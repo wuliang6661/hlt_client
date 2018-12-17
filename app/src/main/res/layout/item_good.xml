@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="66dp"
+    android:background="@color/white"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
+
+
+    <ImageView
+        android:id="@+id/good_img"
+        android:layout_width="38dp"
+        android:layout_height="38dp"
+        android:layout_marginLeft="12dp" />
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="7dp"
+        android:layout_weight="1"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/good_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="卷心菜"
+            android:textColor="#333333"
+            android:textSize="13dp" />
+
+
+        <TextView
+            android:id="@+id/good_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="¥ 12.00元/斤"
+            android:textColor="#ff722b"
+            android:textSize="13sp" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginRight="10dp"
+        android:gravity="center_vertical|right"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/goods_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="数量：5斤"
+            android:textColor="#666666"
+            android:textSize="13dp" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="金额："
+                android:textColor="#666666"
+                android:textSize="13dp" />
+
+
+            <TextView
+                android:id="@+id/goods_all_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
+                android:text="¥：5.00"
+                android:textColor="#f5142f"
+                android:textSize="13dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

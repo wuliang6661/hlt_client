@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/item_layout"
+    android:layout_width="match_parent"
+    android:layout_height="103dp"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="3dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp">
+
+
+            <com.dinuscxj.progressbar.CircleProgressBar
+                android:id="@+id/order_progress"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                app:progress_background_color="@color/holo_darker_gray"
+                app:progress_end_color="@color/holo_green_light"
+                app:progress_start_color="@color/holo_green_light"
+                app:progress_stroke_width="4dp"
+                app:progress_text_color="@color/holo_green_light"
+                app:style="solid_line" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="接单倒计时"
+                    android:textColor="#666666"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/time_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="00:00"
+                    android:textColor="#f5142f"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/shop_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="城西银泰店"
+                android:textColor="#666666"
+                android:textSize="13dp" />
+
+
+            <TextView
+                android:id="@+id/shop_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="杭州市西湖区三墩镇赤化街巴拉巴拉巴"
+                android:textColor="#999999"
+                android:textSize="12dp" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/order_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="¥ 180.00"
+                android:textColor="#f5142f"
+                android:textSize="18dp" />
+
+
+            <TextView
+                android:id="@+id/order_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="查看详情>>"
+                android:textColor="#61c95f"
+                android:textSize="13sp" />
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="#f5142f" />
+
+</RelativeLayout>
