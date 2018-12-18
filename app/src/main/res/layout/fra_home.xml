@@ -44,151 +44,157 @@
     </RelativeLayout>
 
 
-    <android.support.v4.widget.NestedScrollView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
+
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/classify_recycle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="8dp" />
-
-
-            <com.donkingliang.banner.CustomBanner
-                android:id="@+id/banner"
-                android:layout_width="match_parent"
-                android:layout_height="93dp"
-                android:layout_marginLeft="7dp"
-                android:layout_marginRight="7dp"
-                app:indicatorGravity="CENTER"
-                app:indicatorInterval="5dp"
-                app:indicatorSelectRes="@drawable/shape_point_select"
-                app:indicatorStyle="ORDINARY"
-                app:indicatorUnSelectRes="@drawable/shape_point_unselect" />
-
+            android:layout_height="match_parent">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
 
-                <View
-                    android:layout_width="4dp"
-                    android:layout_height="18dp"
-                    android:background="#FF722B" />
-
-
-                <TextView
-                    android:layout_width="0dp"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/classify_recycle"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="6dp"
-                    android:layout_weight="1"
-                    android:text="限时秒杀"
-                    android:textColor="#333333"
-                    android:textSize="15sp" />
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="8dp" />
 
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="距离开始还有："
-                    android:textColor="#666666"
-                    android:textSize="13sp" />
+                <com.donkingliang.banner.CustomBanner
+                    android:id="@+id/banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="93dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginRight="7dp"
+                    app:indicatorGravity="CENTER"
+                    app:indicatorInterval="5dp"
+                    app:indicatorSelectRes="@drawable/shape_point_select"
+                    app:indicatorStyle="ORDINARY"
+                    app:indicatorUnSelectRes="@drawable/shape_point_unselect" />
 
 
-                <TextView
-                    android:id="@+id/down_time"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="00:00:00"
-                    android:textColor="#F5142F"
-                    android:textSize="13sp" />
-
-
-                <TextView
-                    android:id="@+id/xianshi_more"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
                     android:layout_marginLeft="10dp"
-                    android:text="更多>>"
-                    android:textColor="#666666"
-                    android:textSize="13sp" />
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+
+                    <View
+                        android:layout_width="4dp"
+                        android:layout_height="18dp"
+                        android:background="#FF722B" />
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dp"
+                        android:layout_weight="1"
+                        android:text="限时秒杀"
+                        android:textColor="#333333"
+                        android:textSize="15sp" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="距离开始还有："
+                        android:textColor="#666666"
+                        android:textSize="13sp" />
+
+
+                    <TextView
+                        android:id="@+id/down_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="00:00:00"
+                        android:textColor="#F5142F"
+                        android:textSize="13sp" />
+
+
+                    <TextView
+                        android:id="@+id/xianshi_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="更多>>"
+                        android:textColor="#666666"
+                        android:textSize="13sp" />
+
+
+                </LinearLayout>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/xianshi_recycle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+
+                    <View
+                        android:layout_width="4dp"
+                        android:layout_height="18dp"
+                        android:background="#61C95F" />
+
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dp"
+                        android:layout_weight="1"
+                        android:text="常用清单"
+                        android:textColor="#333333"
+                        android:textSize="15sp" />
+
+
+                    <TextView
+                        android:id="@+id/changyong_more"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="更多>>"
+                        android:textColor="#666666"
+                        android:textSize="13sp" />
+
+
+                </LinearLayout>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/changyong_recycle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp" />
 
 
             </LinearLayout>
 
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/xianshi_recycle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp" />
+        </android.support.v4.widget.NestedScrollView>
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-
-                <View
-                    android:layout_width="4dp"
-                    android:layout_height="18dp"
-                    android:background="#61C95F" />
-
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="6dp"
-                    android:layout_weight="1"
-                    android:text="常用清单"
-                    android:textColor="#333333"
-                    android:textSize="15sp" />
-
-
-                <TextView
-                    android:id="@+id/changyong_more"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:text="更多>>"
-                    android:textColor="#666666"
-                    android:textSize="13sp" />
-
-
-            </LinearLayout>
-
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/changyong_recycle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp" />
-
-
-        </LinearLayout>
-
-
-    </android.support.v4.widget.NestedScrollView>
-
-
+    </android.support.v4.widget.SwipeRefreshLayout>
 </LinearLayout>

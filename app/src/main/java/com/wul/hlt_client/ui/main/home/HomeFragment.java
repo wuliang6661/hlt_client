@@ -5,8 +5,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +21,7 @@ import com.wul.hlt_client.R;
 import com.wul.hlt_client.base.GlideApp;
 import com.wul.hlt_client.entity.BannerBo;
 import com.wul.hlt_client.entity.ClassifyBO;
+import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.mvp.MVPBaseFragment;
 import com.wul.hlt_client.widget.lgrecycleadapter.LGRecycleViewAdapter;
 import com.wul.hlt_client.widget.lgrecycleadapter.LGViewHolder;
@@ -37,7 +38,7 @@ import butterknife.Unbinder;
  */
 
 public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresenter>
-        implements HomeContract.View {
+        implements HomeContract.View ,SwipeRefreshLayout.OnRefreshListener{
 
 
     @BindView(R.id.edit_select)
@@ -58,6 +59,8 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     CustomBanner mBanner;
 
     Unbinder unbinder;
+    @BindView(R.id.swipe)
+    SwipeRefreshLayout swipe;
 
     @Nullable
     @Override
@@ -72,8 +75,12 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView();
+        invitionSwipeRefresh(swipe);
+        swipe.setOnRefreshListener(this);
         mPresenter.getClassifyList();
         mPresenter.getBanner();
+        mPresenter.getComomPaseList();
+        mPresenter.getXianshiList();
     }
 
     @Override
@@ -114,14 +121,15 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
 
             @Override
             public void updateUI(Context context, View view, int position, BannerBo data) {
-                GlideApp.with(context).load(data)
-                        .placeholder(R.drawable.zhanwei1).error(R.drawable.zhanwei1)
+                GlideApp.with(context).load(data.getImage())
+                        .placeholder(R.drawable.zhanwei1)
+                        .error(R.drawable.zhanwei1)
                         .into((RoundedImageView) view);
             }
         }, list);
         //设置轮播图自动滚动轮播，参数是轮播图滚动的间隔时间
         //轮播图默认是不自动滚动的，如果不调用这个方法，轮播图将不会自动滚动。
-        mBanner.startTurning(3600);
+        // mBanner.startTurning(3600);
         //设置轮播图的滚动速度
         mBanner.setScrollDuration(500);
         //设置轮播图的点击事件
@@ -138,6 +146,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
      * 返回上半部分类型
      */
     public void getClassify(List<ClassifyBO> list) {
+        swipe.setRefreshing(false);
         LGRecycleViewAdapter<ClassifyBO> adapter = new LGRecycleViewAdapter<ClassifyBO>(list) {
             @Override
             public int getLayoutId(int viewType) {
@@ -155,17 +164,74 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
 
     @Override
     public void getBannerList(List<BannerBo> list) {
+        swipe.setRefreshing(false);
         setBanner(list);
+    }
+
+    /**
+     * 常用清单适配器
+     */
+    @Override
+    public void getChangyongShop(List<ShopBO> list) {
+        swipe.setRefreshing(false);
+        LGRecycleViewAdapter<ShopBO> adapter = new LGRecycleViewAdapter<ShopBO>(list) {
+            @Override
+            public int getLayoutId(int viewType) {
+                return R.layout.item_xianshi_menu;
+            }
+
+            @Override
+            public void convert(LGViewHolder holder, ShopBO classifyBO, int position) {
+                holder.setImageUrl(getActivity(), R.id.item_img, classifyBO.getImage());
+                holder.setText(R.id.item_text, classifyBO.getProductName());
+                holder.getView(R.id.shop_price).setVisibility(View.GONE);
+                holder.setText(R.id.shop_old_price, "¥ " + classifyBO.getPrice1() + "元/" + classifyBO.getMeasureUnitName1());
+            }
+        };
+        changyongRecycle.setAdapter(adapter);
+    }
+
+    /**
+     * 限时抢购
+     */
+    @Override
+    public void getXianshiList(List<ShopBO> list) {
+        swipe.setRefreshing(false);
+        LGRecycleViewAdapter<ShopBO> adapter = new LGRecycleViewAdapter<ShopBO>(list) {
+            @Override
+            public int getLayoutId(int viewType) {
+                return R.layout.item_xianshi_menu;
+            }
+
+            @Override
+            public void convert(LGViewHolder holder, ShopBO classifyBO, int position) {
+                holder.setImageUrl(getActivity(), R.id.item_img, classifyBO.getImage());
+                holder.setText(R.id.item_text, classifyBO.getProductName());
+                holder.getView(R.id.shop_price).setVisibility(View.GONE);
+                holder.setText(R.id.shop_old_price, "¥ " + classifyBO.getPrice1() + "元/" + classifyBO.getMeasureUnitName1());
+            }
+        };
+        xianshiRecycle.setAdapter(adapter);
     }
 
 
     @Override
     public void onRequestError(String msg) {
+        swipe.setRefreshing(false);
         showToast(msg);
     }
 
     @Override
     public void onRequestEnd() {
 
+    }
+
+    @Override
+    public void onRefresh() {
+        swipe.setRefreshing(true);
+        mPresenter.getClassifyList();
+        mPresenter.getBanner();
+        mPresenter.getComomPaseList();
+        mPresenter.getXianshiList();
     }
 }

@@ -3,10 +3,12 @@ package com.wul.hlt_client.api;
 import com.wul.hlt_client.base.MyApplication;
 import com.wul.hlt_client.entity.BannerBo;
 import com.wul.hlt_client.entity.ClassifyBO;
+import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.entity.UserBo;
 import com.wul.hlt_client.entity.request.BaseRequest;
 import com.wul.hlt_client.entity.request.LoginBo;
 import com.wul.hlt_client.entity.request.PageBO;
+import com.wul.hlt_client.entity.request.XianshiBO;
 import com.wul.hlt_client.util.rx.RxResultHelper;
 
 import java.util.List;
@@ -62,4 +64,21 @@ public class HttpServiceIml {
         request.token = MyApplication.token;
         return getService().getBanner(request).compose(RxResultHelper.<List<BannerBo>>httpRusult());
     }
+
+    /**
+     * 获取常用清单
+     */
+    public static Observable<List<ShopBO>> getComstonList(PageBO pageBO) {
+        pageBO.token = MyApplication.token;
+        return getService().getComminPurchase(pageBO).compose(RxResultHelper.<List<ShopBO>>httpRusult());
+    }
+
+    /**
+     * 获取限时清单
+     */
+    public static Observable<List<ShopBO>> getXianshiList(XianshiBO pageBO) {
+        pageBO.token = MyApplication.token;
+        return getService().getSpikeAndProductList(pageBO).compose(RxResultHelper.<List<ShopBO>>httpRusult());
+    }
+
 }

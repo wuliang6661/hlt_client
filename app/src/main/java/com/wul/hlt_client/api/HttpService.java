@@ -5,12 +5,14 @@ import com.wul.hlt_client.entity.BaseResult;
 import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.HistoryOrderBo;
 import com.wul.hlt_client.entity.OrderDetails;
+import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.entity.UnOrderBo;
 import com.wul.hlt_client.entity.UserBo;
 import com.wul.hlt_client.entity.request.BaseRequest;
 import com.wul.hlt_client.entity.request.LoginBo;
 import com.wul.hlt_client.entity.request.PageBO;
 import com.wul.hlt_client.entity.request.RegisterBO;
+import com.wul.hlt_client.entity.request.XianshiBO;
 
 import java.util.List;
 
@@ -58,8 +60,17 @@ public interface HttpService {
     @POST("/hct_webservice/app/address/home/getAllAdvertiseList")
     Observable<BaseResult<List<BannerBo>>> getBanner(@Body BaseRequest body);
 
+    /**
+     * 获取常用清单
+     */
+    @POST("/hct_webservice/app/address/home/getCommonPurchaseList")
+    Observable<BaseResult<List<ShopBO>>> getComminPurchase(@Body PageBO pageBO);
 
-
+    /**
+     * 限时抢购和促销商品列表
+     */
+    @POST("/hct_webservice/app/address/home/getSpikeProductAndPromotionProductList")
+    Observable<BaseResult<List<ShopBO>>> getSpikeAndProductList(@Body XianshiBO body);
 
 
 }
