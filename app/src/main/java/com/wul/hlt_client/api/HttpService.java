@@ -5,6 +5,10 @@ import com.wul.hlt_client.entity.HistoryOrderBo;
 import com.wul.hlt_client.entity.OrderDetails;
 import com.wul.hlt_client.entity.UnOrderBo;
 import com.wul.hlt_client.entity.UserBo;
+import com.wul.hlt_client.entity.request.BaseRequest;
+import com.wul.hlt_client.entity.request.LoginBo;
+import com.wul.hlt_client.entity.request.PageBO;
+import com.wul.hlt_client.entity.request.RegisterBO;
 
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
@@ -28,35 +32,30 @@ public interface HttpService {
     /**
      * 登录接口
      */
-    @POST("/hct_webservice/app/greengrocer/login")
-    Observable<BaseResult<UserBo>> login(@Body RequestBody body);
+    @POST("/hct_webservice/app/address/login")
+    Observable<BaseResult<UserBo>> login(@Body LoginBo body);
 
     /**
-     * 查询商户历史订单列表
+     * 注册接口
      */
-    @POST("/hct_webservice/app/greengrocer/getGreengrocerHistoryOrderList")
-    Observable<BaseResult<HistoryOrderBo>> getHistoryList(@Body RequestBody body);
-
-
-    /**
-     * 查询待接单列表
-     */
-    @POST("/hct_webservice/app/greengrocer/getGreengrocerUnOrderList")
-    Observable<BaseResult<UnOrderBo>> getUnOrderList(@Body RequestBody body);
+    @POST("/hct_webservice/app/address/register")
+    Observable<BaseResult<String>> register(@Body RegisterBO body);
 
 
     /**
-     * 接单
+     * 首页获取全部商品类型
      */
-    @POST("/hct_webservice/app/greengrocer/updateOrderStatus")
-    Observable<BaseResult<String>> orderTaking(@Body RequestBody body);
-
+    @POST("/hct_webservice/app/address/home/getAllProductCategoryList")
+    Observable<BaseResult<String>> getCategorys(@Body PageBO body);
 
     /**
-     * 获取订单详情
+     * 获取轮播广告
      */
-    @POST("/hct_webservice/app/greengrocer/getGreengrocerOrder")
-    Observable<BaseResult<OrderDetails>> getGreengrocerOrder(@Body RequestBody body);
+    @POST("/hct_webservice/app/address/home/getAllAdvertiseList")
+    Observable<BaseResult<String>> getBanner(@Body BaseRequest body);
+
+
+
 
 
 }

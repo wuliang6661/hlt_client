@@ -1,17 +1,12 @@
 package com.wul.hlt_client.api;
 
 import com.wul.hlt_client.base.MyApplication;
-import com.wul.hlt_client.entity.HistoryOrderBo;
-import com.wul.hlt_client.entity.OrderDetails;
-import com.wul.hlt_client.entity.UnOrderBo;
 import com.wul.hlt_client.entity.UserBo;
+import com.wul.hlt_client.entity.request.BaseRequest;
+import com.wul.hlt_client.entity.request.LoginBo;
+import com.wul.hlt_client.entity.request.PageBO;
 import com.wul.hlt_client.util.rx.RxResultHelper;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import okhttp3.MediaType;
-import okhttp3.RequestBody;
 import rx.Observable;
 
 /**
@@ -40,81 +35,26 @@ public class HttpServiceIml {
      * 登录接口
      */
     public static Observable<UserBo> login(String number, String phone, String password) {
-        JSONObject object = new JSONObject();
-        try {
-            object.put("number", number);
-            object.put("password", password);
-            object.put("phone", phone);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        RequestBody body = RequestBody.create(MediaType.parse("application/json"), object.toString());
-        return getService().login(body).compose(RxResultHelper.<UserBo>httpRusult());
+        LoginBo loginBo = new LoginBo();
+        loginBo.number = number;
+        loginBo.password = password;
+        loginBo.contactPhone = phone;
+        return getService().login(loginBo).compose(RxResultHelper.<UserBo>httpRusult());
     }
-
 
     /**
-     * 获取待接单订单列表
+     * 首页获取全部商品类型
      */
-    public static Observable<UnOrderBo> getUnOrderList() {
-        JSONObject object = new JSONObject();
-        try {
-            object.put("token", MyApplication.spUtils.getString("token"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        RequestBody body = RequestBody.create(MediaType.parse("application/json"), object.toString());
-        return getService().getUnOrderList(body).compose(RxResultHelper.<UnOrderBo>httpRusult());
+    public static Observable<String> getCategorys(PageBO pageBO) {
+        return getService().getCategorys(pageBO).compose(RxResultHelper.<String>httpRusult());
     }
-
 
     /**
-     * 获取历史订单列表
+     * 获取轮播广告
      */
-    public static Observable<HistoryOrderBo> getHistoryList() {
-        JSONObject object = new JSONObject();
-        try {
-            object.put("token", MyApplication.spUtils.getString("token"));
-            object.put("pageNum", 1);
-            object.put("pageSize", 1000);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        RequestBody body = RequestBody.create(MediaType.parse("application/json"), object.toString());
-        return getService().getHistoryList(body).compose(RxResultHelper.<HistoryOrderBo>httpRusult());
+    public static Observable<String> getBanner() {
+        BaseRequest request = new BaseRequest();
+        request.token = MyApplication.token;
+        return getService().getBanner(request).compose(RxResultHelper.<String>httpRusult());
     }
-
-
-    /**
-     * 接单
-     */
-    public static Observable<String> orderTaking(String orderId) {
-        JSONObject object = new JSONObject();
-        try {
-            object.put("token", MyApplication.spUtils.getString("token"));
-            object.put("id", orderId);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        RequestBody body = RequestBody.create(MediaType.parse("application/json"), object.toString());
-        return getService().orderTaking(body).compose(RxResultHelper.<String>httpRusult());
-    }
-
-
-    /**
-     * 获取订单详情
-     */
-    public static Observable<OrderDetails> getOrderDetails(String orderId) {
-        JSONObject object = new JSONObject();
-        try {
-            object.put("token", MyApplication.spUtils.getString("token"));
-            object.put("id", orderId);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        RequestBody body = RequestBody.create(MediaType.parse("application/json"), object.toString());
-        return getService().getGreengrocerOrder(body).compose(RxResultHelper.<OrderDetails>httpRusult());
-    }
-
-
 }

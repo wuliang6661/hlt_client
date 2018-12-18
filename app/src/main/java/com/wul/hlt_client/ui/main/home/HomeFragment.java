@@ -1,7 +1,6 @@
 package com.wul.hlt_client.ui.main.home;
 
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,12 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.donkingliang.banner.CustomBanner;
 import com.wul.hlt_client.R;
-import com.wul.hlt_client.base.GlideApp;
 import com.wul.hlt_client.mvp.MVPBaseFragment;
 
 import butterknife.BindView;
@@ -52,9 +49,6 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
 
     Unbinder unbinder;
 
-
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,6 +62,8 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView();
+        mPresenter.getClassifyList();
+        mPresenter.getBanner();
     }
 
     @Override
@@ -115,8 +111,8 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
 //                GlideApp.with(context).load(data).into((ImageView) view);
 //            }
 //        }, beans);
-    //设置轮播图自动滚动轮播，参数是轮播图滚动的间隔时间
-      //轮播图默认是不自动滚动的，如果不调用这个方法，轮播图将不会自动滚动。
+        //设置轮播图自动滚动轮播，参数是轮播图滚动的间隔时间
+        //轮播图默认是不自动滚动的，如果不调用这个方法，轮播图将不会自动滚动。
         mBanner.startTurning(3600);
         //停止轮播图的自动滚动
         mBanner.stopTurning();
@@ -130,5 +126,15 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
                 //str 轮播图当前项对应的数据
             }
         });
+    }
+
+    @Override
+    public void onRequestError(String msg) {
+        showToast(msg);
+    }
+
+    @Override
+    public void onRequestEnd() {
+
     }
 }

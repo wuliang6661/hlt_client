@@ -8,6 +8,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
+import com.blankj.utilcode.util.ToastUtils;
 import com.wul.hlt_client.R;
 
 /**
@@ -76,6 +77,11 @@ public abstract class BaseFragment extends Fragment {
         mSwipeLayout.setDistanceToTriggerSync(400);// 设置手指在屏幕下拉多少距离会触发下拉刷新
         mSwipeLayout.setProgressBackgroundColor(R.color.white); // 设定下拉圆圈的背景
         mSwipeLayout.setSize(SwipeRefreshLayout.DEFAULT); // 设置圆圈的大小
+    }
+
+
+    protected void showToast(String message) {
+        ToastUtils.showShort(message);
     }
 
 

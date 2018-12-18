@@ -127,6 +127,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
             MyApplication.spUtils.clear();
         }
         MyApplication.spUtils.put("token", userBo.getToken());
+        MyApplication.token = userBo.getToken();
         gotoActivity(MainActivity.class, true);
     }
 }

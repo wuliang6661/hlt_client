@@ -22,6 +22,8 @@ public class MyApplication extends Application {
 
     public static SPUtils spUtils;
 
+    public static String token;
+
     @Override
     public void onCreate() {
         super.onCreate();
