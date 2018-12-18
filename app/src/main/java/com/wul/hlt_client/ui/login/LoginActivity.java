@@ -119,7 +119,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
     @Override
     public void loginSuress(UserBo userBo) {
         if (isHaveMe) {
-            MyApplication.spUtils.put("phone", userBo.getPhone());
+            MyApplication.spUtils.put("phone", strPhone);
             MyApplication.spUtils.put("pwd", strPwd);
             MyApplication.spUtils.put("shopNum", strShop);
             MyApplication.spUtils.put("isHaveMe", true);

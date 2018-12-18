@@ -2,8 +2,11 @@ package com.wul.hlt_client.ui.main.home;
 
 import com.wul.hlt_client.api.HttpResultSubscriber;
 import com.wul.hlt_client.api.HttpServiceIml;
+import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.request.PageBO;
 import com.wul.hlt_client.mvp.BasePresenterImpl;
+
+import java.util.List;
 
 /**
  * MVPPlugin
@@ -17,11 +20,11 @@ public class HomePresenter extends BasePresenterImpl<HomeContract.View>
         PageBO pageBO = new PageBO();
         pageBO.pageNum = 1;
         pageBO.pageSize = 8;
-        HttpServiceIml.getCategorys(pageBO).subscribe(new HttpResultSubscriber<String>(mView.getContext()) {
+        HttpServiceIml.getCategorys(pageBO).subscribe(new HttpResultSubscriber<List<ClassifyBO>>(mView.getContext()) {
             @Override
-            public void onSuccess(String s) {
+            public void onSuccess(List<ClassifyBO> s) {
                 if (mView != null) {
-//                    mView
+                    mView.getClassify(s);
                 }
             }
 

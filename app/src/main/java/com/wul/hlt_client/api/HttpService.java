@@ -1,6 +1,7 @@
 package com.wul.hlt_client.api;
 
 import com.wul.hlt_client.entity.BaseResult;
+import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.HistoryOrderBo;
 import com.wul.hlt_client.entity.OrderDetails;
 import com.wul.hlt_client.entity.UnOrderBo;
@@ -9,6 +10,8 @@ import com.wul.hlt_client.entity.request.BaseRequest;
 import com.wul.hlt_client.entity.request.LoginBo;
 import com.wul.hlt_client.entity.request.PageBO;
 import com.wul.hlt_client.entity.request.RegisterBO;
+
+import java.util.List;
 
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
@@ -46,7 +49,7 @@ public interface HttpService {
      * 首页获取全部商品类型
      */
     @POST("/hct_webservice/app/address/home/getAllProductCategoryList")
-    Observable<BaseResult<String>> getCategorys(@Body PageBO body);
+    Observable<BaseResult<List<ClassifyBO>>> getCategorys(@Body PageBO body);
 
     /**
      * 获取轮播广告

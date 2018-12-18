@@ -1,11 +1,14 @@
 package com.wul.hlt_client.api;
 
 import com.wul.hlt_client.base.MyApplication;
+import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.UserBo;
 import com.wul.hlt_client.entity.request.BaseRequest;
 import com.wul.hlt_client.entity.request.LoginBo;
 import com.wul.hlt_client.entity.request.PageBO;
 import com.wul.hlt_client.util.rx.RxResultHelper;
+
+import java.util.List;
 
 import rx.Observable;
 
@@ -45,8 +48,9 @@ public class HttpServiceIml {
     /**
      * 首页获取全部商品类型
      */
-    public static Observable<String> getCategorys(PageBO pageBO) {
-        return getService().getCategorys(pageBO).compose(RxResultHelper.<String>httpRusult());
+    public static Observable<List<ClassifyBO>> getCategorys(PageBO pageBO) {
+        pageBO.token = MyApplication.token;
+        return getService().getCategorys(pageBO).compose(RxResultHelper.<List<ClassifyBO>>httpRusult());
     }
 
     /**

@@ -15,7 +15,12 @@ import android.widget.TextView;
 
 import com.donkingliang.banner.CustomBanner;
 import com.wul.hlt_client.R;
+import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.mvp.MVPBaseFragment;
+import com.wul.hlt_client.widget.lgrecycleadapter.LGRecycleViewAdapter;
+import com.wul.hlt_client.widget.lgrecycleadapter.LGViewHolder;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -127,6 +132,26 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
             }
         });
     }
+
+    /**
+     * 返回上半部分类型
+     */
+    public void getClassify(List<ClassifyBO> list) {
+        LGRecycleViewAdapter<ClassifyBO> adapter = new LGRecycleViewAdapter<ClassifyBO>(list) {
+            @Override
+            public int getLayoutId(int viewType) {
+                return R.layout.item_home_classify;
+            }
+
+            @Override
+            public void convert(LGViewHolder holder, ClassifyBO classifyBO, int position) {
+                holder.setImageUrl(getActivity(), R.id.item_img, classifyBO.getImage());
+                holder.setText(R.id.item_text, classifyBO.getCategoryName());
+            }
+        };
+        classifyRecycle.setAdapter(adapter);
+    }
+
 
     @Override
     public void onRequestError(String msg) {
