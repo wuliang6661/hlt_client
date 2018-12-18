@@ -1,5 +1,6 @@
 package com.wul.hlt_client.ui.main.home;
 
+import com.wul.hlt_client.entity.BannerBo;
 import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.mvp.BasePresenter;
 import com.wul.hlt_client.mvp.BaseRequestView;
@@ -15,6 +16,8 @@ public class HomeContract {
     interface View extends BaseRequestView {
 
         void getClassify(List<ClassifyBO> list);
+
+        void getBannerList(List<BannerBo> list);
 
     }
 

@@ -1,6 +1,7 @@
 package com.wul.hlt_client.api;
 
 import com.wul.hlt_client.base.MyApplication;
+import com.wul.hlt_client.entity.BannerBo;
 import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.UserBo;
 import com.wul.hlt_client.entity.request.BaseRequest;
@@ -56,9 +57,9 @@ public class HttpServiceIml {
     /**
      * 获取轮播广告
      */
-    public static Observable<String> getBanner() {
+    public static Observable<List<BannerBo>> getBanner() {
         BaseRequest request = new BaseRequest();
         request.token = MyApplication.token;
-        return getService().getBanner(request).compose(RxResultHelper.<String>httpRusult());
+        return getService().getBanner(request).compose(RxResultHelper.<List<BannerBo>>httpRusult());
     }
 }

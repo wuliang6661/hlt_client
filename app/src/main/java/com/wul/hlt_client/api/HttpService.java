@@ -1,5 +1,6 @@
 package com.wul.hlt_client.api;
 
+import com.wul.hlt_client.entity.BannerBo;
 import com.wul.hlt_client.entity.BaseResult;
 import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.HistoryOrderBo;
@@ -55,7 +56,7 @@ public interface HttpService {
      * 获取轮播广告
      */
     @POST("/hct_webservice/app/address/home/getAllAdvertiseList")
-    Observable<BaseResult<String>> getBanner(@Body BaseRequest body);
+    Observable<BaseResult<List<BannerBo>>> getBanner(@Body BaseRequest body);
 
 
 

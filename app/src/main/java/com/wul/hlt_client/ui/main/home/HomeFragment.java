@@ -1,6 +1,7 @@
 package com.wul.hlt_client.ui.main.home;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -11,10 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.donkingliang.banner.CustomBanner;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.wul.hlt_client.R;
+import com.wul.hlt_client.base.GlideApp;
+import com.wul.hlt_client.entity.BannerBo;
 import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.mvp.MVPBaseFragment;
 import com.wul.hlt_client.widget.lgrecycleadapter.LGRecycleViewAdapter;
@@ -85,42 +90,38 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 4);
         classifyRecycle.setLayoutManager(manager);
         classifyRecycle.setNestedScrollingEnabled(false);
-        LinearLayoutManager manager1 = new LinearLayoutManager(getActivity());
-        manager1.setOrientation(LinearLayoutManager.HORIZONTAL);
+        GridLayoutManager manager1 = new GridLayoutManager(getActivity(), 4);
         xianshiRecycle.setLayoutManager(manager1);
-        LinearLayoutManager manager2 = new LinearLayoutManager(getActivity());
-        manager2.setOrientation(LinearLayoutManager.HORIZONTAL);
+        xianshiRecycle.setNestedScrollingEnabled(false);
+        GridLayoutManager manager2 = new GridLayoutManager(getActivity(), 4);
         changyongRecycle.setLayoutManager(manager2);
+        changyongRecycle.setNestedScrollingEnabled(false);
     }
 
 
     /**
      * 设置轮播图
      */
-    private void setBanner() {
-//        mBanner.setPages(new CustomBanner.ViewCreator<String>() {
-//            @Override
-//            public View createView(Context context, int position) {
-//                //这里返回的是轮播图的项的布局 支持任何的布局
-//                //position 轮播图的第几个项
-//                ImageView imageView = new ImageView(context);
-//                return imageView;
-//            }
-//
-//            @Override
-//            public void updateUI(Context context, View view, int position, String data) {
-//                //在这里更新轮播图的UI
-//                //position 轮播图的第几个项
-//                //view 轮播图当前项的布局 它是createView方法的返回值
-//                //data 轮播图当前项对应的数据
-//                GlideApp.with(context).load(data).into((ImageView) view);
-//            }
-//        }, beans);
+    private void setBanner(List<BannerBo> list) {
+        mBanner.setPages(new CustomBanner.ViewCreator<BannerBo>() {
+            @Override
+            public View createView(Context context, int position) {
+                RoundedImageView imageView = new RoundedImageView(context);
+                imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                imageView.setCornerRadius(10);
+                return imageView;
+            }
+
+            @Override
+            public void updateUI(Context context, View view, int position, BannerBo data) {
+                GlideApp.with(context).load(data)
+                        .placeholder(R.drawable.zhanwei1).error(R.drawable.zhanwei1)
+                        .into((RoundedImageView) view);
+            }
+        }, list);
         //设置轮播图自动滚动轮播，参数是轮播图滚动的间隔时间
         //轮播图默认是不自动滚动的，如果不调用这个方法，轮播图将不会自动滚动。
         mBanner.startTurning(3600);
-        //停止轮播图的自动滚动
-        mBanner.stopTurning();
         //设置轮播图的滚动速度
         mBanner.setScrollDuration(500);
         //设置轮播图的点击事件
@@ -150,6 +151,11 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
             }
         };
         classifyRecycle.setAdapter(adapter);
+    }
+
+    @Override
+    public void getBannerList(List<BannerBo> list) {
+        setBanner(list);
     }
 
 

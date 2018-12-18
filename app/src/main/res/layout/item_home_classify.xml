@@ -11,6 +11,7 @@
         android:id="@+id/item_img"
         android:layout_width="53dp"
         android:layout_height="53dp"
+        android:scaleType="fitXY"
         app:riv_corner_radius="12dp" />
 
 

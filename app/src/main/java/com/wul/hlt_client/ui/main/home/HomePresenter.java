@@ -2,6 +2,7 @@ package com.wul.hlt_client.ui.main.home;
 
 import com.wul.hlt_client.api.HttpResultSubscriber;
 import com.wul.hlt_client.api.HttpServiceIml;
+import com.wul.hlt_client.entity.BannerBo;
 import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.request.PageBO;
 import com.wul.hlt_client.mvp.BasePresenterImpl;
@@ -39,10 +40,12 @@ public class HomePresenter extends BasePresenterImpl<HomeContract.View>
 
 
     public void getBanner() {
-        HttpServiceIml.getBanner().subscribe(new HttpResultSubscriber<String>() {
+        HttpServiceIml.getBanner().subscribe(new HttpResultSubscriber<List<BannerBo>>() {
             @Override
-            public void onSuccess(String s) {
-
+            public void onSuccess(List<BannerBo> s) {
+                if (mView != null) {
+                    mView.getBannerList(s);
+                }
             }
 
             @Override
