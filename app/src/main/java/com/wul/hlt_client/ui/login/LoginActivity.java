@@ -13,6 +13,7 @@ import com.wul.hlt_client.R;
 import com.wul.hlt_client.base.MyApplication;
 import com.wul.hlt_client.entity.UserBo;
 import com.wul.hlt_client.mvp.MVPBaseActivity;
+import com.wul.hlt_client.ui.main.MainActivity;
 import com.wul.hlt_client.util.MD5;
 
 

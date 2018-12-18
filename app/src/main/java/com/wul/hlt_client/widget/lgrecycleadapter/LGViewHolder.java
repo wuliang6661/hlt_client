@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.wul.hlt_client.R;
+import com.wul.hlt_client.base.GlideApp;
 
 /**
  * Created by guizhigang on 16/8/8.
@@ -64,7 +64,8 @@ public class LGViewHolder extends RecyclerView.ViewHolder {
 
     public void setImageUrl(Context mContext, int viewId, String url) {
         ImageView view = (ImageView) getView(viewId);
-        Glide.with(mContext).load(url)
+
+        GlideApp.with(mContext).load(url)
                 .placeholder(R.drawable.zhanwei1)
                 .error(R.drawable.zhanwei1)
                 .into(view);

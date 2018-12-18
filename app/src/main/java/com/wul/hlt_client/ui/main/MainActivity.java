@@ -15,10 +15,11 @@ import android.view.View;
 
 import com.wul.hlt_client.R;
 import com.wul.hlt_client.base.BaseActivity;
+import com.wul.hlt_client.ui.main.home.HomeFragment;
 import com.wul.hlt_client.util.AppManager;
 import com.xyz.tabitem.BottmTabItem;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 
 /**
@@ -27,16 +28,16 @@ import butterknife.Bind;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
 
-    @Bind(R.id.main1)
+    @BindView(R.id.main1)
     BottmTabItem main1;
-    @Bind(R.id.main2)
+    @BindView(R.id.main2)
     BottmTabItem main2;
-    @Bind(R.id.main3)
+    @BindView(R.id.main3)
     BottmTabItem main3;
-    @Bind(R.id.main4)
+    @BindView(R.id.main4)
     BottmTabItem main4;
 
-//    StudyFragment fragment1;    //学习
+    HomeFragment fragment1;    //学习
 //    ClassLibraayFragment fragment2;   //课程库
 //    DiscoverFragment fragment3;     //发现
 
@@ -44,7 +45,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     protected int getLayout() {
-        return R.layout.act_main;
+        return R.layout.act_main_new;
     }
 
     @Override
@@ -52,10 +53,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
 
         buttms = new BottmTabItem[]{main1, main2, main3, main4};
-//        fragment1 = new StudyFragment();
+        fragment1 = new HomeFragment();
 //        fragment2 = new ClassLibraayFragment();
 //        fragment3 = new DiscoverFragment();
-//        goToFragment(fragment1);
+        goToFragment(fragment1);
         main1.setOnClickListener(this);
         main2.setOnClickListener(this);
         main3.setOnClickListener(this);
@@ -67,21 +68,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-//            case R.id.main1:
-//                goToFragment(fragment1);
-//                setButtom(0);
-//                break;
-//            case R.id.main2:
+            case R.id.main1:
+                goToFragment(fragment1);
+                setButtom(0);
+                break;
+            case R.id.main2:
 //                goToFragment(fragment2);
-//                setButtom(1);
-//                break;
-//            case R.id.main3:
+                setButtom(1);
+                break;
+            case R.id.main3:
 //                goToFragment(fragment3);
-//                setButtom(2);
-//                break;
-//            case R.id.main4:
-//                setButtom(3);
-//                break;
+                setButtom(2);
+                break;
+            case R.id.main4:
+                setButtom(3);
+                break;
         }
     }
 
