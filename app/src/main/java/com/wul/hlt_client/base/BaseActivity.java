@@ -5,10 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.Window;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.gyf.barlibrary.ImmersionBar;
+import com.wul.hlt_client.R;
 import com.wul.hlt_client.util.AppManager;
 
 import butterknife.ButterKnife;
@@ -58,7 +62,31 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
 
-    protected void showToast(String message){
+    /**
+     * 设置返回
+     */
+    protected void goBack() {
+        ImageView imageView = findViewById(R.id.back);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    /**
+     * 设置标题
+     *
+     * @param title
+     */
+    protected void setTitleText(String title) {
+        TextView titleTex = findViewById(R.id.title_text);
+        titleTex.setText(title);
+    }
+
+
+    protected void showToast(String message) {
         ToastUtils.showShort(message);
     }
 

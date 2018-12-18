@@ -41,11 +41,14 @@
         </activity>
 
 
-      <!--  <activity
-            android:name=".ui.main.MainActivity"
-            android:screenOrientation="portrait" />-->
+        <!--注册页面-->
+        <activity
+            android:name=".ui.register.RegisterActivity"
+            android:screenOrientation="portrait" />
 
-
+        <!--  <activity
+              android:name=".ui.main.MainActivity"
+              android:screenOrientation="portrait" />-->
 
 
     </application>

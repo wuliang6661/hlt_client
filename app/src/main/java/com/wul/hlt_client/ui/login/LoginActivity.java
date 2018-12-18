@@ -14,7 +14,10 @@ import com.wul.hlt_client.base.MyApplication;
 import com.wul.hlt_client.entity.UserBo;
 import com.wul.hlt_client.mvp.MVPBaseActivity;
 import com.wul.hlt_client.ui.main.MainActivity;
+import com.wul.hlt_client.ui.register.RegisterActivity;
 import com.wul.hlt_client.util.MD5;
+
+import butterknife.BindView;
 
 
 /**
@@ -30,6 +33,8 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
     EditText editPhone;
     CheckBox checkbox;
     TextView btnLogin;
+    @BindView(R.id.tx_register)
+    TextView txRegister;
 
     private String strPhone;
     private String strShop;
@@ -60,6 +65,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
             checkbox.setChecked(true);
         }
         btnLogin.setOnClickListener(this);
+        txRegister.setOnClickListener(this);
     }
 
     @Override
@@ -73,6 +79,9 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
                 if (isLogin()) {
                     mPresenter.login(strPhone, strShop, MD5.strToMd5Low32(MD5.strToMd5Low32(strPwd) + "bby"));
                 }
+                break;
+            case R.id.tx_register:
+                gotoActivity(RegisterActivity.class, false);
                 break;
         }
     }
