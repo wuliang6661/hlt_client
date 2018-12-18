@@ -9,6 +9,11 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="24dp"
+            android:background="@color/white" />
+
         <include layout="@layout/title_bar1" />
 
 
@@ -35,12 +40,12 @@
                 android:src="@drawable/gonggao_red" />
 
             <TextView
+                android:id="@+id/gonggao_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="marquee"
                 android:singleLine="true"
-                android:text="ddsdsadasdasdasdsadsa"
                 android:textColor="#666666"
                 android:textSize="10sp" />
 
@@ -57,14 +62,51 @@
     </LinearLayout>
 
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_alignParentBottom="true"
-        android:gravity="center_vertical">
+        android:layout_alignParentBottom="true">
 
 
-    </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#cccccc" />
+
+        <ImageView
+            android:id="@+id/shop_car_img"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="13dp"
+            android:src="@drawable/shop_car_notice" />
+
+
+        <TextView
+            android:id="@+id/shop_car_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="26dp"
+            android:layout_toRightOf="@+id/shop_car_img"
+            android:text="购物车是空的！"
+            android:textColor="#999999"
+            android:textSize="13sp" />
+
+
+        <TextView
+            android:id="@+id/shop_car_button"
+            android:layout_width="102dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/shop_car_bg"
+            android:gravity="center"
+            android:text="去结算"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+
+    </RelativeLayout>
 
 
 </RelativeLayout>

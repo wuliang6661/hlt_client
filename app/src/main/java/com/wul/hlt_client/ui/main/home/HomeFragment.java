@@ -23,6 +23,7 @@ import com.wul.hlt_client.entity.BannerBo;
 import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.mvp.MVPBaseFragment;
+import com.wul.hlt_client.ui.opsgood.OpsGoodActivity;
 import com.wul.hlt_client.widget.lgrecycleadapter.LGRecycleViewAdapter;
 import com.wul.hlt_client.widget.lgrecycleadapter.LGViewHolder;
 
@@ -38,7 +39,7 @@ import butterknife.Unbinder;
  */
 
 public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresenter>
-        implements HomeContract.View ,SwipeRefreshLayout.OnRefreshListener{
+        implements HomeContract.View, SwipeRefreshLayout.OnRefreshListener, View.OnClickListener {
 
 
     @BindView(R.id.edit_select)
@@ -103,6 +104,8 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         GridLayoutManager manager2 = new GridLayoutManager(getActivity(), 4);
         changyongRecycle.setLayoutManager(manager2);
         changyongRecycle.setNestedScrollingEnabled(false);
+        changyongMore.setOnClickListener(this);
+        xianshiMore.setOnClickListener(this);
     }
 
 
@@ -233,5 +236,17 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         mPresenter.getBanner();
         mPresenter.getComomPaseList();
         mPresenter.getXianshiList();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.changyong_more:   //常用列表
+                gotoActivity(OpsGoodActivity.class, false);
+                break;
+            case R.id.xianshi_more:
+
+                break;
+        }
     }
 }
