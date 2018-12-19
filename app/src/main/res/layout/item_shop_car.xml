@@ -27,7 +27,8 @@
         android:gravity="center"
         android:text="促"
         android:textColor="@color/white"
-        android:textSize="13sp" />
+        android:textSize="13sp"
+        android:visibility="gone" />
 
 
     <TextView
@@ -41,7 +42,8 @@
         android:gravity="center"
         android:text="秒"
         android:textColor="@color/white"
-        android:textSize="13sp" />
+        android:textSize="13sp"
+        android:visibility="gone" />
 
 
     <LinearLayout
@@ -71,7 +73,7 @@
                 android:id="@+id/good_unit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3斤/袋"
+                android:text="0"
                 android:textColor="#666666"
                 android:textSize="13sp" />
 
@@ -81,7 +83,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="13dp"
-                android:text="¥10.0元/袋"
+                android:text="¥0.0"
                 android:textColor="#FF722B"
                 android:textSize="13sp" />
 
@@ -99,7 +101,7 @@
                 android:id="@+id/good_unit2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3斤/斤"
+                android:text="¥0.0元"
                 android:textColor="#666666"
                 android:textSize="13sp" />
 
@@ -109,7 +111,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="13dp"
-                android:text="¥10.0元/袋"
+                android:text="¥0.0"
                 android:textColor="#FF722B"
                 android:textSize="13sp" />
 
@@ -133,7 +135,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="13dp"
-            android:text="仅剩200袋"
+            android:text="仅剩0"
             android:textColor="#F5142F"
             android:textSize="13sp" />
 
