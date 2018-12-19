@@ -66,7 +66,6 @@
 
         <include layout="@layout/title_bar1" />
 
-
         <View
             android:layout_width="match_parent"
             android:layout_height="3dp"
@@ -100,6 +99,52 @@
                 android:singleLine="true"
                 android:textColor="#666666"
                 android:textSize="10sp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="#f2f2f2"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+
+            <TextView
+                android:id="@+id/down_time_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="距离开始还有："
+                android:textColor="#666666"
+                android:textSize="13sp" />
+
+
+            <TextView
+                android:id="@+id/down_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="00:00:00"
+                android:textColor="#F5142F"
+                android:textSize="13sp" />
+
+
+            <TextView
+                android:id="@+id/tixing_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/miao_bg"
+                android:paddingBottom="3dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="3dp"
+                android:text="提醒我"
+                android:textColor="#ffffff"
+                android:textSize="13sp" />
 
 
         </LinearLayout>

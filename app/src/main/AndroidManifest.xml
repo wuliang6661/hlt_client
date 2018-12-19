@@ -48,11 +48,15 @@
 
         <activity
             android:name=".ui.main.MainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
-
 
         <activity
             android:name=".ui.opsgood.OpsGoodActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.salesgood.SalesGoodActivity"
             android:screenOrientation="portrait" />
 
     </application>

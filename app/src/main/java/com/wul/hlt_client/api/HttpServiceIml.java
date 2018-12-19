@@ -2,6 +2,7 @@ package com.wul.hlt_client.api;
 
 import com.wul.hlt_client.base.MyApplication;
 import com.wul.hlt_client.entity.BannerBo;
+import com.wul.hlt_client.entity.CityGongGao;
 import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.entity.UserBo;
@@ -79,6 +80,15 @@ public class HttpServiceIml {
     public static Observable<List<ShopBO>> getXianshiList(XianshiBO pageBO) {
         pageBO.token = MyApplication.token;
         return getService().getSpikeAndProductList(pageBO).compose(RxResultHelper.<List<ShopBO>>httpRusult());
+    }
+
+    /**
+     * 获取城市公告
+     */
+    public static Observable<List<CityGongGao>> getCityGongGao() {
+        BaseRequest request = new BaseRequest();
+        request.token = MyApplication.token;
+        return getService().getCityGongGao(request).compose(RxResultHelper.httpRusult());
     }
 
 }
