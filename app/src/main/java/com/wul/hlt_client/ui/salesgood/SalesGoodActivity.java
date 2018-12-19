@@ -43,7 +43,7 @@ public class SalesGoodActivity extends MVPBaseActivity<SalesGoodContract.View, S
 
     @Override
     protected int getLayout() {
-        return R.layout.act_ops_good;
+        return R.layout.act_sales_good;
     }
 
 
