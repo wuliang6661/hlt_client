@@ -7,6 +7,7 @@ import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.entity.UserBo;
 import com.wul.hlt_client.entity.request.BaseRequest;
+import com.wul.hlt_client.entity.request.ChildFlowBO;
 import com.wul.hlt_client.entity.request.LoginBo;
 import com.wul.hlt_client.entity.request.PageBO;
 import com.wul.hlt_client.entity.request.XianshiBO;
@@ -56,6 +57,17 @@ public class HttpServiceIml {
         pageBO.token = MyApplication.token;
         return getService().getCategorys(pageBO).compose(RxResultHelper.<List<ClassifyBO>>httpRusult());
     }
+
+    /**
+     * 根据商品类型id查询商品子类型
+     */
+    public static Observable<List<ClassifyBO>> getChildCategorys(int cateId) {
+        ChildFlowBO childFlowBO = new ChildFlowBO();
+        childFlowBO.token = MyApplication.token;
+        childFlowBO.categoryId = cateId;
+        return getService().getChildCategorys(childFlowBO).compose(RxResultHelper.httpRusult());
+    }
+
 
     /**
      * 获取轮播广告

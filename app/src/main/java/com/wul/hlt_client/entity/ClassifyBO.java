@@ -16,12 +16,21 @@ public class ClassifyBO {
      * updateDate : 1543170668000
      */
 
+
+
     private int active;
     private String categoryName;
     private long createDate;
     private int id;
     private String image;
     private long updateDate;
+    /**
+     * categoryId : 1
+     * subCategoryName : 特菜
+     */
+
+    private int categoryId;
+    private String subCategoryName;
 
     public int getActive() {
         return active;
@@ -69,5 +78,21 @@ public class ClassifyBO {
 
     public void setUpdateDate(long updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getSubCategoryName() {
+        return subCategoryName;
+    }
+
+    public void setSubCategoryName(String subCategoryName) {
+        this.subCategoryName = subCategoryName;
     }
 }

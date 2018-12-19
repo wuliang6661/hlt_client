@@ -7,6 +7,7 @@ import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.entity.UserBo;
 import com.wul.hlt_client.entity.request.BaseRequest;
+import com.wul.hlt_client.entity.request.ChildFlowBO;
 import com.wul.hlt_client.entity.request.LoginBo;
 import com.wul.hlt_client.entity.request.PageBO;
 import com.wul.hlt_client.entity.request.RegisterBO;
@@ -50,6 +51,12 @@ public interface HttpService {
      */
     @POST("/hct_webservice/app/address/home/getAllProductCategoryList")
     Observable<BaseResult<List<ClassifyBO>>> getCategorys(@Body PageBO body);
+
+    /**
+     * 根据商品类型id查询商品子类型
+     */
+    @POST("/hct_webservice/app/address/home/getAllProductSubCategorysByCategoryId")
+    Observable<BaseResult<List<ClassifyBO>>> getChildCategorys(@Body ChildFlowBO childFlowBO);
 
     /**
      * 获取轮播广告

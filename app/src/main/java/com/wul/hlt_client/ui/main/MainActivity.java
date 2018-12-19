@@ -15,6 +15,7 @@ import android.view.View;
 
 import com.wul.hlt_client.R;
 import com.wul.hlt_client.base.BaseActivity;
+import com.wul.hlt_client.ui.classify.ClassifyFragment;
 import com.wul.hlt_client.ui.main.home.HomeFragment;
 import com.wul.hlt_client.util.AppManager;
 import com.xyz.tabitem.BottmTabItem;
@@ -38,8 +39,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     BottmTabItem main4;
 
     HomeFragment fragment1;    //学习
-//    ClassLibraayFragment fragment2;   //课程库
-//    DiscoverFragment fragment3;     //发现
+    ClassifyFragment fragment2;
 
     private BottmTabItem[] buttms;
 
@@ -54,6 +54,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         buttms = new BottmTabItem[]{main1, main2, main3, main4};
         fragment1 = new HomeFragment();
+        fragment2 = new ClassifyFragment();
 //        fragment2 = new ClassLibraayFragment();
 //        fragment3 = new DiscoverFragment();
         goToFragment(fragment1);
@@ -73,7 +74,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 setButtom(0);
                 break;
             case R.id.main2:
-//                goToFragment(fragment2);
+                goToFragment(fragment2);
                 setButtom(1);
                 break;
             case R.id.main3:
