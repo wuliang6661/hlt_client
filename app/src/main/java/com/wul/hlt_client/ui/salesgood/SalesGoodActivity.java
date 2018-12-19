@@ -1,10 +1,12 @@
-package com.wul.hlt_client.ui.opsgood;
+package com.wul.hlt_client.ui.salesgood;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wul.hlt_client.R;
@@ -20,45 +22,43 @@ import butterknife.BindView;
 
 /**
  * MVPPlugin
- * 常用清单列表
+ * 邮箱 784787081@qq.com
  */
 
-public class OpsGoodActivity extends MVPBaseActivity<OpsGoodContract.View, OpsGoodPresenter>
-        implements OpsGoodContract.View {
+public class SalesGoodActivity extends MVPBaseActivity<SalesGoodContract.View, SalesGoodPresenter>
+        implements SalesGoodContract.View {
 
-    @BindView(R.id.back)
-    ImageView back;
-    @BindView(R.id.title_text)
-    TextView titleText;
-    @BindView(R.id.gonggao_text)
-    TextView gonggaoText;
-    @BindView(R.id.recycle)
-    RecyclerView recycle;
     @BindView(R.id.shop_car_img)
     ImageView shopCarImg;
     @BindView(R.id.shop_car_price)
     TextView shopCarPrice;
     @BindView(R.id.shop_car_button)
     TextView shopCarButton;
+    @BindView(R.id.shop_car_layout)
+    RelativeLayout shopCarLayout;
+    @BindView(R.id.gonggao_text)
+    TextView gonggaoText;
+    @BindView(R.id.recycle)
+    RecyclerView recycle;
 
     @Override
     protected int getLayout() {
-        return R.layout.act_ops_good;
+        return R.layout.act_sales_good;
     }
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitleText("限时促销专场");
         goBack();
-        setTitleText("常用清单列表");
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recycle.setLayoutManager(manager);
 
-        mPresenter.getChangyongList();
         mPresenter.getCityGongGao();
+        mPresenter.getXianshiList();
     }
 
     @Override
@@ -72,17 +72,17 @@ public class OpsGoodActivity extends MVPBaseActivity<OpsGoodContract.View, OpsGo
     }
 
     @Override
-    public void getOpsShop(List<ShopBO> list) {
-        ShopAdapter adapter = new ShopAdapter(this, list);
-        recycle.setAdapter(adapter);
-    }
-
-    @Override
     public void getCityGongGao(List<CityGongGao> cityGongGaos) {
         StringBuilder buffer = new StringBuilder();
         for (CityGongGao cityGongGao : cityGongGaos) {
             buffer.append(cityGongGao.getContent()).append("                      ");
         }
         gonggaoText.setText(buffer.toString());
+    }
+
+    @Override
+    public void getXianshiList(List<ShopBO> shopBOS) {
+        ShopAdapter adapter = new ShopAdapter(this, shopBOS);
+        recycle.setAdapter(adapter);
     }
 }

@@ -11,7 +11,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,6 +23,7 @@ import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.mvp.MVPBaseFragment;
 import com.wul.hlt_client.ui.opsgood.OpsGoodActivity;
+import com.wul.hlt_client.ui.salesgood.SalesGoodActivity;
 import com.wul.hlt_client.widget.lgrecycleadapter.LGRecycleViewAdapter;
 import com.wul.hlt_client.widget.lgrecycleadapter.LGViewHolder;
 
@@ -43,7 +43,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
 
 
     @BindView(R.id.edit_select)
-    EditText editSelect;
+    TextView editSelect;
     @BindView(R.id.classify_recycle)
     RecyclerView classifyRecycle;
     @BindView(R.id.down_time)
@@ -106,6 +106,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         changyongRecycle.setNestedScrollingEnabled(false);
         changyongMore.setOnClickListener(this);
         xianshiMore.setOnClickListener(this);
+        editSelect.setOnClickListener(this);
     }
 
 
@@ -244,7 +245,10 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
             case R.id.changyong_more:   //常用列表
                 gotoActivity(OpsGoodActivity.class, false);
                 break;
-            case R.id.xianshi_more:
+            case R.id.xianshi_more:    //进入限时抢购
+                gotoActivity(SalesGoodActivity.class, false);
+                break;
+            case R.id.edit_select:    //进入搜索页面
 
                 break;
         }

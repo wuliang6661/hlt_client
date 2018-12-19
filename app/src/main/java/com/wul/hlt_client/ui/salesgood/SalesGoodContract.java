@@ -1,9 +1,12 @@
-package com.wul.hlt_client.ui.opsgood;
+package com.wul.hlt_client.ui.salesgood;
+
+import android.content.Context;
 
 import com.wul.hlt_client.entity.CityGongGao;
 import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.mvp.BasePresenter;
 import com.wul.hlt_client.mvp.BaseRequestView;
+import com.wul.hlt_client.mvp.BaseView;
 
 import java.util.List;
 
@@ -12,12 +15,12 @@ import java.util.List;
  * 邮箱 784787081@qq.com
  */
 
-public class OpsGoodContract {
+public class SalesGoodContract {
     interface View extends BaseRequestView {
 
-        void getOpsShop(List<ShopBO> list);
+        void getCityGongGao(List<CityGongGao> list);
 
-        void getCityGongGao(List<CityGongGao> cityGongGaos);
+        void getXianshiList(List<ShopBO> shopBOS);
     }
 
     interface Presenter extends BasePresenter<View> {

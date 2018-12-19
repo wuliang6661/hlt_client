@@ -34,8 +34,13 @@ public class ShopBO {
     private String subCategoryName;
     private int surplusStock;
     private int id;
-    private double price1;
+    private String price1;
+    private String price2;
     private int productType;
+    private String promotionPrice1;
+    private String promotionPrice2;
+    private int maxBuyNum;
+
 
     public String getImage() {
         return image;
@@ -125,11 +130,11 @@ public class ShopBO {
         this.id = id;
     }
 
-    public double getPrice1() {
+    public String getPrice1() {
         return price1;
     }
 
-    public void setPrice1(double price1) {
+    public void setPrice1(String price1) {
         this.price1 = price1;
     }
 
@@ -140,4 +145,37 @@ public class ShopBO {
     public void setProductType(int productType) {
         this.productType = productType;
     }
+
+    public String getPrice2() {
+        return price2;
+    }
+
+    public void setPrice2(String price2) {
+        this.price2 = price2;
+    }
+
+    public String getPromotionPrice1() {
+        return promotionPrice1;
+    }
+
+    public void setPromotionPrice1(String promotionPrice1) {
+        this.promotionPrice1 = promotionPrice1;
+    }
+
+    public String getPromotionPrice2() {
+        return promotionPrice2;
+    }
+
+    public void setPromotionPrice2(String promotionPrice2) {
+        this.promotionPrice2 = promotionPrice2;
+    }
+
+    public int getMaxBuyNum() {
+        return maxBuyNum;
+    }
+
+    public void setMaxBuyNum(int maxBuyNum) {
+        this.maxBuyNum = maxBuyNum;
+    }
+
 }

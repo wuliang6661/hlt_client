@@ -1,10 +1,12 @@
-package com.wul.hlt_client.ui.opsgood;
+package com.wul.hlt_client.ui.salesgood;
+
+import android.content.Context;
 
 import com.wul.hlt_client.api.HttpResultSubscriber;
 import com.wul.hlt_client.api.HttpServiceIml;
 import com.wul.hlt_client.entity.CityGongGao;
 import com.wul.hlt_client.entity.ShopBO;
-import com.wul.hlt_client.entity.request.PageBO;
+import com.wul.hlt_client.entity.request.XianshiBO;
 import com.wul.hlt_client.mvp.BasePresenterImpl;
 
 import java.util.List;
@@ -14,19 +16,16 @@ import java.util.List;
  * 邮箱 784787081@qq.com
  */
 
-public class OpsGoodPresenter extends BasePresenterImpl<OpsGoodContract.View>
-        implements OpsGoodContract.Presenter {
+public class SalesGoodPresenter extends BasePresenterImpl<SalesGoodContract.View>
+        implements SalesGoodContract.Presenter {
 
 
-    public void getChangyongList() {
-        PageBO pageBO = new PageBO();
-        pageBO.pageSize = 1000;
-        pageBO.pageNum = 1;
-        HttpServiceIml.getComstonList(pageBO).subscribe(new HttpResultSubscriber<List<ShopBO>>(mView.getContext()) {
+    public void getCityGongGao() {
+        HttpServiceIml.getCityGongGao().subscribe(new HttpResultSubscriber<List<CityGongGao>>() {
             @Override
-            public void onSuccess(List<ShopBO> shopBOS) {
+            public void onSuccess(List<CityGongGao> s) {
                 if (mView != null) {
-                    mView.getOpsShop(shopBOS);
+                    mView.getCityGongGao(s);
                 }
             }
 
@@ -40,12 +39,15 @@ public class OpsGoodPresenter extends BasePresenterImpl<OpsGoodContract.View>
     }
 
 
-    public void getCityGongGao() {
-        HttpServiceIml.getCityGongGao().subscribe(new HttpResultSubscriber<List<CityGongGao>>() {
+    public void getXianshiList() {
+        XianshiBO xianshiBO = new XianshiBO();
+        xianshiBO.pageNum = 1;
+        xianshiBO.pageSize = 1000;
+        HttpServiceIml.getXianshiList(xianshiBO).subscribe(new HttpResultSubscriber<List<ShopBO>>(mView.getContext()) {
             @Override
-            public void onSuccess(List<CityGongGao> s) {
+            public void onSuccess(List<ShopBO> list) {
                 if (mView != null) {
-                    mView.getCityGongGao(s);
+                    mView.getXianshiList(list);
                 }
             }
 

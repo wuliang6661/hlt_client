@@ -2,11 +2,9 @@ package com.wul.hlt_client.api;
 
 import com.wul.hlt_client.entity.BannerBo;
 import com.wul.hlt_client.entity.BaseResult;
+import com.wul.hlt_client.entity.CityGongGao;
 import com.wul.hlt_client.entity.ClassifyBO;
-import com.wul.hlt_client.entity.HistoryOrderBo;
-import com.wul.hlt_client.entity.OrderDetails;
 import com.wul.hlt_client.entity.ShopBO;
-import com.wul.hlt_client.entity.UnOrderBo;
 import com.wul.hlt_client.entity.UserBo;
 import com.wul.hlt_client.entity.request.BaseRequest;
 import com.wul.hlt_client.entity.request.LoginBo;
@@ -16,7 +14,6 @@ import com.wul.hlt_client.entity.request.XianshiBO;
 
 import java.util.List;
 
-import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 import rx.Observable;
@@ -72,5 +69,9 @@ public interface HttpService {
     @POST("/hct_webservice/app/address/home/getSpikeProductAndPromotionProductList")
     Observable<BaseResult<List<ShopBO>>> getSpikeAndProductList(@Body XianshiBO body);
 
-
+    /**
+     * 获取城市公告
+     */
+    @POST("/hct_webservice/app/address/home/getAnnouncementByAddressCityId")
+    Observable<BaseResult<List<CityGongGao>>> getCityGongGao(@Body BaseRequest body);
 }
