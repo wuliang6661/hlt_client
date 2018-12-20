@@ -81,4 +81,16 @@ public interface HttpService {
      */
     @POST("/hct_webservice/app/address/home/getAnnouncementByAddressCityId")
     Observable<BaseResult<List<CityGongGao>>> getCityGongGao(@Body BaseRequest body);
+
+    /**
+     * 获取城市列表
+     */
+    @POST("/hct_webservice/app/address/getAllCityList")
+    Observable<BaseResult<String>> getCityList();
+
+    /**
+     * 查询城市所属区域
+     */
+    @POST("/hct_webservice/app/address/getAllRegionListByCityId")
+    Observable<BaseResult<String>> getQuyuByCity();
 }
