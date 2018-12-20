@@ -2,6 +2,7 @@ package com.wul.hlt_client.api;
 
 import com.wul.hlt_client.entity.BannerBo;
 import com.wul.hlt_client.entity.BaseResult;
+import com.wul.hlt_client.entity.CityBO;
 import com.wul.hlt_client.entity.CityGongGao;
 import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.ShopBO;
@@ -86,7 +87,7 @@ public interface HttpService {
      * 获取城市列表
      */
     @POST("/hct_webservice/app/address/getAllCityList")
-    Observable<BaseResult<String>> getCityList();
+    Observable<BaseResult<List<CityBO>>> getCityList();
 
     /**
      * 查询城市所属区域
