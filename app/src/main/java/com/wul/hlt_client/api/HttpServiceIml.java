@@ -4,6 +4,7 @@ import com.wul.hlt_client.base.MyApplication;
 import com.wul.hlt_client.entity.BannerBo;
 import com.wul.hlt_client.entity.CityBO;
 import com.wul.hlt_client.entity.CityGongGao;
+import com.wul.hlt_client.entity.CityRegionBO;
 import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.entity.UserBo;
@@ -11,6 +12,8 @@ import com.wul.hlt_client.entity.request.BaseRequest;
 import com.wul.hlt_client.entity.request.ChildFlowBO;
 import com.wul.hlt_client.entity.request.LoginBo;
 import com.wul.hlt_client.entity.request.PageBO;
+import com.wul.hlt_client.entity.request.RegionBO;
+import com.wul.hlt_client.entity.request.RegisterBO;
 import com.wul.hlt_client.entity.request.XianshiBO;
 import com.wul.hlt_client.util.rx.RxResultHelper;
 
@@ -50,6 +53,14 @@ public class HttpServiceIml {
         loginBo.contactPhone = phone;
         return getService().login(loginBo).compose(RxResultHelper.<UserBo>httpRusult());
     }
+
+    /**
+     * 注册接口
+     */
+    public static Observable<String> register(RegisterBO registerBO) {
+        return getService().register(registerBO).compose(RxResultHelper.httpRusult());
+    }
+
 
     /**
      * 首页获取全部商品类型
@@ -109,6 +120,17 @@ public class HttpServiceIml {
      */
     public static Observable<List<CityBO>> getAllCity() {
         return getService().getCityList().compose(RxResultHelper.httpRusult());
+    }
+
+
+    /**
+     * 根据城市ID获取区域
+     */
+    public static Observable<List<CityRegionBO>> getRegionByCity(int cityId) {
+        RegionBO regionBO = new RegionBO();
+        regionBO.token = MyApplication.token;
+        regionBO.cityId = cityId;
+        return getService().getQuyuByCity(regionBO).compose(RxResultHelper.httpRusult());
     }
 
 }

@@ -4,6 +4,7 @@ import com.wul.hlt_client.entity.BannerBo;
 import com.wul.hlt_client.entity.BaseResult;
 import com.wul.hlt_client.entity.CityBO;
 import com.wul.hlt_client.entity.CityGongGao;
+import com.wul.hlt_client.entity.CityRegionBO;
 import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.entity.UserBo;
@@ -11,6 +12,7 @@ import com.wul.hlt_client.entity.request.BaseRequest;
 import com.wul.hlt_client.entity.request.ChildFlowBO;
 import com.wul.hlt_client.entity.request.LoginBo;
 import com.wul.hlt_client.entity.request.PageBO;
+import com.wul.hlt_client.entity.request.RegionBO;
 import com.wul.hlt_client.entity.request.RegisterBO;
 import com.wul.hlt_client.entity.request.XianshiBO;
 
@@ -93,5 +95,5 @@ public interface HttpService {
      * 查询城市所属区域
      */
     @POST("/hct_webservice/app/address/getAllRegionListByCityId")
-    Observable<BaseResult<String>> getQuyuByCity();
+    Observable<BaseResult<List<CityRegionBO>>> getQuyuByCity(@Body RegionBO regionBO);
 }

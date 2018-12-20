@@ -1,6 +1,7 @@
 package com.wul.hlt_client.ui.register;
 
 import com.wul.hlt_client.entity.CityBO;
+import com.wul.hlt_client.entity.CityRegionBO;
 import com.wul.hlt_client.mvp.BasePresenter;
 import com.wul.hlt_client.mvp.BaseRequestView;
 
@@ -15,6 +16,8 @@ public class RegisterContract {
     interface View extends BaseRequestView {
 
         void getCityList(List<CityBO> cityBOS);
+
+        void getRegionByCity(List<CityRegionBO> regionBOS);
     }
 
     interface Presenter extends BasePresenter<View> {
