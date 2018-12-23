@@ -5,6 +5,7 @@ import com.wul.hlt_client.api.HttpServiceIml;
 import com.wul.hlt_client.entity.BannerBo;
 import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.ShopBO;
+import com.wul.hlt_client.entity.XianShiBO;
 import com.wul.hlt_client.entity.request.PageBO;
 import com.wul.hlt_client.entity.request.XianshiBO;
 import com.wul.hlt_client.mvp.BasePresenterImpl;
@@ -86,9 +87,9 @@ public class HomePresenter extends BasePresenterImpl<HomeContract.View>
         XianshiBO xianshiBO = new XianshiBO();
         xianshiBO.pageNum = 1;
         xianshiBO.pageSize = 4;
-        HttpServiceIml.getXianshiList(xianshiBO).subscribe(new HttpResultSubscriber<List<ShopBO>>() {
+        HttpServiceIml.getXianshiList(xianshiBO).subscribe(new HttpResultSubscriber<XianShiBO>() {
             @Override
-            public void onSuccess(List<ShopBO> list) {
+            public void onSuccess(XianShiBO list) {
                 if (mView != null) {
                     mView.getXianshiList(list);
                 }

@@ -1,6 +1,7 @@
 package com.wul.hlt_client.ui.opsgood;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -8,10 +9,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wul.hlt_client.R;
+import com.wul.hlt_client.base.MyApplication;
 import com.wul.hlt_client.entity.CityGongGao;
 import com.wul.hlt_client.entity.ShopBO;
+import com.wul.hlt_client.entity.event.ShopCarRefresh;
 import com.wul.hlt_client.mvp.MVPBaseActivity;
 import com.wul.hlt_client.ui.ShopAdapter;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -52,6 +59,7 @@ public class OpsGoodActivity extends MVPBaseActivity<OpsGoodContract.View, OpsGo
         super.onCreate(savedInstanceState);
         goBack();
         setTitleText("常用清单列表");
+        EventBus.getDefault().register(this);
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -59,7 +67,34 @@ public class OpsGoodActivity extends MVPBaseActivity<OpsGoodContract.View, OpsGo
 
         mPresenter.getChangyongList();
         mPresenter.getCityGongGao();
+        initShopCar();
     }
+
+    /**
+     * 初始化购物车
+     */
+    private void initShopCar() {
+        if (MyApplication.shopCarBO == null ||
+                MyApplication.shopCarBO.getShoppingCartList() == null ||
+                MyApplication.shopCarBO.getShoppingCartList().size() == 0) {
+            shopCarImg.setImageResource(R.drawable.shop_car_notice);
+            shopCarPrice.setText("购物车是空的！");
+            shopCarPrice.setTextColor(Color.parseColor("#999999"));
+            shopCarButton.setEnabled(false);
+        } else {
+            shopCarImg.setImageResource(R.drawable.shop_car_img_blue);
+            shopCarPrice.setText("¥ " + MyApplication.shopCarBO.getAmount());
+            shopCarPrice.setTextColor(Color.parseColor("#F5142F"));
+            shopCarButton.setEnabled(true);
+        }
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(ShopCarRefresh refresh) {
+        initShopCar();
+    }
+
 
     @Override
     public void onRequestError(String msg) {
@@ -72,8 +107,14 @@ public class OpsGoodActivity extends MVPBaseActivity<OpsGoodContract.View, OpsGo
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
     public void getOpsShop(List<ShopBO> list) {
-        ShopAdapter adapter = new ShopAdapter(this, list);
+        ShopAdapter adapter = new ShopAdapter(this, list, MyApplication.shopCarBO);
         recycle.setAdapter(adapter);
     }
 

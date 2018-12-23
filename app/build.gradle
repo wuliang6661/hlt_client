@@ -86,4 +86,5 @@ dependencies {
     implementation 'com.github.donkingliang:CustomBanner:1.1.0'
     implementation 'com.hedgehog.ratingbar:app:1.1.2'
     compile 'com.makeramen:roundedimageview:2.3.0'
+    compile 'org.greenrobot:eventbus:3.0.0'
 }

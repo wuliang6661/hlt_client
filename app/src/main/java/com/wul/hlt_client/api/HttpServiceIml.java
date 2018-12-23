@@ -7,13 +7,16 @@ import com.wul.hlt_client.entity.CityGongGao;
 import com.wul.hlt_client.entity.CityRegionBO;
 import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.ShopBO;
+import com.wul.hlt_client.entity.ShopCarBO;
 import com.wul.hlt_client.entity.UserBo;
+import com.wul.hlt_client.entity.XianShiBO;
 import com.wul.hlt_client.entity.request.BaseRequest;
 import com.wul.hlt_client.entity.request.ChildFlowBO;
 import com.wul.hlt_client.entity.request.LoginBo;
 import com.wul.hlt_client.entity.request.PageBO;
 import com.wul.hlt_client.entity.request.RegionBO;
 import com.wul.hlt_client.entity.request.RegisterBO;
+import com.wul.hlt_client.entity.request.ShopCarSetBO;
 import com.wul.hlt_client.entity.request.XianshiBO;
 import com.wul.hlt_client.util.rx.RxResultHelper;
 
@@ -51,7 +54,7 @@ public class HttpServiceIml {
         loginBo.number = number;
         loginBo.password = password;
         loginBo.contactPhone = phone;
-        return getService().login(loginBo).compose(RxResultHelper.<UserBo>httpRusult());
+        return getService().login(loginBo).compose(RxResultHelper.httpRusult());
     }
 
     /**
@@ -67,7 +70,7 @@ public class HttpServiceIml {
      */
     public static Observable<List<ClassifyBO>> getCategorys(PageBO pageBO) {
         pageBO.token = MyApplication.token;
-        return getService().getCategorys(pageBO).compose(RxResultHelper.<List<ClassifyBO>>httpRusult());
+        return getService().getCategorys(pageBO).compose(RxResultHelper.httpRusult());
     }
 
     /**
@@ -87,7 +90,7 @@ public class HttpServiceIml {
     public static Observable<List<BannerBo>> getBanner() {
         BaseRequest request = new BaseRequest();
         request.token = MyApplication.token;
-        return getService().getBanner(request).compose(RxResultHelper.<List<BannerBo>>httpRusult());
+        return getService().getBanner(request).compose(RxResultHelper.httpRusult());
     }
 
     /**
@@ -95,15 +98,15 @@ public class HttpServiceIml {
      */
     public static Observable<List<ShopBO>> getComstonList(PageBO pageBO) {
         pageBO.token = MyApplication.token;
-        return getService().getComminPurchase(pageBO).compose(RxResultHelper.<List<ShopBO>>httpRusult());
+        return getService().getComminPurchase(pageBO).compose(RxResultHelper.httpRusult());
     }
 
     /**
      * 获取限时清单
      */
-    public static Observable<List<ShopBO>> getXianshiList(XianshiBO pageBO) {
+    public static Observable<XianShiBO> getXianshiList(XianshiBO pageBO) {
         pageBO.token = MyApplication.token;
-        return getService().getSpikeAndProductList(pageBO).compose(RxResultHelper.<List<ShopBO>>httpRusult());
+        return getService().getSpikeAndProductList(pageBO).compose(RxResultHelper.httpRusult());
     }
 
     /**
@@ -131,6 +134,37 @@ public class HttpServiceIml {
         regionBO.token = MyApplication.token;
         regionBO.cityId = cityId;
         return getService().getQuyuByCity(regionBO).compose(RxResultHelper.httpRusult());
+    }
+
+
+    /**
+     * 获取购物车商品
+     */
+    public static Observable<ShopCarBO> getShopCarList() {
+        BaseRequest request = new BaseRequest();
+        request.token = MyApplication.token;
+        return getService().getShopCarList(request).compose(RxResultHelper.httpRusult());
+    }
+
+
+    /**
+     * 添加商品到购物车
+     */
+    public static Observable<String> addShopCar(int shopId) {
+        ShopCarSetBO setBO = new ShopCarSetBO();
+        setBO.productId = shopId;
+        setBO.token = MyApplication.token;
+        return getService().addShopCarNum(setBO).compose(RxResultHelper.httpRusult());
+    }
+
+    /**
+     * 减伤购物车商品数量
+     */
+    public static Observable<String> removeShop(int shopId) {
+        ShopCarSetBO setBO = new ShopCarSetBO();
+        setBO.productId = shopId;
+        setBO.token = MyApplication.token;
+        return getService().reduceShopCarNum(setBO).compose(RxResultHelper.httpRusult());
     }
 
 }

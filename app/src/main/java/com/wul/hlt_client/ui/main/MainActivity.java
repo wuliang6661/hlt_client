@@ -13,8 +13,13 @@ import android.support.v4.content.ContextCompat;
 import android.view.KeyEvent;
 import android.view.View;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.wul.hlt_client.R;
+import com.wul.hlt_client.api.HttpResultSubscriber;
+import com.wul.hlt_client.api.HttpServiceIml;
 import com.wul.hlt_client.base.BaseActivity;
+import com.wul.hlt_client.base.MyApplication;
+import com.wul.hlt_client.entity.ShopCarBO;
 import com.wul.hlt_client.ui.classify.ClassifyFragment;
 import com.wul.hlt_client.ui.main.home.HomeFragment;
 import com.wul.hlt_client.ui.main.shopcar.ShopCarFragment;
@@ -64,6 +69,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         main3.setOnClickListener(this);
         main4.setOnClickListener(this);
 //        getPermission();
+        getShopCarList();
     }
 
 
@@ -119,6 +125,24 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 //        if (requestCode == 1) {   //授权成功
 //        }
     }
+
+    /**
+     * 查询购物车商品
+     */
+    private void getShopCarList() {
+        HttpServiceIml.getShopCarList().subscribe(new HttpResultSubscriber<ShopCarBO>() {
+            @Override
+            public void onSuccess(ShopCarBO s) {
+                MyApplication.shopCarBO = s;
+            }
+
+            @Override
+            public void onFiled(String message) {
+                ToastUtils.showShort(message);
+            }
+        });
+    }
+
 
     /**
      * 用户拒绝权限，重新申请

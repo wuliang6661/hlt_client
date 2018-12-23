@@ -59,7 +59,9 @@ public class RegisterPresenter extends BasePresenterImpl<RegisterContract.View>
         HttpServiceIml.register(registerBO).subscribe(new HttpResultSubscriber<String>() {
             @Override
             public void onSuccess(String s) {
-
+                if (mView != null) {
+                    mView.registerSuress();
+                }
             }
 
             @Override

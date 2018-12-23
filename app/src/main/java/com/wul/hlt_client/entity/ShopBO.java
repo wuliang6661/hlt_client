@@ -40,6 +40,19 @@ public class ShopBO {
     private String promotionPrice1;
     private String promotionPrice2;
     private int maxBuyNum;
+    /**
+     * quantity : 1
+     * productId : 920
+     * money : 4.2
+     * httpUrl : http://47.98.53.141:8099/hct_webservice/static/images/product/YuMiZha_CQ.jpg
+     * price2 : 5.0
+     * promotionPrice2 : 4.2
+     */
+
+    private int quantity;
+    private int productId;
+    private double money;
+    private String httpUrl;
 
 
     public String getImage() {
@@ -178,4 +191,35 @@ public class ShopBO {
         this.maxBuyNum = maxBuyNum;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    public double getMoney() {
+        return money;
+    }
+
+    public void setMoney(double money) {
+        this.money = money;
+    }
+
+    public String getHttpUrl() {
+        return httpUrl;
+    }
+
+    public void setHttpUrl(String httpUrl) {
+        this.httpUrl = httpUrl;
+    }
 }

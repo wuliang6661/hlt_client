@@ -7,13 +7,16 @@ import com.wul.hlt_client.entity.CityGongGao;
 import com.wul.hlt_client.entity.CityRegionBO;
 import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.ShopBO;
+import com.wul.hlt_client.entity.ShopCarBO;
 import com.wul.hlt_client.entity.UserBo;
+import com.wul.hlt_client.entity.XianShiBO;
 import com.wul.hlt_client.entity.request.BaseRequest;
 import com.wul.hlt_client.entity.request.ChildFlowBO;
 import com.wul.hlt_client.entity.request.LoginBo;
 import com.wul.hlt_client.entity.request.PageBO;
 import com.wul.hlt_client.entity.request.RegionBO;
 import com.wul.hlt_client.entity.request.RegisterBO;
+import com.wul.hlt_client.entity.request.ShopCarSetBO;
 import com.wul.hlt_client.entity.request.XianshiBO;
 
 import java.util.List;
@@ -77,7 +80,7 @@ public interface HttpService {
      * 限时抢购和促销商品列表
      */
     @POST("/hct_webservice/app/address/home/getSpikeProductAndPromotionProductList")
-    Observable<BaseResult<List<ShopBO>>> getSpikeAndProductList(@Body XianshiBO body);
+    Observable<BaseResult<XianShiBO>> getSpikeAndProductList(@Body XianshiBO body);
 
     /**
      * 获取城市公告
@@ -96,4 +99,24 @@ public interface HttpService {
      */
     @POST("/hct_webservice/app/address/getAllRegionListByCityId")
     Observable<BaseResult<List<CityRegionBO>>> getQuyuByCity(@Body RegionBO regionBO);
+
+    /**
+     * 获取购物车商品列表
+     */
+    @POST("/hct_webservice/app/address/shoppingCart/getShoppingCartList")
+    Observable<BaseResult<ShopCarBO>> getShopCarList(@Body BaseRequest body);
+
+    /**
+     * 增加购物车商品数量
+     */
+    @POST("/hct_webservice/app/address/shoppingCart/addProductQuantity")
+    Observable<BaseResult<String>> addShopCarNum(@Body ShopCarSetBO body);
+
+
+    /**
+     * 减少购物车商品数量
+     */
+    @POST("/hct_webservice/app/address/shoppingCart/reduceProductQuantity")
+    Observable<BaseResult<String>> reduceShopCarNum(@Body ShopCarSetBO body);
+
 }

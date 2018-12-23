@@ -18,6 +18,8 @@ public class RegisterContract {
         void getCityList(List<CityBO> cityBOS);
 
         void getRegionByCity(List<CityRegionBO> regionBOS);
+
+        void registerSuress();
     }
 
     interface Presenter extends BasePresenter<View> {

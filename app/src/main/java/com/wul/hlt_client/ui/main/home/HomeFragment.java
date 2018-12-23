@@ -1,8 +1,12 @@
 package com.wul.hlt_client.ui.main.home;
 
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -21,13 +25,16 @@ import com.wul.hlt_client.base.GlideApp;
 import com.wul.hlt_client.entity.BannerBo;
 import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.ShopBO;
+import com.wul.hlt_client.entity.XianShiBO;
 import com.wul.hlt_client.mvp.MVPBaseFragment;
+import com.wul.hlt_client.ui.DowmTimer;
 import com.wul.hlt_client.ui.opsgood.OpsGoodActivity;
 import com.wul.hlt_client.ui.salesgood.SalesGoodActivity;
 import com.wul.hlt_client.widget.lgrecycleadapter.LGRecycleViewAdapter;
 import com.wul.hlt_client.widget.lgrecycleadapter.LGViewHolder;
 
 import java.util.List;
+import java.util.Timer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,6 +69,11 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     Unbinder unbinder;
     @BindView(R.id.swipe)
     SwipeRefreshLayout swipe;
+    @BindView(R.id.down_time_text)
+    TextView downTimeText;
+
+    Timer timer;
+
 
     @Nullable
     @Override
@@ -137,12 +149,8 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         //设置轮播图的滚动速度
         mBanner.setScrollDuration(500);
         //设置轮播图的点击事件
-        mBanner.setOnPageClickListener(new CustomBanner.OnPageClickListener<String>() {
-            @Override
-            public void onPageClick(int position, String str) {
-                //position 轮播图的第几个项
-                //str 轮播图当前项对应的数据
-            }
+        mBanner.setOnPageClickListener((i, o) -> {
+
         });
     }
 
@@ -199,9 +207,9 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
      * 限时抢购
      */
     @Override
-    public void getXianshiList(List<ShopBO> list) {
+    public void getXianshiList(XianShiBO list) {
         swipe.setRefreshing(false);
-        LGRecycleViewAdapter<ShopBO> adapter = new LGRecycleViewAdapter<ShopBO>(list) {
+        LGRecycleViewAdapter<ShopBO> adapter = new LGRecycleViewAdapter<ShopBO>(list.getList()) {
             @Override
             public int getLayoutId(int viewType) {
                 return R.layout.item_xianshi_menu;
@@ -211,13 +219,44 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
             public void convert(LGViewHolder holder, ShopBO classifyBO, int position) {
                 holder.setImageUrl(getActivity(), R.id.item_img, classifyBO.getImage());
                 holder.setText(R.id.item_text, classifyBO.getProductName());
-                holder.getView(R.id.shop_price).setVisibility(View.GONE);
-                holder.setText(R.id.shop_old_price, "¥ " + classifyBO.getPrice1() + "元/" + classifyBO.getMeasureUnitName1());
+                TextView oldPrice = (TextView) holder.getView(R.id.shop_old_price);
+                oldPrice.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
+                oldPrice.setText("¥ " + classifyBO.getPrice1() + "元/" + classifyBO.getMeasureUnitName1());
+                holder.setText(R.id.shop_price, "¥" + classifyBO.getPromotionPrice1() + "元/" + classifyBO.getMeasureUnitName1());
             }
         };
         xianshiRecycle.setAdapter(adapter);
+        timer = new Timer();
+        timer.schedule(new DowmTimer(list.getStartTime(), list.getEndTime(), handler), 0, 1000);
     }
 
+    @SuppressLint("HandlerLeak")
+    Handler handler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            String time = (String) msg.obj;
+            switch (msg.what) {
+                case 0x11:
+                    downTimeText.setText("距离开始时间还有：");
+                    break;
+                case 0x22:
+                    downTimeText.setText("距离结束时间还有：");
+                    break;
+            }
+            downTime.setText(time);
+        }
+    };
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (timer != null) {
+            timer.cancel();
+        }
+    }
 
     @Override
     public void onRequestError(String msg) {

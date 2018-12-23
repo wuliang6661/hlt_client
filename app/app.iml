@@ -155,6 +155,7 @@
     <orderEntry type="library" name="com.contrarywind:Android-PickerView-3.2.6" level="project" />
     <orderEntry type="library" name="io.netty:netty-handler:4.1.0.Beta7@jar" level="project" />
     <orderEntry type="library" name="com.android.support:support-compat-28.0.0" level="project" />
+    <orderEntry type="library" name="org.greenrobot:eventbus:3.0.0@jar" level="project" />
     <orderEntry type="library" name="com.hedgehog.ratingbar:app-1.1.2" level="project" />
     <orderEntry type="library" name="com.jakewharton.rxbinding:rxbinding-0.4.0" level="project" />
     <orderEntry type="library" name="com.android.support:multidex-1.0.3" level="project" />

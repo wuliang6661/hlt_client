@@ -35,4 +35,8 @@
     <color name="holo_lighter_gray">#ffefefef</color>
     <!-- A really darker Holo shade of gray -->
     <color name="holo_darker_gray">#ffaaaaaa</color>
+
+
+    <color name="car_button">#64BD3A</color>
+
 </resources>

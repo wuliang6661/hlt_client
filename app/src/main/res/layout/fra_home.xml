@@ -109,6 +109,7 @@
 
 
                     <TextView
+                        android:id="@+id/down_time_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="距离开始还有："

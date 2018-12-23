@@ -15,7 +15,6 @@ import com.wul.hlt_client.entity.UserBo;
 import com.wul.hlt_client.mvp.MVPBaseActivity;
 import com.wul.hlt_client.ui.main.MainActivity;
 import com.wul.hlt_client.ui.register.RegisterActivity;
-import com.wul.hlt_client.util.MD5;
 
 import butterknife.BindView;
 
@@ -77,7 +76,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
         switch (view.getId()) {
             case R.id.btn_login:
                 if (isLogin()) {
-                    mPresenter.login(strPhone, strShop, MD5.strToMd5Low32(MD5.strToMd5Low32(strPwd) + "bby"));
+                    mPresenter.login(strPhone, strShop, strPwd);
                 }
                 break;
             case R.id.tx_register:

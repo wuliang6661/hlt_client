@@ -1,7 +1,10 @@
 package com.wul.hlt_client.ui.classify;
 
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,14 +16,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wul.hlt_client.R;
+import com.wul.hlt_client.base.MyApplication;
 import com.wul.hlt_client.entity.CityGongGao;
 import com.wul.hlt_client.entity.ClassifyBO;
-import com.wul.hlt_client.entity.ShopBO;
+import com.wul.hlt_client.entity.XianShiBO;
 import com.wul.hlt_client.mvp.MVPBaseFragment;
+import com.wul.hlt_client.ui.DowmTimer;
 import com.wul.hlt_client.ui.ShopAdapter;
 import com.wul.hlt_client.ui.opsgood.OpsGoodActivity;
 
 import java.util.List;
+import java.util.Timer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,6 +63,8 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
     private int flowSelectPosition = 0;
 
     private List<ClassifyBO> classifyBOS;
+
+    Timer timer;
 
     @Nullable
     @Override
@@ -98,6 +106,8 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
         recycle.setLayoutManager(manager2);
         changyongLayout.setOnClickListener(this);
     }
+
+
 
     @Override
     public void onClick(View view) {
@@ -157,8 +167,39 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
     }
 
     @Override
-    public void getXianshiList(List<ShopBO> shopBOS) {
-        ShopAdapter adapter = new ShopAdapter(getActivity(), shopBOS);
+    public void getXianshiList(XianShiBO shopBOS) {
+        ShopAdapter adapter = new ShopAdapter(getActivity(), shopBOS.getList(), MyApplication.shopCarBO);
         recycle.setAdapter(adapter);
+        timer = new Timer();
+        timer.schedule(new DowmTimer(shopBOS.getStartTime(), shopBOS.getEndTime(), handler), 0, 1000);
     }
+
+    @SuppressLint("HandlerLeak")
+    Handler handler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            String time = (String) msg.obj;
+            switch (msg.what) {
+                case 0x11:
+                    downTimeText.setText("距离开始时间还有：");
+                    break;
+                case 0x22:
+                    downTimeText.setText("距离结束时间还有：");
+                    break;
+            }
+            downTime.setText(time);
+        }
+    };
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (timer != null) {
+            timer.cancel();
+        }
+    }
+
+
 }

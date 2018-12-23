@@ -1,9 +1,8 @@
 package com.wul.hlt_client.ui.main.shopcar;
 
-import android.content.Context;
-
+import com.wul.hlt_client.entity.ShopCarBO;
 import com.wul.hlt_client.mvp.BasePresenter;
-import com.wul.hlt_client.mvp.BaseView;
+import com.wul.hlt_client.mvp.BaseRequestView;
 
 /**
  * MVPPlugin
@@ -11,7 +10,10 @@ import com.wul.hlt_client.mvp.BaseView;
  */
 
 public class ShopCarContract {
-    interface View extends BaseView {
+    interface View extends BaseRequestView {
+
+        void getShopCar(ShopCarBO carBO);
+
         
     }
 

@@ -6,6 +6,7 @@ import com.wul.hlt_client.api.HttpResultSubscriber;
 import com.wul.hlt_client.api.HttpServiceIml;
 import com.wul.hlt_client.entity.CityGongGao;
 import com.wul.hlt_client.entity.ShopBO;
+import com.wul.hlt_client.entity.XianShiBO;
 import com.wul.hlt_client.entity.request.XianshiBO;
 import com.wul.hlt_client.mvp.BasePresenterImpl;
 
@@ -43,9 +44,9 @@ public class SalesGoodPresenter extends BasePresenterImpl<SalesGoodContract.View
         XianshiBO xianshiBO = new XianshiBO();
         xianshiBO.pageNum = 1;
         xianshiBO.pageSize = 1000;
-        HttpServiceIml.getXianshiList(xianshiBO).subscribe(new HttpResultSubscriber<List<ShopBO>>(mView.getContext()) {
+        HttpServiceIml.getXianshiList(xianshiBO).subscribe(new HttpResultSubscriber<XianShiBO>(mView.getContext()) {
             @Override
-            public void onSuccess(List<ShopBO> list) {
+            public void onSuccess(XianShiBO list) {
                 if (mView != null) {
                     mView.getXianshiList(list);
                 }

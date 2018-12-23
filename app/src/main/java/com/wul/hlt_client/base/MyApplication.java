@@ -7,6 +7,7 @@ import android.support.multidex.MultiDex;
 
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.Utils;
+import com.wul.hlt_client.entity.ShopCarBO;
 
 import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
 
@@ -23,6 +24,8 @@ public class MyApplication extends Application {
     public static SPUtils spUtils;
 
     public static String token;
+
+    public static ShopCarBO shopCarBO;
 
     @Override
     public void onCreate() {

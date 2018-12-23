@@ -12,6 +12,7 @@
         android:layout_height="53dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="8dp"
+        android:scaleType="fitXY"
         app:riv_corner_radius="3dp" />
 
 
@@ -147,14 +148,26 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <ImageView
+            <LinearLayout
+                android:id="@+id/shop_remove"
                 android:layout_width="23dp"
                 android:layout_height="23dp"
-                android:src="@drawable/shop_add"
-                android:visibility="gone" />
+                android:background="@drawable/shop_car_remove"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <View
+                    android:layout_width="13dp"
+                    android:layout_height="2dp"
+                    android:background="#64bd3a" />
+
+
+            </LinearLayout>
 
 
             <TextView
+                android:id="@+id/shop_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
@@ -192,6 +205,7 @@
 
 
             <TextView
+                android:id="@+id/shop_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="¥ 0.00"

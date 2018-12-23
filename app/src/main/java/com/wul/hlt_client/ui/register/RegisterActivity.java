@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.StringUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.wul.hlt_client.R;
 import com.wul.hlt_client.entity.CityBO;
 import com.wul.hlt_client.entity.CityRegionBO;
@@ -93,6 +94,12 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
     @Override
     public void getRegionByCity(List<CityRegionBO> regionBOS) {
         this.regionBOS = regionBOS;
+    }
+
+    @Override
+    public void registerSuress() {
+        ToastUtils.showLong("注册成功！请等待管理员联系获取登录账号！");
+        finish();
     }
 
     @Override
