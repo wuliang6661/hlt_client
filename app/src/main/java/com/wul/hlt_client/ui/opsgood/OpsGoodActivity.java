@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.entity.event.ShopCarRefresh;
 import com.wul.hlt_client.mvp.MVPBaseActivity;
 import com.wul.hlt_client.ui.ShopAdapter;
+import com.wul.hlt_client.ui.ordercommit.OrderCommitActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -67,6 +69,7 @@ public class OpsGoodActivity extends MVPBaseActivity<OpsGoodContract.View, OpsGo
 
         mPresenter.getChangyongList();
         mPresenter.getCityGongGao();
+        shopCarButton.setOnClickListener(view -> gotoActivity(OrderCommitActivity.class, false));
         initShopCar();
     }
 

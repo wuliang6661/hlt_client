@@ -59,6 +59,14 @@
             android:name=".ui.salesgood.SalesGoodActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".ui.ordercommit.OrderCommitActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.ordershop.OrderShopActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

@@ -21,6 +21,7 @@ import com.wul.hlt_client.entity.event.ShopCarRefresh;
 import com.wul.hlt_client.mvp.MVPBaseActivity;
 import com.wul.hlt_client.ui.DowmTimer;
 import com.wul.hlt_client.ui.ShopAdapter;
+import com.wul.hlt_client.ui.ordercommit.OrderCommitActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -80,6 +81,7 @@ public class SalesGoodActivity extends MVPBaseActivity<SalesGoodContract.View, S
 
         mPresenter.getCityGongGao();
         mPresenter.getXianshiList();
+        shopCarButton.setOnClickListener(view -> gotoActivity(OrderCommitActivity.class, false));
         initShopCar();
     }
 

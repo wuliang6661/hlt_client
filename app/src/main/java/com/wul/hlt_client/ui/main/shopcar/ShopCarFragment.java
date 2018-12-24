@@ -16,6 +16,7 @@ import com.wul.hlt_client.R;
 import com.wul.hlt_client.base.MyApplication;
 import com.wul.hlt_client.entity.ShopCarBO;
 import com.wul.hlt_client.mvp.MVPBaseFragment;
+import com.wul.hlt_client.ui.ordercommit.OrderCommitActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,6 +57,8 @@ public class ShopCarFragment extends MVPBaseFragment<ShopCarContract.View, ShopC
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         shopCarRecycle.setLayoutManager(manager);
 
+        shopCarButton.setOnClickListener(view1 -> gotoActivity(OrderCommitActivity.class, false));
+
     }
 
 
@@ -84,7 +87,7 @@ public class ShopCarFragment extends MVPBaseFragment<ShopCarContract.View, ShopC
     @Override
     public void getShopCar(ShopCarBO carBO) {
         MyApplication.shopCarBO = carBO;
-        ShopCarAdapter adapter = new ShopCarAdapter(getActivity(),carBO);
+        ShopCarAdapter adapter = new ShopCarAdapter(getActivity(), carBO);
         shopCarRecycle.setAdapter(adapter);
     }
 }
