@@ -38,7 +38,7 @@
         android:layout_height="18dp"
         android:layout_above="@+id/good_img"
         android:layout_marginBottom="2dp"
-        android:layout_toRightOf="@+id/good_type_cu"
+        android:layout_alignLeft="@+id/good_img"
         android:background="@drawable/miao_bg"
         android:gravity="center"
         android:text="秒"

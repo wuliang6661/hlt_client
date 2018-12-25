@@ -1,11 +1,8 @@
 package com.wul.hlt_client.ui.salesgood;
 
-import android.content.Context;
-
 import com.wul.hlt_client.api.HttpResultSubscriber;
 import com.wul.hlt_client.api.HttpServiceIml;
 import com.wul.hlt_client.entity.CityGongGao;
-import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.entity.XianShiBO;
 import com.wul.hlt_client.entity.request.XianshiBO;
 import com.wul.hlt_client.mvp.BasePresenterImpl;
@@ -60,4 +57,24 @@ public class SalesGoodPresenter extends BasePresenterImpl<SalesGoodContract.View
             }
         });
     }
+
+
+    public void testSkipe() {
+        HttpServiceIml.testSpike().subscribe(new HttpResultSubscriber<String>() {
+            @Override
+            public void onSuccess(String s) {
+                if (mView != null) {
+                    mView.testSuress();
+                }
+            }
+
+            @Override
+            public void onFiled(String message) {
+                if (mView != null) {
+                    mView.onRequestError(message);
+                }
+            }
+        });
+    }
+
 }

@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -69,7 +68,7 @@ public class OpsGoodActivity extends MVPBaseActivity<OpsGoodContract.View, OpsGo
 
         mPresenter.getChangyongList();
         mPresenter.getCityGongGao();
-        shopCarButton.setOnClickListener(view -> gotoActivity(OrderCommitActivity.class, false));
+        shopCarButton.setOnClickListener(view -> mPresenter.testSkipe());
         initShopCar();
     }
 
@@ -128,5 +127,10 @@ public class OpsGoodActivity extends MVPBaseActivity<OpsGoodContract.View, OpsGo
             buffer.append(cityGongGao.getContent()).append("                      ");
         }
         gonggaoText.setText(buffer.toString());
+    }
+
+    @Override
+    public void testSuress() {
+        gotoActivity(OrderCommitActivity.class, false);
     }
 }

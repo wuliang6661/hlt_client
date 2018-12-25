@@ -43,7 +43,7 @@ public class ShopCarAdapter extends LGRecycleViewAdapter<ShopBO> {
     public void convert(LGViewHolder holder, ShopBO shopBO, int position) {
 
         ImageView shopAdd = (ImageView) holder.getView(R.id.shop_add);
-        holder.setImageUrl(context, R.id.good_img, shopBO.getImage());
+        holder.setImageUrl(context, R.id.good_img, shopBO.getHttpUrl());
         holder.setText(R.id.good_name, shopBO.getProductName());
         TextView goodUnit = (TextView) holder.getView(R.id.good_unit);
         TextView goodUnit2 = (TextView) holder.getView(R.id.good_unit2);
@@ -64,7 +64,7 @@ public class ShopCarAdapter extends LGRecycleViewAdapter<ShopBO> {
         shopAdd.setTag(shopBO);
         shopAdd.setOnClickListener(view -> {
             ShopBO body = (ShopBO) view.getTag();
-            addShopCar(body.getId());
+            addShopCar(body.getProductId());
         });
         LinearLayout remove = (LinearLayout) holder.getView(R.id.shop_remove);
         TextView shopNum = (TextView) holder.getView(R.id.shop_num);
@@ -85,7 +85,7 @@ public class ShopCarAdapter extends LGRecycleViewAdapter<ShopBO> {
         remove.setOnClickListener(view ->
         {
             ShopBO body = (ShopBO) view.getTag();
-            removeShopCar(body.getId());
+            removeShopCar(body.getProductId());
         });
     }
 

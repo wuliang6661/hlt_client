@@ -6,7 +6,7 @@ import com.wul.hlt_client.mvp.BaseRequestView;
 
 /**
  * MVPPlugin
- *  邮箱 784787081@qq.com
+ * 邮箱 784787081@qq.com
  */
 
 public class ShopCarContract {
@@ -14,10 +14,12 @@ public class ShopCarContract {
 
         void getShopCar(ShopCarBO carBO);
 
-        
+        void testSuress();
+
+
     }
 
-    interface  Presenter extends BasePresenter<View> {
-        
+    interface Presenter extends BasePresenter<View> {
+
     }
 }

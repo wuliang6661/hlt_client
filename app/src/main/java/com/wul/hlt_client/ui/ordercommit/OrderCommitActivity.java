@@ -3,13 +3,21 @@ package com.wul.hlt_client.ui.ordercommit;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.Gravity;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.wul.hlt_client.R;
+import com.wul.hlt_client.base.GlideApp;
+import com.wul.hlt_client.entity.AddressBO;
+import com.wul.hlt_client.entity.ShoppingCarBO;
 import com.wul.hlt_client.mvp.MVPBaseActivity;
+import com.wul.hlt_client.ui.ordershop.OrderShopActivity;
+import com.wul.hlt_client.widget.PayDialog;
 
 import butterknife.BindView;
 
@@ -20,7 +28,7 @@ import butterknife.BindView;
  */
 
 public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.View, OrderCommitPresenter>
-        implements OrderCommitContract.View {
+        implements OrderCommitContract.View, View.OnClickListener {
 
     @BindView(R.id.order_price)
     TextView orderPrice;
@@ -64,6 +72,12 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
     TextView blancePrice;
     @BindView(R.id.balance_layout)
     LinearLayout balanceLayout;
+    @BindView(R.id.good_price)
+    TextView goodPrice;
+    @BindView(R.id.mian_view)
+    RelativeLayout mianView;
+
+    private int strPayType = 1;   //默认支付宝
 
     @Override
     protected int getLayout() {
@@ -78,6 +92,87 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
         goBack();
         setTitleText("确认订单");
 
+        goodLayout.setOnClickListener(this);
+        payLayout.setOnClickListener(this);
+        mPresenter.getAddressInfo();
+        mPresenter.getShoppingList(0);
+    }
 
+    @Override
+    public void onRequestError(String msg) {
+        showToast(msg);
+    }
+
+    @Override
+    public void onRequestEnd() {
+
+    }
+
+    @Override
+    public void getAddressInfo(AddressBO addressBO) {
+        person.setText("联系人：" + addressBO.getContact());
+        personPhone.setText("联系方式：" + addressBO.getContactPhone());
+        shopName.setText("收货店名：" + addressBO.getAddressName());
+        shopAddress.setText("联系地址：" + addressBO.getAddress());
+    }
+
+    @Override
+    public void testSuress() {
+        gotoActivity(OrderShopActivity.class, false);
+    }
+
+    @Override
+    public void getShoppingList(ShoppingCarBO carBO) {
+        allGoodNum.setText("共" + carBO.getShoppingCartList().size() + "种商品");
+        goodPrice.setText("¥ " + carBO.getAmount());
+        int size = carBO.getShoppingCartList().size();
+        if (size >= 1) {
+            GlideApp.with(this).load(carBO.getShoppingCartList().get(0).getHttpUrl())
+                    .placeholder(R.drawable.zhanwei1)
+                    .error(R.drawable.zhanwei1)
+                    .into(goodImg1);
+        }
+        if (size >= 2) {
+            GlideApp.with(this).load(carBO.getShoppingCartList().get(1).getHttpUrl())
+                    .placeholder(R.drawable.zhanwei1)
+                    .error(R.drawable.zhanwei1)
+                    .into(goodImg2);
+        }
+        if (size >= 3) {
+            GlideApp.with(this).load(carBO.getShoppingCartList().get(2).getHttpUrl())
+                    .placeholder(R.drawable.zhanwei1)
+                    .error(R.drawable.zhanwei1)
+                    .into(goodImg3);
+        }
+        if (size >= 4) {
+            GlideApp.with(this).load(carBO.getShoppingCartList().get(3).getHttpUrl())
+                    .placeholder(R.drawable.zhanwei1)
+                    .error(R.drawable.zhanwei1)
+                    .into(goodImg4);
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.good_layout:   //进入商品清单
+                mPresenter.testSkipe();
+                break;
+            case R.id.pay_layout:
+                PayDialog dialog = new PayDialog(this, strPayType);
+                dialog.setOnComitListener(type -> {
+                    strPayType = type;
+                    switch (type) {
+                        case 1:
+                            payType.setText("支付宝");
+                            break;
+                        case 2:
+                            payType.setText("货到付款");
+                            break;
+                    }
+                });
+                dialog.showAtLocation(mianView, Gravity.BOTTOM, 0, 0);
+                break;
+        }
     }
 }

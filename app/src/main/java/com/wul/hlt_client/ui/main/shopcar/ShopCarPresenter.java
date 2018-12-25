@@ -33,4 +33,22 @@ public class ShopCarPresenter extends BasePresenterImpl<ShopCarContract.View>
     }
 
 
+    public void testSkipe() {
+        HttpServiceIml.testSpike().subscribe(new HttpResultSubscriber<String>() {
+            @Override
+            public void onSuccess(String s) {
+                if (mView != null) {
+                    mView.testSuress();
+                }
+            }
+
+            @Override
+            public void onFiled(String message) {
+                if (mView != null) {
+                    mView.onRequestError(message);
+                }
+            }
+        });
+    }
+
 }

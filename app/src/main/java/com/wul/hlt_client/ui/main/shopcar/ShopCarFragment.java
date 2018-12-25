@@ -57,7 +57,7 @@ public class ShopCarFragment extends MVPBaseFragment<ShopCarContract.View, ShopC
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         shopCarRecycle.setLayoutManager(manager);
 
-        shopCarButton.setOnClickListener(view1 -> gotoActivity(OrderCommitActivity.class, false));
+        shopCarButton.setOnClickListener(view1 -> mPresenter.testSkipe());
 
     }
 
@@ -89,5 +89,10 @@ public class ShopCarFragment extends MVPBaseFragment<ShopCarContract.View, ShopC
         MyApplication.shopCarBO = carBO;
         ShopCarAdapter adapter = new ShopCarAdapter(getActivity(), carBO);
         shopCarRecycle.setAdapter(adapter);
+    }
+
+    @Override
+    public void testSuress() {
+        gotoActivity(OrderCommitActivity.class, false);
     }
 }

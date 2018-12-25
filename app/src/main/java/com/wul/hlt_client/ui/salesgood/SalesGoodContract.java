@@ -1,13 +1,9 @@
 package com.wul.hlt_client.ui.salesgood;
 
-import android.content.Context;
-
 import com.wul.hlt_client.entity.CityGongGao;
-import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.entity.XianShiBO;
 import com.wul.hlt_client.mvp.BasePresenter;
 import com.wul.hlt_client.mvp.BaseRequestView;
-import com.wul.hlt_client.mvp.BaseView;
 
 import java.util.List;
 
@@ -22,6 +18,8 @@ public class SalesGoodContract {
         void getCityGongGao(List<CityGongGao> list);
 
         void getXianshiList(XianShiBO shopBOS);
+
+        void testSuress();
     }
 
     interface Presenter extends BasePresenter<View> {

@@ -1,5 +1,6 @@
 package com.wul.hlt_client.api;
 
+import com.wul.hlt_client.entity.AddressBO;
 import com.wul.hlt_client.entity.BannerBo;
 import com.wul.hlt_client.entity.BaseResult;
 import com.wul.hlt_client.entity.CityBO;
@@ -8,15 +9,18 @@ import com.wul.hlt_client.entity.CityRegionBO;
 import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.entity.ShopCarBO;
+import com.wul.hlt_client.entity.ShoppingCarBO;
 import com.wul.hlt_client.entity.UserBo;
 import com.wul.hlt_client.entity.XianShiBO;
 import com.wul.hlt_client.entity.request.BaseRequest;
 import com.wul.hlt_client.entity.request.ChildFlowBO;
+import com.wul.hlt_client.entity.request.CommitOrderBO;
 import com.wul.hlt_client.entity.request.LoginBo;
 import com.wul.hlt_client.entity.request.PageBO;
 import com.wul.hlt_client.entity.request.RegionBO;
 import com.wul.hlt_client.entity.request.RegisterBO;
 import com.wul.hlt_client.entity.request.ShopCarSetBO;
+import com.wul.hlt_client.entity.request.ShoppingListBO;
 import com.wul.hlt_client.entity.request.XianshiBO;
 
 import java.util.List;
@@ -118,5 +122,31 @@ public interface HttpService {
      */
     @POST("/hct_webservice/app/address/shoppingCart/reduceProductQuantity")
     Observable<BaseResult<String>> reduceShopCarNum(@Body ShopCarSetBO body);
+
+
+    /**
+     * 检测商品是否被秒杀光
+     */
+    @POST("/hct_webservice/app/address/settlement/testSpikeProductCount")
+    Observable<BaseResult<String>> testSpikeProduct(@Body BaseRequest body);
+
+    /**
+     * 结算时获取门店信息
+     */
+    @POST("/hct_webservice/app/address/settlement/getAddressInfo")
+    Observable<BaseResult<AddressBO>> getAddressInfo(@Body BaseRequest body);
+
+    /**
+     * 获取订单结算清单
+     */
+    @POST("/hct_webservice/app/address/settlement/getShoppingCartListAndCalculationPrice")
+    Observable<BaseResult<ShoppingCarBO>> getShoppingList(@Body ShoppingListBO listBO);
+
+    /**
+     * 确认订单
+     */
+    @POST("/hct_webservice/app/address/settlement/confirmOrder")
+    Observable<BaseResult<String>> commitOrder(@Body CommitOrderBO commitOrderBO);
+
 
 }

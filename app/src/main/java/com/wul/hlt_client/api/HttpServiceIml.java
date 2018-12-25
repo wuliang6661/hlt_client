@@ -1,6 +1,7 @@
 package com.wul.hlt_client.api;
 
 import com.wul.hlt_client.base.MyApplication;
+import com.wul.hlt_client.entity.AddressBO;
 import com.wul.hlt_client.entity.BannerBo;
 import com.wul.hlt_client.entity.CityBO;
 import com.wul.hlt_client.entity.CityGongGao;
@@ -8,15 +9,18 @@ import com.wul.hlt_client.entity.CityRegionBO;
 import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.entity.ShopCarBO;
+import com.wul.hlt_client.entity.ShoppingCarBO;
 import com.wul.hlt_client.entity.UserBo;
 import com.wul.hlt_client.entity.XianShiBO;
 import com.wul.hlt_client.entity.request.BaseRequest;
 import com.wul.hlt_client.entity.request.ChildFlowBO;
+import com.wul.hlt_client.entity.request.CommitOrderBO;
 import com.wul.hlt_client.entity.request.LoginBo;
 import com.wul.hlt_client.entity.request.PageBO;
 import com.wul.hlt_client.entity.request.RegionBO;
 import com.wul.hlt_client.entity.request.RegisterBO;
 import com.wul.hlt_client.entity.request.ShopCarSetBO;
+import com.wul.hlt_client.entity.request.ShoppingListBO;
 import com.wul.hlt_client.entity.request.XianshiBO;
 import com.wul.hlt_client.util.rx.RxResultHelper;
 
@@ -166,5 +170,43 @@ public class HttpServiceIml {
         setBO.token = MyApplication.token;
         return getService().reduceShopCarNum(setBO).compose(RxResultHelper.httpRusult());
     }
+
+
+    /**
+     * 检测商品是否被秒杀光
+     */
+    public static Observable<String> testSpike() {
+        BaseRequest request = new BaseRequest();
+        request.token = MyApplication.token;
+        return getService().testSpikeProduct(request).compose(RxResultHelper.httpRusult());
+    }
+
+    /**
+     * 去结算时获取用户信息
+     */
+    public static Observable<AddressBO> getAddressInfo() {
+        BaseRequest request = new BaseRequest();
+        request.token = MyApplication.token;
+        return getService().getAddressInfo(request).compose(RxResultHelper.httpRusult());
+    }
+
+    /**
+     * 获取订单结算清单
+     */
+    public static Observable<ShoppingCarBO> getShoppingList(int orderType) {
+        ShoppingListBO listBO = new ShoppingListBO();
+        listBO.orderType = orderType;
+        listBO.token = MyApplication.token;
+        return getService().getShoppingList(listBO).compose(RxResultHelper.httpRusult());
+    }
+
+    /**
+     * 确认订单
+     */
+    public static Observable<String> commitOrder(CommitOrderBO commitOrderBO) {
+        commitOrderBO.token = MyApplication.token;
+        return getService().commitOrder(commitOrderBO).compose(RxResultHelper.httpRusult());
+    }
+
 
 }

@@ -12,6 +12,7 @@
 
 
         <ImageView
+            android:id="@+id/colse"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_centerVertical="true"
@@ -31,6 +32,7 @@
 
 
     <LinearLayout
+        android:id="@+id/ali_pay"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:background="@color/white"
@@ -61,7 +63,8 @@
             android:layout_marginRight="18dp"
             android:background="@drawable/check_box"
             android:button="@null"
-            android:checked="true" />
+            android:checked="true"
+            android:enabled="false" />
 
 
     </LinearLayout>
@@ -73,6 +76,7 @@
 
 
     <LinearLayout
+        android:id="@+id/huodao_pay"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:background="@color/white"
@@ -102,7 +106,8 @@
             android:layout_height="20dp"
             android:layout_marginRight="18dp"
             android:background="@drawable/check_box"
-            android:button="@null" />
+            android:button="@null"
+            android:enabled="false" />
 
 
     </LinearLayout>
@@ -116,8 +121,8 @@
     <TextView
         android:id="@+id/commit"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="70dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="60dp"
         android:background="#61C95F"
         android:gravity="center"
         android:text="确定"

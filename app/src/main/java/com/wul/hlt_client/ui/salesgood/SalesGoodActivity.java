@@ -81,7 +81,7 @@ public class SalesGoodActivity extends MVPBaseActivity<SalesGoodContract.View, S
 
         mPresenter.getCityGongGao();
         mPresenter.getXianshiList();
-        shopCarButton.setOnClickListener(view -> gotoActivity(OrderCommitActivity.class, false));
+        shopCarButton.setOnClickListener(view -> mPresenter.testSkipe());
         initShopCar();
     }
 
@@ -136,6 +136,11 @@ public class SalesGoodActivity extends MVPBaseActivity<SalesGoodContract.View, S
         recycle.setAdapter(adapter);
         timer = new Timer();
         timer.schedule(new DowmTimer(shopBOS.getStartTime(), shopBOS.getEndTime(), handler), 0, 1000);
+    }
+
+    @Override
+    public void testSuress() {
+        gotoActivity(OrderCommitActivity.class, false);
     }
 
     @SuppressLint("HandlerLeak")

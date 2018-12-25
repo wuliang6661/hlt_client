@@ -18,6 +18,8 @@ public class OpsGoodContract {
         void getOpsShop(List<ShopBO> list);
 
         void getCityGongGao(List<CityGongGao> cityGongGaos);
+
+        void testSuress();
     }
 
     interface Presenter extends BasePresenter<View> {

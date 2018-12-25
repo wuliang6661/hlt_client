@@ -4,9 +4,52 @@
     android:layout_height="match_parent"
     android:background="#f2f2f2">
 
+
+    <LinearLayout
+        android:id="@+id/buttom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="13sp"
+            android:text="合计："
+            android:textColor="#666666"
+            android:textSize="18sp" />
+
+
+        <TextView
+            android:id="@+id/shop_car_price"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="¥ 0.00"
+            android:textColor="#f5142f"
+            android:textSize="18sp" />
+
+
+        <TextView
+            android:id="@+id/shop_car_button"
+            android:layout_width="102dp"
+            android:layout_height="match_parent"
+            android:background="#61c95f"
+            android:gravity="center"
+            android:text="去结算"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_above="@+id/buttom_layout"
         android:orientation="vertical">
 
 
@@ -89,44 +132,5 @@
 
     </LinearLayout>
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="13sp"
-            android:text="合计："
-            android:textColor="#666666"
-            android:textSize="18sp" />
-
-
-        <TextView
-            android:id="@+id/shop_car_price"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="¥ 0.00"
-            android:textColor="#f5142f"
-            android:textSize="18sp" />
-
-
-        <TextView
-            android:id="@+id/shop_car_button"
-            android:layout_width="102dp"
-            android:layout_height="match_parent"
-            android:background="#61c95f"
-            android:gravity="center"
-            android:text="去结算"
-            android:textColor="@color/white"
-            android:textSize="18sp" />
-
-    </LinearLayout>
 
 </RelativeLayout>
