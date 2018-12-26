@@ -14,6 +14,7 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.wul.hlt_client.R;
 import com.wul.hlt_client.base.GlideApp;
 import com.wul.hlt_client.entity.AddressBO;
+import com.wul.hlt_client.entity.MoneyBO;
 import com.wul.hlt_client.entity.ShoppingCarBO;
 import com.wul.hlt_client.mvp.MVPBaseActivity;
 import com.wul.hlt_client.ui.ordershop.OrderShopActivity;
@@ -98,6 +99,7 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
         dispatchingTimeLayout.setOnClickListener(this);
         mPresenter.getAddressInfo();
         mPresenter.getShoppingList(0);
+        mPresenter.getMoney(0);
     }
 
     @Override
@@ -152,6 +154,13 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
                     .error(R.drawable.zhanwei1)
                     .into(goodImg4);
         }
+    }
+
+    @Override
+    public void getMoney(MoneyBO moneyBO) {
+        blancePrice.setText("余额可抵用" + moneyBO.getBalancePay());
+        dispatchingPrice.setText("¥ " + moneyBO.getDistributionFee());
+        orderPrice.setText("¥ " + moneyBO.getAmount());
     }
 
     @Override

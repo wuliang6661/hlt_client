@@ -3,6 +3,7 @@ package com.wul.hlt_client.ui.ordercommit;
 import com.wul.hlt_client.api.HttpResultSubscriber;
 import com.wul.hlt_client.api.HttpServiceIml;
 import com.wul.hlt_client.entity.AddressBO;
+import com.wul.hlt_client.entity.MoneyBO;
 import com.wul.hlt_client.entity.ShoppingCarBO;
 import com.wul.hlt_client.mvp.BasePresenterImpl;
 
@@ -83,4 +84,24 @@ public class OrderCommitPresenter extends BasePresenterImpl<OrderCommitContract.
     }
 
 
+    /**
+     * 获取订单金额
+     */
+    public void getMoney(int orderType) {
+        HttpServiceIml.getMoney(orderType).subscribe(new HttpResultSubscriber<MoneyBO>() {
+            @Override
+            public void onSuccess(MoneyBO s) {
+                if (mView != null) {
+                    mView.getMoney(s);
+                }
+            }
+
+            @Override
+            public void onFiled(String message) {
+                if (mView != null) {
+                    mView.onRequestError(message);
+                }
+            }
+        });
+    }
 }

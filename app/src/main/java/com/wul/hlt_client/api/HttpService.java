@@ -7,6 +7,7 @@ import com.wul.hlt_client.entity.CityBO;
 import com.wul.hlt_client.entity.CityGongGao;
 import com.wul.hlt_client.entity.CityRegionBO;
 import com.wul.hlt_client.entity.ClassifyBO;
+import com.wul.hlt_client.entity.MoneyBO;
 import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.entity.ShopCarBO;
 import com.wul.hlt_client.entity.ShoppingCarBO;
@@ -153,6 +154,13 @@ public interface HttpService {
      */
     @POST("/hct_webservice/app/address/settlement/confirmOrder")
     Observable<BaseResult<String>> commitOrder(@Body CommitOrderBO commitOrderBO);
+
+
+    /**
+     * 获取结算时的金额
+     */
+    @POST("/hct_webservice/app/address/settlement/getMoney")
+    Observable<BaseResult<MoneyBO>> getMoney(@Body ShoppingListBO listBO);
 
 
 }

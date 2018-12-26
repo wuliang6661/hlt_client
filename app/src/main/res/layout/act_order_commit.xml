@@ -440,7 +440,6 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="3dp"
                         android:layout_toRightOf="@+id/text1"
-                        android:text="（满0元免配送费）"
                         android:textSize="10sp" />
 
 
@@ -480,7 +479,7 @@
                         android:layout_marginLeft="18dp"
                         android:background="@drawable/check_box"
                         android:button="@null"
-                        android:checked="true" />
+                        android:checked="false" />
 
 
                     <TextView

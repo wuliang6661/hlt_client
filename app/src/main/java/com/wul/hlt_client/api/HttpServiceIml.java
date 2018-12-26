@@ -7,6 +7,7 @@ import com.wul.hlt_client.entity.CityBO;
 import com.wul.hlt_client.entity.CityGongGao;
 import com.wul.hlt_client.entity.CityRegionBO;
 import com.wul.hlt_client.entity.ClassifyBO;
+import com.wul.hlt_client.entity.MoneyBO;
 import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.entity.ShopCarBO;
 import com.wul.hlt_client.entity.ShoppingCarBO;
@@ -215,6 +216,16 @@ public class HttpServiceIml {
     public static Observable<String> commitOrder(CommitOrderBO commitOrderBO) {
         commitOrderBO.token = MyApplication.token;
         return getService().commitOrder(commitOrderBO).compose(RxResultHelper.httpRusult());
+    }
+
+    /**
+     * 获取结算时的金额
+     */
+    public static Observable<MoneyBO> getMoney(int orderType) {
+        ShoppingListBO listBO = new ShoppingListBO();
+        listBO.orderType = orderType;
+        listBO.token = MyApplication.token;
+        return getService().getMoney(listBO).compose(RxResultHelper.httpRusult());
     }
 
 

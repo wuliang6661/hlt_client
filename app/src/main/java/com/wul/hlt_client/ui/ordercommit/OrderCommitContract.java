@@ -1,6 +1,7 @@
 package com.wul.hlt_client.ui.ordercommit;
 
 import com.wul.hlt_client.entity.AddressBO;
+import com.wul.hlt_client.entity.MoneyBO;
 import com.wul.hlt_client.entity.ShoppingCarBO;
 import com.wul.hlt_client.mvp.BasePresenter;
 import com.wul.hlt_client.mvp.BaseRequestView;
@@ -19,6 +20,7 @@ public class OrderCommitContract {
 
         void getShoppingList(ShoppingCarBO carBO);
 
+        void getMoney(MoneyBO moneyBO);
 
     }
 
