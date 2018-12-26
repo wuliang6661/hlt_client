@@ -123,6 +123,12 @@ public interface HttpService {
     @POST("/hct_webservice/app/address/shoppingCart/reduceProductQuantity")
     Observable<BaseResult<String>> reduceShopCarNum(@Body ShopCarSetBO body);
 
+    /**
+     * 清空购物车
+     */
+    @POST("/hct_webservice/app/address/shoppingCart/clearShoppingCartList")
+    Observable<BaseResult<String>> clearShoppingCar(@Body BaseRequest request);
+
 
     /**
      * 检测商品是否被秒杀光

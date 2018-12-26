@@ -15,8 +15,13 @@ import android.widget.TextView;
 import com.wul.hlt_client.R;
 import com.wul.hlt_client.base.MyApplication;
 import com.wul.hlt_client.entity.ShopCarBO;
+import com.wul.hlt_client.entity.event.ShopCarRefresh;
 import com.wul.hlt_client.mvp.MVPBaseFragment;
 import com.wul.hlt_client.ui.ordercommit.OrderCommitActivity;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,12 +45,21 @@ public class ShopCarFragment extends MVPBaseFragment<ShopCarContract.View, ShopC
     @BindView(R.id.shop_car_button)
     TextView shopCarButton;
     Unbinder unbinder;
+    @BindView(R.id.buttom_layout)
+    LinearLayout buttomLayout;
+    @BindView(R.id.go_shopping)
+    TextView goShopping;
+    @BindView(R.id.none_layout)
+    LinearLayout noneLayout;
+    @BindView(R.id.main_layout)
+    LinearLayout mainLayout;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fra_shop_car, null);
         unbinder = ButterKnife.bind(this, view);
+        EventBus.getDefault().register(this);
         return view;
     }
 
@@ -58,7 +72,7 @@ public class ShopCarFragment extends MVPBaseFragment<ShopCarContract.View, ShopC
         shopCarRecycle.setLayoutManager(manager);
 
         shopCarButton.setOnClickListener(view1 -> mPresenter.testSkipe());
-
+        clearCar.setOnClickListener(v -> mPresenter.clearShoppingCar());
     }
 
 
@@ -72,7 +86,27 @@ public class ShopCarFragment extends MVPBaseFragment<ShopCarContract.View, ShopC
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        EventBus.getDefault().unregister(this);
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(ShopCarRefresh refresh) {
+        if (MyApplication.shopCarBO.getAmount() == 0) {
+            clearCar.setVisibility(View.GONE);
+            buttomLayout.setVisibility(View.GONE);
+            mainLayout.setVisibility(View.GONE);
+            noneLayout.setVisibility(View.VISIBLE);
+        } else {
+            clearCar.setVisibility(View.VISIBLE);
+            buttomLayout.setVisibility(View.VISIBLE);
+            mainLayout.setVisibility(View.VISIBLE);
+            noneLayout.setVisibility(View.GONE);
+            shopCarPrice.setText("¥ " + MyApplication.shopCarBO.getAmount());
+            ShopCarAdapter adapter = new ShopCarAdapter(getActivity(), MyApplication.shopCarBO);
+            shopCarRecycle.setAdapter(adapter);
+        }
+    }
+
 
     @Override
     public void onRequestError(String msg) {
@@ -87,8 +121,20 @@ public class ShopCarFragment extends MVPBaseFragment<ShopCarContract.View, ShopC
     @Override
     public void getShopCar(ShopCarBO carBO) {
         MyApplication.shopCarBO = carBO;
-        ShopCarAdapter adapter = new ShopCarAdapter(getActivity(), carBO);
-        shopCarRecycle.setAdapter(adapter);
+        if (carBO.getAmount() == 0) {
+            clearCar.setVisibility(View.GONE);
+            buttomLayout.setVisibility(View.GONE);
+            mainLayout.setVisibility(View.GONE);
+            noneLayout.setVisibility(View.VISIBLE);
+        } else {
+            clearCar.setVisibility(View.VISIBLE);
+            buttomLayout.setVisibility(View.VISIBLE);
+            mainLayout.setVisibility(View.VISIBLE);
+            noneLayout.setVisibility(View.GONE);
+            shopCarPrice.setText("¥ " + carBO.getAmount());
+            ShopCarAdapter adapter = new ShopCarAdapter(getActivity(), carBO);
+            shopCarRecycle.setAdapter(adapter);
+        }
     }
 
     @Override

@@ -18,6 +18,7 @@ import com.wul.hlt_client.entity.ShoppingCarBO;
 import com.wul.hlt_client.mvp.MVPBaseActivity;
 import com.wul.hlt_client.ui.ordershop.OrderShopActivity;
 import com.wul.hlt_client.widget.PayDialog;
+import com.wul.hlt_client.widget.TimeDialog;
 
 import butterknife.BindView;
 
@@ -94,6 +95,7 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
 
         goodLayout.setOnClickListener(this);
         payLayout.setOnClickListener(this);
+        dispatchingTimeLayout.setOnClickListener(this);
         mPresenter.getAddressInfo();
         mPresenter.getShoppingList(0);
     }
@@ -158,7 +160,7 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
             case R.id.good_layout:   //进入商品清单
                 mPresenter.testSkipe();
                 break;
-            case R.id.pay_layout:
+            case R.id.pay_layout:    //支付方式
                 PayDialog dialog = new PayDialog(this, strPayType);
                 dialog.setOnComitListener(type -> {
                     strPayType = type;
@@ -172,6 +174,10 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
                     }
                 });
                 dialog.showAtLocation(mianView, Gravity.BOTTOM, 0, 0);
+                break;
+            case R.id.dispatching_time_layout:   //配送时间
+                TimeDialog dialog1 = new TimeDialog(this);
+                dialog1.showAtLocation(mianView, Gravity.BOTTOM, 0, 0);
                 break;
         }
     }

@@ -1,5 +1,6 @@
 package com.wul.hlt_client.ui.login;
 
+import com.wul.hlt_client.api.HttpResultSubscriber;
 import com.wul.hlt_client.api.HttpServiceIml;
 import com.wul.hlt_client.entity.UserBo;
 import com.wul.hlt_client.mvp.BasePresenterImpl;
@@ -15,25 +16,22 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
 
     @Override
     public void login(String phone, String shopNum, String password) {
-        HttpServiceIml.login(shopNum, phone, password).subscribe(new Subscriber<UserBo>() {
-            @Override
-            public void onCompleted() {
-
-            }
+        HttpServiceIml.login(shopNum, phone, password).subscribe(new HttpResultSubscriber<UserBo>(mView.getContext()) {
 
             @Override
-            public void onError(Throwable e) {
-                if (mView != null) {
-                    mView.onRequestError(e.getMessage());
-                }
-            }
-
-            @Override
-            public void onNext(UserBo userBo) {
+            public void onSuccess(UserBo userBo) {
                 if (mView != null) {
                     mView.loginSuress(userBo);
                 }
             }
+
+            @Override
+            public void onFiled(String message) {
+                if (mView != null) {
+                    mView.onRequestError(message);
+                }
+            }
+
         });
     }
 }

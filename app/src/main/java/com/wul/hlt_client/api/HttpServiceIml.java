@@ -171,6 +171,15 @@ public class HttpServiceIml {
         return getService().reduceShopCarNum(setBO).compose(RxResultHelper.httpRusult());
     }
 
+    /**
+     * 清空购物车
+     */
+    public static Observable<String> clearShopCar() {
+        BaseRequest request = new BaseRequest();
+        request.token = MyApplication.token;
+        return getService().clearShoppingCar(request).compose(RxResultHelper.httpRusult());
+    }
+
 
     /**
      * 检测商品是否被秒杀光

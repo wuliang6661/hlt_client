@@ -42,11 +42,12 @@ public class ShopAdapter extends LGRecycleViewAdapter<ShopBO> {
         super(dataList);
         this.context = context;
         shopCars = new HashMap<>();
-        if (carBO != null && carBO.getShoppingCartList() != null) {
-            for (ShopBO shopBO : carBO.getShoppingCartList()) {
-                shopCars.put(shopBO.getProductId(), shopBO);
-            }
-        }
+//        if (carBO != null && carBO.getShoppingCartList() != null) {
+//            for (ShopBO shopBO : carBO.getShoppingCartList()) {
+//                shopCars.put(shopBO.getProductId(), shopBO);
+//            }
+//        }
+        getShopCarList();
     }
 
     @Override
@@ -172,7 +173,7 @@ public class ShopAdapter extends LGRecycleViewAdapter<ShopBO> {
      * 查询购物车商品
      */
     private void getShopCarList() {
-        HttpServiceIml.getShopCarList().subscribe(new HttpResultSubscriber<ShopCarBO>(context) {
+        HttpServiceIml.getShopCarList().subscribe(new HttpResultSubscriber<ShopCarBO>() {
             @Override
             public void onSuccess(ShopCarBO s) {
                 shopCars.clear();

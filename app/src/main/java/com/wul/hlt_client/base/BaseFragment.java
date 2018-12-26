@@ -3,7 +3,6 @@ package com.wul.hlt_client.base;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 
@@ -11,13 +10,15 @@ import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.blankj.utilcode.util.ToastUtils;
 import com.wul.hlt_client.R;
 
+import me.yokeyword.fragmentation.SupportFragment;
+
 /**
  * Created by wuliang on 2017/5/11.
  * <p>
  * 所有Fragment的父类
  */
 
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends SupportFragment {
 
     private SVProgressHUD svProgressHUD;
 

@@ -4,7 +4,6 @@ package com.wul.hlt_client.base;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
@@ -16,6 +15,7 @@ import com.wul.hlt_client.R;
 import com.wul.hlt_client.util.AppManager;
 
 import butterknife.ButterKnife;
+import me.yokeyword.fragmentation.SupportActivity;
 
 /**
  * 作者 by wuliang 时间 16/10/31.
@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
  * 所有activity的基类，此处建立了一个activity的栈，用于管理activity
  */
 
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends SupportActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -15,7 +15,7 @@ public class ShopCarPresenter extends BasePresenterImpl<ShopCarContract.View>
 
 
     public void getShopCarList() {
-        HttpServiceIml.getShopCarList().subscribe(new HttpResultSubscriber<ShopCarBO>() {
+        HttpServiceIml.getShopCarList().subscribe(new HttpResultSubscriber<ShopCarBO>(mView.getContext()) {
             @Override
             public void onSuccess(ShopCarBO s) {
                 if (mView != null) {
@@ -39,6 +39,25 @@ public class ShopCarPresenter extends BasePresenterImpl<ShopCarContract.View>
             public void onSuccess(String s) {
                 if (mView != null) {
                     mView.testSuress();
+                }
+            }
+
+            @Override
+            public void onFiled(String message) {
+                if (mView != null) {
+                    mView.onRequestError(message);
+                }
+            }
+        });
+    }
+
+
+    public void clearShoppingCar() {
+        HttpServiceIml.clearShopCar().subscribe(new HttpResultSubscriber<String>() {
+            @Override
+            public void onSuccess(String s) {
+                if (mView != null) {
+                    getShopCarList();
                 }
             }
 

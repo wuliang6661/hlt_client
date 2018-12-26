@@ -46,7 +46,7 @@ public class ClassifyPresenter extends BasePresenterImpl<ClassifyContract.View>
         PageBO pageBO = new PageBO();
         pageBO.pageNum = 1;
         pageBO.pageSize = 1000;
-        HttpServiceIml.getCategorys(pageBO).subscribe(new HttpResultSubscriber<List<ClassifyBO>>(mView.getContext()) {
+        HttpServiceIml.getCategorys(pageBO).subscribe(new HttpResultSubscriber<List<ClassifyBO>>() {
             @Override
             public void onSuccess(List<ClassifyBO> s) {
                 if (mView != null) {

@@ -24,7 +24,7 @@ public class HomePresenter extends BasePresenterImpl<HomeContract.View>
         PageBO pageBO = new PageBO();
         pageBO.pageNum = 1;
         pageBO.pageSize = 8;
-        HttpServiceIml.getCategorys(pageBO).subscribe(new HttpResultSubscriber<List<ClassifyBO>>(mView.getContext()) {
+        HttpServiceIml.getCategorys(pageBO).subscribe(new HttpResultSubscriber<List<ClassifyBO>>() {
             @Override
             public void onSuccess(List<ClassifyBO> s) {
                 if (mView != null) {
