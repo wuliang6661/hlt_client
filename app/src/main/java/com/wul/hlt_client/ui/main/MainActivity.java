@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.view.KeyEvent;
 import android.view.View;
@@ -222,29 +220,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 super.shouldShowRequestPermissionRationale(permission);
     }
 
-
-    private Fragment mContent = null;
-
-    /**
-     * 修改显示的内容 不会重新加载
-     **/
-    public void goToFragment(Fragment to) {
-        if (mContent != to) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            if (!to.isAdded()) { // 先判断是否被add过
-                if (mContent != null)
-                    transaction.hide(mContent).add(R.id.fragment_container, to).commitAllowingStateLoss(); // 隐藏当前的fragment，add下一个到Activity中
-                else
-                    transaction.add(R.id.fragment_container, to).commitAllowingStateLoss();
-            } else {
-                if (mContent != null)
-                    transaction.hide(mContent).show(to).commitAllowingStateLoss(); // 隐藏当前的fragment，显示下一个
-                else
-                    transaction.show(to).commitAllowingStateLoss();
-            }
-            mContent = to;
-        }
-    }
 
     //记录用户首次点击返回键的时间
     private long firstTime = 0;
