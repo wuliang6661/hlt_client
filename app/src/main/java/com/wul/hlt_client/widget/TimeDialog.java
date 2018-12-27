@@ -105,14 +105,29 @@ public class TimeDialog extends PopupWindow {
     }
 
 
+    View.OnClickListener listener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.colse:
+                    dismiss();
+                    break;
+                case R.id.commit:
+
+                    break;
+            }
+        }
+    };
+
+
     /**
      * 获取年份
      */
     private List<String> getYear() {
         List<String> years = new ArrayList<>();
         int mYear = c.get(Calendar.YEAR); // 获取当前年份
-        years.add(mYear + "年");
-        years.add(mYear + 1 + "年");
+        years.add(mYear + "");
+        years.add(mYear + 1 + "");
         return years;
     }
 
@@ -123,7 +138,7 @@ public class TimeDialog extends PopupWindow {
     private List<String> getMonth() {
         List<String> months = new ArrayList<>();
         for (int i = 1; i <= 12; i++) {
-            months.add(i + "月");
+            months.add(i + "");
         }
         return months;
     }
@@ -135,7 +150,7 @@ public class TimeDialog extends PopupWindow {
         List<String> days = new ArrayList<>();
         int dayNum = getDaysByYearMonth(year, month);
         for (int i = 1; i <= dayNum; i++) {
-            days.add(i + "日");
+            days.add(i + "");
         }
         return days;
     }

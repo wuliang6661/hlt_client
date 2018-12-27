@@ -172,8 +172,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull
             int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        if (requestCode == 1) {   //授权成功
-//        }
     }
 
     /**
