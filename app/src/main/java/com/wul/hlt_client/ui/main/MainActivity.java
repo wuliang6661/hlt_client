@@ -185,7 +185,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 if (grantResults.length == 0) {
                     return;
                 }
-
                 // 用户拒绝了某些权限
                 for (int x : grantResults) {
                     if (x == PackageManager.PERMISSION_DENIED) {
