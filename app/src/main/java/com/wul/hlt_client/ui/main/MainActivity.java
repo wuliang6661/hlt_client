@@ -73,8 +73,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         main2.setOnClickListener(this);
         main3.setOnClickListener(this);
         main4.setOnClickListener(this);
-//        getPermission();
         getShopCarList();
+        requestPermission();
     }
 
 
@@ -158,20 +158,42 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
 
-    /**
-     * 检查定位权限
-     */
-    private void getPermission() {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    private void requestPermission() {
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)
+                != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{
+                            Manifest.permission.READ_PHONE_STATE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    }, 1);
+
         }
     }
 
+    /**
+     * 权限获取回调
+     */
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull
-            int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                // 用户取消了权限弹窗
+                if (grantResults.length == 0) {
+                    return;
+                }
+
+                // 用户拒绝了某些权限
+                for (int x : grantResults) {
+                    if (x == PackageManager.PERMISSION_DENIED) {
+                        return;
+                    }
+                }
+            }
+        }
     }
 
     /**

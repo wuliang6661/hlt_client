@@ -1,8 +1,17 @@
 package com.wul.hlt_client.ui.ordercommit;
 
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
@@ -10,16 +19,20 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alipay.sdk.app.PayTask;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.wul.hlt_client.R;
 import com.wul.hlt_client.base.GlideApp;
 import com.wul.hlt_client.entity.AddressBO;
 import com.wul.hlt_client.entity.MoneyBO;
+import com.wul.hlt_client.entity.PayResult;
 import com.wul.hlt_client.entity.ShoppingCarBO;
 import com.wul.hlt_client.mvp.MVPBaseActivity;
 import com.wul.hlt_client.ui.ordershop.OrderShopActivity;
 import com.wul.hlt_client.widget.PayDialog;
 import com.wul.hlt_client.widget.TimeDialog;
+
+import java.util.Map;
 
 import butterknife.BindView;
 
@@ -31,6 +44,8 @@ import butterknife.BindView;
 
 public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.View, OrderCommitPresenter>
         implements OrderCommitContract.View, View.OnClickListener {
+
+    private static final int SDK_PAY_FLAG = 1;
 
     @BindView(R.id.order_price)
     TextView orderPrice;
@@ -100,7 +115,48 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
         mPresenter.getAddressInfo();
         mPresenter.getShoppingList(0);
         mPresenter.getMoney(0);
+        requestPermission();
     }
+
+
+    private void requestPermission() {
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)
+                != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{
+                            Manifest.permission.READ_PHONE_STATE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    }, 1);
+
+        }
+    }
+
+    /**
+     * 权限获取回调
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                // 用户取消了权限弹窗
+                if (grantResults.length == 0) {
+                    return;
+                }
+
+                // 用户拒绝了某些权限
+                for (int x : grantResults) {
+                    if (x == PackageManager.PERMISSION_DENIED) {
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
 
     @Override
     public void onRequestError(String msg) {
@@ -196,4 +252,53 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
                 break;
         }
     }
+
+
+    /**
+     * 调用支付宝支付
+     */
+    private void aliPay(String orderInfo) {
+        final Runnable payRunnable = () -> {
+            PayTask alipay = new PayTask(OrderCommitActivity.this);
+            Map<String, String> result = alipay.payV2(orderInfo, true);
+            Log.i("msp", result.toString());
+            Message msg = new Message();
+            msg.what = SDK_PAY_FLAG;
+            msg.obj = result;
+            mHandler.sendMessage(msg);
+        };
+        // 必须异步调用
+        Thread payThread = new Thread(payRunnable);
+        payThread.start();
+    }
+
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @SuppressWarnings("unused")
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case SDK_PAY_FLAG: {
+                    @SuppressWarnings("unchecked")
+                    PayResult payResult = new PayResult((Map<String, String>) msg.obj);
+                    /**
+                     * 对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。
+                     */
+                    String resultInfo = payResult.getResult();// 同步返回需要验证的信息
+                    String resultStatus = payResult.getResultStatus();
+                    // 判断resultStatus 为9000则代表支付成功
+                    if (TextUtils.equals(resultStatus, "9000")) {    //支付成功
+                        // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
+                    } else {              //支付失败
+                        // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+
+        ;
+    };
 }
