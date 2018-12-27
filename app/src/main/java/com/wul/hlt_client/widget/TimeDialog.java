@@ -1,7 +1,9 @@
 package com.wul.hlt_client.widget;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -10,7 +12,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.adapter.ArrayWheelAdapter;
-import com.contrarywind.adapter.WheelAdapter;
+import com.blankj.utilcode.util.LogUtils;
 import com.contrarywind.view.WheelView;
 import com.wul.hlt_client.R;
 
@@ -35,11 +37,24 @@ public class TimeDialog extends PopupWindow {
     private TextView commit;
     private ImageView colse;
 
-    Calendar c;//
+    private Calendar c;//
 
     private int currentYeay;   //当前年份
     private int currentMonth;    //当前月份
-    private int currenDay;   // 当前天数
+
+    private WheelView[] views;
+
+    private String selectYear;    //选中的天数
+    private String selectMonth;   //选中的月份
+    private String selectDay;     //选中的日期
+    private String selectStartHour;    //选中的开始时间
+    private String selectEndHour;      //选中的结束时间
+
+    private List<String> years;
+    private List<String> months;
+    private List<String> days;
+    private List<String> hours;
+
 
     public TimeDialog(Activity context) {
         this.context = context;
@@ -48,7 +63,6 @@ public class TimeDialog extends PopupWindow {
         c = Calendar.getInstance();
         currentYeay = c.get(Calendar.YEAR);
         currentMonth = c.get(Calendar.MONTH) + 1;// 获取当前月份
-        currenDay = c.get(Calendar.DAY_OF_MONTH);// 获取当日期
         initvition(dialogView);
         setListener();
 
@@ -84,11 +98,8 @@ public class TimeDialog extends PopupWindow {
         commit = view.findViewById(R.id.commit);
         colse = view.findViewById(R.id.colse);
 
-        year.setCyclic(false);
-        month.setCyclic(false);
-        day.setCyclic(false);
-        startHour.setCyclic(false);
-        endHour.setCyclic(false);
+        views = new WheelView[]{year, month, day, startHour, endHour};
+        initView();
         year.setAdapter(new ArrayWheelAdapter<>(getYear()));
         month.setAdapter(new ArrayWheelAdapter<>(getMonth()));
         day.setAdapter(new ArrayWheelAdapter<>(getDay(currentYeay, currentMonth)));
@@ -97,25 +108,58 @@ public class TimeDialog extends PopupWindow {
     }
 
 
+    private void initView() {
+        for (WheelView view : views) {
+            view.setCyclic(false);
+            view.setDividerColor(Color.parseColor("#ffffff"));
+            view.setTextColorCenter(Color.parseColor("#383535"));
+            view.setTextSize(13);
+            view.setTextColorOut(Color.parseColor("#979797"));
+            view.setGravity(Gravity.CENTER);
+            view.setLineSpacingMultiplier(2);
+        }
+    }
+
+
     /**
      * 设置事件监听
      */
     private void setListener() {
-
+        colse.setOnClickListener(listener);
+        commit.setOnClickListener(listener);
+        year.setOnItemSelectedListener(index -> {
+            LogUtils.i(index);
+            month.setCurrentItem(0);
+            day.setCurrentItem(0);
+            day.setAdapter(new ArrayWheelAdapter<>(getDay(Integer.parseInt(years.get(index)),
+                    1)));
+        });
+        month.setOnItemSelectedListener(index -> {
+            LogUtils.i(index);
+            day.setCurrentItem(0);
+            day.setAdapter(new ArrayWheelAdapter<>(getDay(Integer.parseInt(years.get(year.getCurrentItem())),
+                    1)));
+        });
     }
 
 
-    View.OnClickListener listener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.colse:
-                    dismiss();
-                    break;
-                case R.id.commit:
-
-                    break;
-            }
+    View.OnClickListener listener = v -> {
+        switch (v.getId()) {
+            case R.id.colse:
+                dismiss();
+                break;
+            case R.id.commit:
+                selectYear = years.get(year.getCurrentItem());
+                selectMonth = months.get(month.getCurrentItem());
+                selectDay = days.get(day.getCurrentItem());
+                selectStartHour = hours.get(startHour.getCurrentItem());
+                selectEndHour = hours.get(endHour.getCurrentItem());
+                if (this.onSelectListener != null) {
+                    this.onSelectListener.onCommit(selectYear + selectMonth + selectDay
+                            + selectStartHour + selectEndHour);
+                }
+                dismiss();
+                break;
         }
     };
 
@@ -124,7 +168,7 @@ public class TimeDialog extends PopupWindow {
      * 获取年份
      */
     private List<String> getYear() {
-        List<String> years = new ArrayList<>();
+        years = new ArrayList<>();
         int mYear = c.get(Calendar.YEAR); // 获取当前年份
         years.add(mYear + "");
         years.add(mYear + 1 + "");
@@ -136,7 +180,7 @@ public class TimeDialog extends PopupWindow {
      * 获取月份
      */
     private List<String> getMonth() {
-        List<String> months = new ArrayList<>();
+        months = new ArrayList<>();
         for (int i = 1; i <= 12; i++) {
             months.add(i + "");
         }
@@ -147,7 +191,7 @@ public class TimeDialog extends PopupWindow {
      * 根据月份获取天数
      */
     private List<String> getDay(int year, int month) {
-        List<String> days = new ArrayList<>();
+        days = new ArrayList<>();
         int dayNum = getDaysByYearMonth(year, month);
         for (int i = 1; i <= dayNum; i++) {
             days.add(i + "");
@@ -166,6 +210,7 @@ public class TimeDialog extends PopupWindow {
         a.set(Calendar.DATE, 1);
         a.roll(Calendar.DATE, -1);
         int maxDate = a.get(Calendar.DATE);
+        LogUtils.i(maxDate);
         return maxDate;
     }
 
@@ -174,11 +219,24 @@ public class TimeDialog extends PopupWindow {
      * 获取24小时集合
      */
     private List<String> getHours() {
-        List<String> hours = new ArrayList<>();
+        hours = new ArrayList<>();
         for (int i = 1; i <= 24; i++) {
             hours.add(i + ":00");
         }
         return hours;
+    }
+
+
+    private onSelectListener onSelectListener;
+
+    public void setOnSelectListener(onSelectListener listener) {
+        this.onSelectListener = listener;
+    }
+
+
+    public interface onSelectListener {
+
+        void onCommit(String date);
     }
 
 

@@ -186,6 +186,12 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
                 break;
             case R.id.dispatching_time_layout:   //配送时间
                 TimeDialog dialog1 = new TimeDialog(this);
+                dialog1.setOnSelectListener(new TimeDialog.onSelectListener() {
+                    @Override
+                    public void onCommit(String date) {
+                        dispatchingTime.setText(date);
+                    }
+                });
                 dialog1.showAtLocation(mianView, Gravity.BOTTOM, 0, 0);
                 break;
         }
