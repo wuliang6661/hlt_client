@@ -4,6 +4,7 @@ package com.wul.hlt_client.ui.ordercommit;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,6 +21,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alipay.sdk.app.PayTask;
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.wul.hlt_client.R;
 import com.wul.hlt_client.base.GlideApp;
@@ -27,11 +31,14 @@ import com.wul.hlt_client.entity.AddressBO;
 import com.wul.hlt_client.entity.MoneyBO;
 import com.wul.hlt_client.entity.PayResult;
 import com.wul.hlt_client.entity.ShoppingCarBO;
+import com.wul.hlt_client.entity.request.CommitOrderBO;
 import com.wul.hlt_client.mvp.MVPBaseActivity;
 import com.wul.hlt_client.ui.ordershop.OrderShopActivity;
 import com.wul.hlt_client.widget.PayDialog;
-import com.wul.hlt_client.widget.TimeDialog;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -94,7 +101,12 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
     @BindView(R.id.mian_view)
     RelativeLayout mianView;
 
-    private int strPayType = 1;   //默认支付宝
+    private int strPayType = 2;   //默认支付宝   1是货到付款
+
+    private MoneyBO moneyBO;
+
+    TimePickerView pvView;
+    TimePickerBuilder builder;
 
     @Override
     protected int getLayout() {
@@ -109,13 +121,35 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
         goBack();
         setTitleText("确认订单");
 
+        payType.setText("支付宝");
         goodLayout.setOnClickListener(this);
         payLayout.setOnClickListener(this);
         dispatchingTimeLayout.setOnClickListener(this);
+        shopCarButton.setOnClickListener(this);
         mPresenter.getAddressInfo();
         mPresenter.getShoppingList(0);
         mPresenter.getMoney(0);
+        setListener();
         requestPermission();
+    }
+
+    /**
+     * 初始化
+     */
+    private void setListener() {
+        checkbox.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                if (strPayType != 2) {
+                    showToast("余额抵扣只支持支付宝支付！");
+                    checkbox.setChecked(false);
+                } else {
+                    checkbox.setChecked(true);
+                    orderPrice.setText("¥ " + (moneyBO.getAmount() - moneyBO.getBalancePay()));
+                }
+            } else {
+                orderPrice.setText("¥ " + moneyBO.getAmount());
+            }
+        });
     }
 
 
@@ -214,6 +248,7 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
 
     @Override
     public void getMoney(MoneyBO moneyBO) {
+        this.moneyBO = moneyBO;
         blancePrice.setText("余额可抵用" + moneyBO.getBalancePay());
         dispatchingPrice.setText("¥ " + moneyBO.getDistributionFee());
         orderPrice.setText("¥ " + moneyBO.getAmount());
@@ -231,28 +266,126 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
                     strPayType = type;
                     switch (type) {
                         case 1:
-                            payType.setText("支付宝");
+                            payType.setText("货到付款");
                             break;
                         case 2:
-                            payType.setText("货到付款");
+                            payType.setText("支付宝");
                             break;
                     }
                 });
                 dialog.showAtLocation(mianView, Gravity.BOTTOM, 0, 0);
                 break;
             case R.id.dispatching_time_layout:   //配送时间
-                TimeDialog dialog1 = new TimeDialog(this);
-                dialog1.setOnSelectListener(new TimeDialog.onSelectListener() {
-                    @Override
-                    public void onCommit(String date) {
-                        dispatchingTime.setText(date);
-                    }
-                });
-                dialog1.showAtLocation(mianView, Gravity.BOTTOM, 0, 0);
+                showTimeSelect();
+                break;
+            case R.id.shop_car_button:
+                CommitOrderBO orderBO = new CommitOrderBO();
+
                 break;
         }
     }
 
+
+    TextView hourTime;
+
+    /**
+     * 显示时间选择器
+     */
+    private void showTimeSelect() {
+        Calendar selectedDate = Calendar.getInstance();//系统当前时间
+        Calendar startDate = Calendar.getInstance();
+        startDate.setTime(new Date());
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(Calendar.DAY_OF_YEAR, endDate.get(Calendar.DAY_OF_YEAR) + 7);
+
+        View view = getLayoutInflater().inflate(R.layout.dialog_time, null);
+        builder = new TimePickerBuilder(this, new OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {
+                switch (v.getId()) {
+                    case R.id.commit:
+
+                        break;
+                    default:
+                        if (isNow(date)) {
+                            hourTime.setText("11：00 - 15：00 点  ");
+                        } else {
+                            hourTime.setText("06：00 - 11：00 点  ");
+                        }
+                        break;
+                }
+            }
+        });
+        builder.setDate(selectedDate);
+        builder.setTimeSelectChangeListener(date -> {
+            pvView.returnData();
+        });
+        builder.setRangDate(startDate, endDate);
+        builder.setLayoutRes(R.layout.dialog_time, v -> {
+            TextView commit = v.findViewById(R.id.commit);
+            commit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    hourTime = view.findViewById(R.id.hour_time);
+                    pvView.returnData();
+                }
+            });
+        });
+        builder.setType(new boolean[]{true, true, true, false, false, false});
+        builder.isCenterLabel(false).setDividerColor(Color.WHITE);
+        builder.setContentTextSize(15);
+        pvView = builder.build();
+        pvView.show(view, true);
+    }
+
+
+    /**
+     * 判断当前时间是否在[startTime, endTime]区间，注意时间格式要一致
+     *
+     * @param nowTime   当前时间
+     * @param startTime 开始时间
+     * @param endTime   结束时间
+     * @return
+     * @author jqlin
+     */
+    public static boolean isEffectiveDate(Date nowTime, Date startTime, Date endTime) {
+        if (nowTime.getTime() == startTime.getTime()
+                || nowTime.getTime() == endTime.getTime()) {
+            return true;
+        }
+        Calendar date = Calendar.getInstance();
+        date.setTime(nowTime);
+
+        Calendar begin = Calendar.getInstance();
+        begin.setTime(startTime);
+
+        Calendar end = Calendar.getInstance();
+        end.setTime(endTime);
+
+        if (date.after(begin) && date.before(end)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    /**
+     * 判断时间是不是今天
+     *
+     * @param date
+     * @return 是返回true，不是返回false
+     */
+    private static boolean isNow(Date date) {
+        //当前时间
+        Date now = new Date();
+        SimpleDateFormat sf = new SimpleDateFormat("yyyyMMdd");
+        //获取今天的日期
+        String nowDay = sf.format(now);
+        //对比的时间
+        String day = sf.format(date);
+        return day.equals(nowDay);
+    }
 
     /**
      * 调用支付宝支付

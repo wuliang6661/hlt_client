@@ -12,12 +12,17 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.adapter.ArrayWheelAdapter;
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.CustomListener;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
 import com.blankj.utilcode.util.LogUtils;
 import com.contrarywind.view.WheelView;
 import com.wul.hlt_client.R;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -32,8 +37,6 @@ public class TimeDialog extends PopupWindow {
     private WheelView year;
     private WheelView month;
     private WheelView day;
-    private WheelView startHour;
-    private WheelView endHour;
     private TextView commit;
     private ImageView colse;
 
@@ -93,18 +96,37 @@ public class TimeDialog extends PopupWindow {
         year = view.findViewById(R.id.year);
         month = view.findViewById(R.id.month);
         day = view.findViewById(R.id.day);
-        startHour = view.findViewById(R.id.hour);
-        endHour = view.findViewById(R.id.end_hour);
         commit = view.findViewById(R.id.commit);
         colse = view.findViewById(R.id.colse);
 
-        views = new WheelView[]{year, month, day, startHour, endHour};
-        initView();
-        year.setAdapter(new ArrayWheelAdapter<>(getYear()));
-        month.setAdapter(new ArrayWheelAdapter<>(getMonth()));
-        day.setAdapter(new ArrayWheelAdapter<>(getDay(currentYeay, currentMonth)));
-        startHour.setAdapter(new ArrayWheelAdapter<>(getHours()));
-        endHour.setAdapter(new ArrayWheelAdapter<>(getHours()));
+        Calendar selectedDate = Calendar.getInstance();//系统当前时间
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH) + 1, 23);
+        Calendar endDate = Calendar.getInstance();
+        endDate.set(2069, 2, 28);
+
+        TimePickerView builder = new TimePickerBuilder(context, new OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {
+
+            }
+        }).setDate(selectedDate)
+                .setRangDate(startDate, endDate).setLayoutRes(R.layout.dialog_time, new CustomListener() {
+                    @Override
+                    public void customLayout(View v) {
+
+                    }
+                }).setType(new boolean[]{true, true, true, false, false, false})
+                .isCenterLabel(false) //是否只显示中间选中项的label文字，false则每项item全部都带有label。
+                .setDividerColor(Color.RED)
+                .build();
+
+        builder.show();
+
+//        initView();
+//        year.setAdapter(new ArrayWheelAdapter<>(getYear()));
+//        month.setAdapter(new ArrayWheelAdapter<>(getMonth()));
+//        day.setAdapter(new ArrayWheelAdapter<>(getDay(currentYeay, currentMonth)));
     }
 
 
@@ -152,13 +174,14 @@ public class TimeDialog extends PopupWindow {
                 selectYear = years.get(year.getCurrentItem());
                 selectMonth = months.get(month.getCurrentItem());
                 selectDay = days.get(day.getCurrentItem());
-                selectStartHour = hours.get(startHour.getCurrentItem());
-                selectEndHour = hours.get(endHour.getCurrentItem());
                 if (this.onSelectListener != null) {
-                    this.onSelectListener.onCommit(selectYear + selectMonth + selectDay
-                            + selectStartHour + selectEndHour);
+                    this.onSelectListener.onCommit(selectYear + "/" + selectMonth + "/" + selectDay
+                            + "   " + selectStartHour + "-" + selectEndHour);
+                    this.onSelectListener.onSelect(selectYear, selectMonth, selectDay, selectStartHour, selectEndHour);
+                    dismiss();
+                } else {
+                    dismiss();
                 }
-                dismiss();
                 break;
         }
     };
@@ -237,6 +260,8 @@ public class TimeDialog extends PopupWindow {
     public interface onSelectListener {
 
         void onCommit(String date);
+
+        void onSelect(String year, String month, String day, String startTime, String endTime);
     }
 
 

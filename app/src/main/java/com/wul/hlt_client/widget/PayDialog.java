@@ -65,11 +65,11 @@ public class PayDialog extends PopupWindow {
         huodaoPayLayout = mView.findViewById(R.id.huodao_pay);
         colse = mView.findViewById(R.id.colse);
         switch (type) {
-            case 1:
+            case 2:
                 aliPay.setChecked(true);
                 huodao.setChecked(false);
                 break;
-            case 2:
+            case 1:
                 aliPay.setChecked(false);
                 huodao.setChecked(true);
                 break;
@@ -95,9 +95,9 @@ public class PayDialog extends PopupWindow {
                 case R.id.commit:
                     if (onCommitListener != null) {
                         if (aliPay.isChecked()) {
-                            onCommitListener.onCommit(1);
-                        } else {
                             onCommitListener.onCommit(2);
+                        } else {
+                            onCommitListener.onCommit(1);
                         }
                     }
                     dismiss();
