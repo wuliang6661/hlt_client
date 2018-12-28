@@ -49,6 +49,8 @@ public class OpsGoodActivity extends MVPBaseActivity<OpsGoodContract.View, OpsGo
     @BindView(R.id.shop_car_button)
     TextView shopCarButton;
 
+    private ShopAdapter adapter;
+
     @Override
     protected int getLayout() {
         return R.layout.act_ops_good;
@@ -116,7 +118,7 @@ public class OpsGoodActivity extends MVPBaseActivity<OpsGoodContract.View, OpsGo
 
     @Override
     public void getOpsShop(List<ShopBO> list) {
-        ShopAdapter adapter = new ShopAdapter(this, list, MyApplication.shopCarBO);
+        adapter = new ShopAdapter(this, list, MyApplication.shopCarBO);
         recycle.setAdapter(adapter);
     }
 

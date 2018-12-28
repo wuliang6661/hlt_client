@@ -129,6 +129,7 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
         goBack();
         setTitleText("确认订单");
 
+        //  EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);   //沙箱版测试
         payType.setText("支付宝");
         goodLayout.setOnClickListener(this);
         payLayout.setOnClickListener(this);
