@@ -2,6 +2,8 @@ package com.wul.hlt_client.util;
 
 import android.app.Activity;
 
+import com.wul.hlt_client.ui.main.MainActivity;
+
 import java.util.Stack;
 
 /**
@@ -55,6 +57,15 @@ public class AppManager {
             activity.finish();
         }
     }
+
+    public void goHome() {
+        for (int i = 0, size = activityStack.size(); i < size; i++) {
+            if (null != activityStack.get(i) && !(activityStack.get(i) instanceof MainActivity)) {
+                activityStack.get(i).finish();
+            }
+        }
+    }
+
 
     public void finishAllActivity() {
         for (int i = 0, size = activityStack.size(); i < size; i++) {
