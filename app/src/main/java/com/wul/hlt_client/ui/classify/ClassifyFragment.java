@@ -20,10 +20,15 @@ import com.wul.hlt_client.base.MyApplication;
 import com.wul.hlt_client.entity.CityGongGao;
 import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.XianShiBO;
+import com.wul.hlt_client.entity.event.SwitchFlow;
 import com.wul.hlt_client.mvp.MVPBaseFragment;
 import com.wul.hlt_client.ui.DowmTimer;
 import com.wul.hlt_client.ui.ShopAdapter;
 import com.wul.hlt_client.ui.opsgood.OpsGoodActivity;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 import java.util.Timer;
@@ -59,10 +64,14 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
     @BindView(R.id.recycle)
     RecyclerView recycle;
     Unbinder unbinder;
+    @BindView(R.id.time_layout)
+    LinearLayout timeLayout;
 
     private int flowSelectPosition = 0;
 
     private List<ClassifyBO> classifyBOS;
+
+    private FlowAdapter adapter;
 
     Timer timer;
 
@@ -72,12 +81,14 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fra_classify, null);
         unbinder = ButterKnife.bind(this, view);
+        EventBus.getDefault().register(this);
         return view;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        EventBus.getDefault().unregister(this);
         unbinder.unbind();
     }
 
@@ -108,7 +119,6 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
     }
 
 
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -118,6 +128,16 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
 
         }
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(SwitchFlow flow) {
+        if (adapter != null) {
+            adapter.setSelectPosition(flow.position);
+            flowSelectPosition = flow.position;
+            mPresenter.getChildClassify(classifyBOS.get(flowSelectPosition).getId());
+        }
+    }
+
 
     @Override
     public void onRequestError(String msg) {
@@ -144,7 +164,7 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
         if (list != null && list.size() > 0) {
             mPresenter.getChildClassify(list.get(0).getId());
         }
-        FlowAdapter adapter = new FlowAdapter(getActivity(), list);
+        adapter = new FlowAdapter(getActivity(), list);
         adapter.setOnItemClickListener(R.id.flow_text, (view, position) -> {
             adapter.setSelectPosition(position);
             flowSelectPosition = position;
@@ -168,6 +188,12 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
 
     @Override
     public void getXianshiList(XianShiBO shopBOS) {
+        if (shopBOS.getList() == null || shopBOS.getList().size() == 0) {
+            timeLayout.setVisibility(View.GONE);
+            return;
+        } else {
+            timeLayout.setVisibility(View.VISIBLE);
+        }
         ShopAdapter adapter = new ShopAdapter(getActivity(), shopBOS.getList(), MyApplication.shopCarBO);
         recycle.setAdapter(adapter);
         timer = new Timer();

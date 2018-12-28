@@ -18,11 +18,16 @@ import com.wul.hlt_client.api.HttpServiceIml;
 import com.wul.hlt_client.base.BaseActivity;
 import com.wul.hlt_client.base.MyApplication;
 import com.wul.hlt_client.entity.ShopCarBO;
+import com.wul.hlt_client.entity.event.SwithFragment;
 import com.wul.hlt_client.ui.classify.ClassifyFragment;
 import com.wul.hlt_client.ui.main.home.HomeFragment;
 import com.wul.hlt_client.ui.main.shopcar.ShopCarFragment;
 import com.wul.hlt_client.util.AppManager;
 import com.xyz.tabitem.BottmTabItem;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -62,6 +67,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        EventBus.getDefault().register(this);
         buttms = new BottmTabItem[]{main1, main2, main3, main4};
         fragment1 = new HomeFragment();
         fragment2 = new ClassifyFragment();
@@ -75,6 +81,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         requestPermission();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 
     /**
      * 初始化fragment
@@ -141,6 +152,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
         }
     }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(SwithFragment swithFragment) {
+        showHideFragment(mFragments[swithFragment.goFragment], mFragments[selectPosition]);
+        selectPosition = swithFragment.goFragment;
+        setButtom(swithFragment.goFragment);
+    }
+
 
     /**
      * 设置底部按钮显示

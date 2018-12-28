@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.donkingliang.banner.CustomBanner;
@@ -26,12 +27,16 @@ import com.wul.hlt_client.entity.BannerBo;
 import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.entity.XianShiBO;
+import com.wul.hlt_client.entity.event.SwitchFlow;
+import com.wul.hlt_client.entity.event.SwithFragment;
 import com.wul.hlt_client.mvp.MVPBaseFragment;
 import com.wul.hlt_client.ui.DowmTimer;
 import com.wul.hlt_client.ui.opsgood.OpsGoodActivity;
 import com.wul.hlt_client.ui.salesgood.SalesGoodActivity;
 import com.wul.hlt_client.widget.lgrecycleadapter.LGRecycleViewAdapter;
 import com.wul.hlt_client.widget.lgrecycleadapter.LGViewHolder;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 import java.util.Timer;
@@ -73,6 +78,8 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     TextView downTimeText;
 
     Timer timer;
+    @BindView(R.id.xianshi_layout)
+    LinearLayout xianshiLayout;
 
 
     @Nullable
@@ -171,6 +178,10 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
                 holder.setText(R.id.item_text, classifyBO.getCategoryName());
             }
         };
+        adapter.setOnItemClickListener(R.id.item_layout, (view, position) -> {
+            EventBus.getDefault().post(new SwithFragment(1));
+            EventBus.getDefault().post(new SwitchFlow(position));
+        });
         classifyRecycle.setAdapter(adapter);
     }
 
@@ -209,6 +220,14 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     @Override
     public void getXianshiList(XianShiBO list) {
         swipe.setRefreshing(false);
+        if (list.getList() == null || list.getList().size() == 0) {
+            xianshiRecycle.setVisibility(View.GONE);
+            xianshiLayout.setVisibility(View.GONE);
+            return;
+        } else {
+            xianshiRecycle.setVisibility(View.VISIBLE);
+            xianshiLayout.setVisibility(View.VISIBLE);
+        }
         LGRecycleViewAdapter<ShopBO> adapter = new LGRecycleViewAdapter<ShopBO>(list.getList()) {
             @Override
             public int getLayoutId(int viewType) {

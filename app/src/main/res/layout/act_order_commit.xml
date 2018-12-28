@@ -66,7 +66,9 @@
             android:id="@+id/order_price"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
             android:layout_weight="1"
+            android:singleLine="true"
             android:text="¥ 0.00"
             android:textColor="#f5142f"
             android:textSize="18sp" />
@@ -227,8 +229,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:text="请选择配送时间"
+                        android:hint="请选择配送时间"
                         android:textColor="#61c95f"
+                        android:textColorHint="#61c95f"
                         android:textSize="13sp" />
 
                     <ImageView

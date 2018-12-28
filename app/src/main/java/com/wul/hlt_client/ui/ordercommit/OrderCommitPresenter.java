@@ -5,6 +5,7 @@ import com.wul.hlt_client.api.HttpServiceIml;
 import com.wul.hlt_client.entity.AddressBO;
 import com.wul.hlt_client.entity.MoneyBO;
 import com.wul.hlt_client.entity.ShoppingCarBO;
+import com.wul.hlt_client.entity.request.CommitOrderBO;
 import com.wul.hlt_client.mvp.BasePresenterImpl;
 
 /**
@@ -61,7 +62,22 @@ public class OrderCommitPresenter extends BasePresenterImpl<OrderCommitContract.
     /**
      * 确认订单
      */
-    public void commitOrder() {
+    public void commitOrder(CommitOrderBO orderBO) {
+        HttpServiceIml.commitOrder(orderBO).subscribe(new HttpResultSubscriber<String>() {
+            @Override
+            public void onSuccess(String s) {
+                if (mView != null) {
+                    mView.paySourss(s);
+                }
+            }
+
+            @Override
+            public void onFiled(String message) {
+                if (mView != null) {
+                    mView.onRequestError(message);
+                }
+            }
+        });
     }
 
 

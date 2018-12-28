@@ -22,6 +22,8 @@ public class OrderCommitContract {
 
         void getMoney(MoneyBO moneyBO);
 
+        void paySourss(String orderInfo);
+
     }
 
     interface Presenter extends BasePresenter<View> {

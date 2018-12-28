@@ -16,6 +16,7 @@ import com.wul.hlt_client.R;
 import com.wul.hlt_client.base.MyApplication;
 import com.wul.hlt_client.entity.ShopCarBO;
 import com.wul.hlt_client.entity.event.ShopCarRefresh;
+import com.wul.hlt_client.entity.event.SwithFragment;
 import com.wul.hlt_client.mvp.MVPBaseFragment;
 import com.wul.hlt_client.ui.ordercommit.OrderCommitActivity;
 
@@ -73,6 +74,7 @@ public class ShopCarFragment extends MVPBaseFragment<ShopCarContract.View, ShopC
 
         shopCarButton.setOnClickListener(view1 -> mPresenter.testSkipe());
         clearCar.setOnClickListener(v -> mPresenter.clearShoppingCar());
+        goShopping.setOnClickListener(v -> EventBus.getDefault().post(new SwithFragment(1)));
     }
 
 

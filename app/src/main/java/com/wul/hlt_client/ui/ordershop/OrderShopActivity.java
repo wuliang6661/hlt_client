@@ -2,7 +2,6 @@ package com.wul.hlt_client.ui.ordershop;
 
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -44,7 +43,8 @@ public class OrderShopActivity extends MVPBaseActivity<OrderShopContract.View, O
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recycle.setLayoutManager(manager);
 
-        mPresenter.getShoppingList(0);
+        int orderType = getIntent().getExtras().getInt("orderType");
+        mPresenter.getShoppingList(orderType);
     }
 
     @Override

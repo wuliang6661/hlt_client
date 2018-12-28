@@ -7,17 +7,7 @@ package com.wul.hlt_client.entity.request;
 public class CommitOrderBO extends BaseRequest {
 
 
-    /**
-     * balancePay : string
-     * distributionFee : string
-     * orderType : 0
-     * payChannel : 0
-     * requireDeliverOn : string
-     * uaddress : {}
-     */
-
-    public String balancePay;
-    public String distributionFee;
+    public int balancePayStatus;   //是否余额抵扣
     public int orderType;
     public int payChannel;
     public String requireDeliverOn;

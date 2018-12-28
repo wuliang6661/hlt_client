@@ -22,8 +22,9 @@ import android.widget.TextView;
 
 import com.alipay.sdk.app.PayTask;
 import com.bigkoo.pickerview.builder.TimePickerBuilder;
-import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.TimePickerView;
+import com.blankj.utilcode.util.StringUtils;
+import com.contrarywind.view.WheelView;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.wul.hlt_client.R;
 import com.wul.hlt_client.base.GlideApp;
@@ -34,8 +35,10 @@ import com.wul.hlt_client.entity.ShoppingCarBO;
 import com.wul.hlt_client.entity.request.CommitOrderBO;
 import com.wul.hlt_client.mvp.MVPBaseActivity;
 import com.wul.hlt_client.ui.ordershop.OrderShopActivity;
+import com.wul.hlt_client.widget.AlertDialog;
 import com.wul.hlt_client.widget.PayDialog;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -108,6 +111,11 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
     TimePickerView pvView;
     TimePickerBuilder builder;
 
+    private String selectTime;    //选择的配送时间
+    private Date selectDate;      //选择的时间
+
+    private int orderType = 0;     //默认按正单计算
+
     @Override
     protected int getLayout() {
         return R.layout.act_order_commit;
@@ -127,8 +135,8 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
         dispatchingTimeLayout.setOnClickListener(this);
         shopCarButton.setOnClickListener(this);
         mPresenter.getAddressInfo();
-        mPresenter.getShoppingList(0);
-        mPresenter.getMoney(0);
+        mPresenter.getShoppingList(orderType);
+        mPresenter.getMoney(orderType);
         setListener();
         requestPermission();
     }
@@ -212,7 +220,9 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
 
     @Override
     public void testSuress() {
-        gotoActivity(OrderShopActivity.class, false);
+        Bundle bundle = new Bundle();
+        bundle.putInt("orderType", orderType);
+        gotoActivity(OrderShopActivity.class, bundle, false);
     }
 
     @Override
@@ -255,6 +265,20 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
     }
 
     @Override
+    public void paySourss(String orderInfo) {
+        if (StringUtils.isEmpty(orderInfo)) {
+            if (strPayType == 1) {
+                showToast("下单成功！");
+                finish();
+            } else {
+                showToast("orderInfo为空！");
+            }
+        } else {
+            aliPay(orderInfo);
+        }
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.good_layout:   //进入商品清单
@@ -267,6 +291,7 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
                     switch (type) {
                         case 1:
                             payType.setText("货到付款");
+                            checkbox.setChecked(false);
                             break;
                         case 2:
                             payType.setText("支付宝");
@@ -279,56 +304,114 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
                 showTimeSelect();
                 break;
             case R.id.shop_car_button:
-                CommitOrderBO orderBO = new CommitOrderBO();
-
+                String time = dispatchingTime.getText().toString().trim();
+                if (StringUtils.isEmpty(time)) {
+                    showToast("请选择配送时间！");
+                    return;
+                }
+                if (isZhengDan()) {   //可以下单
+                    if (orderType == 1 && strPayType == 2) {
+                        new AlertDialog(this).builder().setGone().setMsg("临时补单只支持货到付款")
+                                .setNegativeButton("确定", null).show();
+                    } else {
+                        CommitOrderBO orderBO = new CommitOrderBO();
+                        orderBO.balancePayStatus = checkbox.isChecked() ? 0 : 1;
+                        orderBO.orderType = orderType;
+                        orderBO.payChannel = strPayType;
+                        orderBO.requireDeliverOn = selectTime.replaceAll(":00", "").replace(" ", "");
+                        mPresenter.commitOrder(orderBO);
+                    }
+                } else {
+                    new AlertDialog(this).builder().setGone().setMsg("当前时间不能临时补单\n请重新选择配送时间")
+                            .setNegativeButton("确定", null).show();
+                }
                 break;
         }
     }
 
 
     TextView hourTime;
+    private int selectView = 0;   //默认是滑动控件
 
     /**
      * 显示时间选择器
      */
+    @SuppressLint("ClickableViewAccessibility")
     private void showTimeSelect() {
-        Calendar selectedDate = Calendar.getInstance();//系统当前时间
         Calendar startDate = Calendar.getInstance();
-        startDate.setTime(new Date());
         Calendar endDate = Calendar.getInstance();
-        endDate.set(Calendar.DAY_OF_YEAR, endDate.get(Calendar.DAY_OF_YEAR) + 7);
+        endDate.set(Calendar.DAY_OF_YEAR, endDate.get(Calendar.DAY_OF_YEAR) + 7);   //默认设置可选择7天，可配置
 
         View view = getLayoutInflater().inflate(R.layout.dialog_time, null);
-        builder = new TimePickerBuilder(this, new OnTimeSelectListener() {
-            @Override
-            public void onTimeSelect(Date date, View v) {
-                switch (v.getId()) {
-                    case R.id.commit:
-
-                        break;
-                    default:
-                        if (isNow(date)) {
-                            hourTime.setText("11：00 - 15：00 点  ");
+        builder = new TimePickerBuilder(this, (date, v) -> {
+            switch (selectView) {
+                case 1:
+                    SimpleDateFormat sf = new SimpleDateFormat("yyyy年MM月dd日");
+                    selectTime = sf.format(date) + " " + hourTime.getText().toString();
+                    selectDate = date;
+                    dispatchingTime.setText(selectTime);
+                    if (isZhengDan()) {
+                        if (orderType == 1) {
+                            new AlertDialog(this).builder().setGone().setTitle("请注意")
+                                    .setMsg("该订单为临时补单\n采购价格将会上调")
+                                    .setCancelable(false)
+                                    .setNegativeButton("确定", v12 -> {
+                                        mPresenter.getShoppingList(orderType);
+                                        mPresenter.getMoney(orderType);
+                                    }).show();
                         } else {
-                            hourTime.setText("06：00 - 11：00 点  ");
+                            mPresenter.getShoppingList(orderType);
+                            mPresenter.getMoney(orderType);
                         }
-                        break;
-                }
+                    } else {
+                        mPresenter.getShoppingList(orderType);
+                        mPresenter.getMoney(orderType);
+                    }
+                    pvView.dismiss();
+                    break;
+                default:
+                    if (isNow(date)) {
+                        hourTime.setText("11:00-15:00点");
+                    } else {
+                        hourTime.setText("06:00-11:00点");
+                    }
+                    break;
             }
         });
-        builder.setDate(selectedDate);
+        builder.setDate(startDate);
         builder.setTimeSelectChangeListener(date -> {
             pvView.returnData();
         });
         builder.setRangDate(startDate, endDate);
         builder.setLayoutRes(R.layout.dialog_time, v -> {
             TextView commit = v.findViewById(R.id.commit);
-            commit.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    hourTime = view.findViewById(R.id.hour_time);
-                    pvView.returnData();
-                }
+            WheelView year = v.findViewById(R.id.year);
+            WheelView month = v.findViewById(R.id.month);
+            WheelView day = v.findViewById(R.id.day);
+            LinearLayout layout = v.findViewById(R.id.dialog_layout);
+            layout.setOnTouchListener((v14, event) -> {
+                hourTime = v14.findViewById(R.id.hour_time);
+                return false;
+            });
+            year.setOnTouchListener((v13, event) -> {
+                selectView = 0;
+                hourTime = v.findViewById(R.id.hour_time);
+                return false;
+            });
+            month.setOnTouchListener((v1, event) -> {
+                selectView = 0;
+                hourTime = v.findViewById(R.id.hour_time);
+                return false;
+            });
+            day.setOnTouchListener((v1, event) -> {
+                selectView = 0;
+                hourTime = v.findViewById(R.id.hour_time);
+                return false;
+            });
+            commit.setOnClickListener(view1 -> {
+                selectView = 1;
+                hourTime = v.findViewById(R.id.hour_time);
+                pvView.returnData();
             });
         });
         builder.setType(new boolean[]{true, true, true, false, false, false});
@@ -387,9 +470,37 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
         return day.equals(nowDay);
     }
 
+
     /**
-     * 调用支付宝支付
+     * 是否能下单
      */
+    @SuppressLint("SimpleDateFormat")
+    private boolean isZhengDan() {
+        String format = "HH:mm:ss";
+        SimpleDateFormat sf = new SimpleDateFormat("HH:mm:ss");
+        String now = sf.format(new Date());
+        if (isNow(selectDate)) {   //如果时间是今天
+            try {
+                Date startTime = new SimpleDateFormat(format).parse("11:00:00");
+                Date endTime = new SimpleDateFormat(format).parse("15:00:00");
+                Date nowTime = new SimpleDateFormat(format).parse(now);
+                if (isEffectiveDate(nowTime, startTime, endTime)) {
+                    orderType = 1;
+                    return true;
+                } else {
+                    orderType = 0;
+                    return false;
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        } else {
+            orderType = 0;
+        }
+        return true;
+    }
+
+
     private void aliPay(String orderInfo) {
         final Runnable payRunnable = () -> {
             PayTask alipay = new PayTask(OrderCommitActivity.this);
@@ -422,8 +533,11 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
                     // 判断resultStatus 为9000则代表支付成功
                     if (TextUtils.equals(resultStatus, "9000")) {    //支付成功
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
+                        showToast("支付成功！");
+                        finish();
                     } else {              //支付失败
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
+                        showToast("支付失败！");
                     }
                     break;
                 }

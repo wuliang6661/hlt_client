@@ -13,31 +13,31 @@ public class MoneyBO {
      * distributionFee : 0.0
      */
 
-    private double balancePay;
-    private double amount;
-    private double distributionFee;
+    private float balancePay;
+    private float amount;
+    private float distributionFee;
 
-    public double getBalancePay() {
+    public float getBalancePay() {
         return balancePay;
     }
 
-    public void setBalancePay(double balancePay) {
+    public void setBalancePay(float balancePay) {
         this.balancePay = balancePay;
     }
 
-    public double getAmount() {
+    public float getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 
-    public double getDistributionFee() {
+    public float getDistributionFee() {
         return distributionFee;
     }
 
-    public void setDistributionFee(double distributionFee) {
+    public void setDistributionFee(float distributionFee) {
         this.distributionFee = distributionFee;
     }
 }
