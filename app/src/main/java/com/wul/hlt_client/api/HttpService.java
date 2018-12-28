@@ -23,6 +23,7 @@ import com.wul.hlt_client.entity.request.RegisterBO;
 import com.wul.hlt_client.entity.request.ShopCarSetBO;
 import com.wul.hlt_client.entity.request.ShoppingListBO;
 import com.wul.hlt_client.entity.request.XianshiBO;
+import com.wul.hlt_client.entity.request.GetShopRequest;
 
 import java.util.List;
 
@@ -161,6 +162,18 @@ public interface HttpService {
      */
     @POST("/hct_webservice/app/address/settlement/getMoney")
     Observable<BaseResult<MoneyBO>> getMoney(@Body ShoppingListBO listBO);
+
+    /**
+     * 搜索接口
+     */
+    @POST("/hct_webservice/app/address/home/search")
+    Observable<BaseResult<XianShiBO>> searchList(@Body GetShopRequest request);
+
+    /**
+     * 根据子类型查询商品
+     */
+    @POST("/hct_webservice/app/address/home/getProductListByCategoryAndSubCategory")
+    Observable<BaseResult<XianShiBO>> getShopList(@Body XianshiBO xianshiBO);
 
 
 }

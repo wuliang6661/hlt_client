@@ -188,9 +188,8 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
 
     @Override
     public void getXianshiList(XianShiBO shopBOS) {
-        if (shopBOS.getList() == null || shopBOS.getList().size() == 0) {
+        if (shopBOS.getStartTime() == 0 || shopBOS.getEndTime() == 0) {
             timeLayout.setVisibility(View.GONE);
-            return;
         } else {
             timeLayout.setVisibility(View.VISIBLE);
         }

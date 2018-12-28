@@ -16,6 +16,7 @@ import com.wul.hlt_client.entity.XianShiBO;
 import com.wul.hlt_client.entity.request.BaseRequest;
 import com.wul.hlt_client.entity.request.ChildFlowBO;
 import com.wul.hlt_client.entity.request.CommitOrderBO;
+import com.wul.hlt_client.entity.request.GetShopRequest;
 import com.wul.hlt_client.entity.request.LoginBo;
 import com.wul.hlt_client.entity.request.PageBO;
 import com.wul.hlt_client.entity.request.RegionBO;
@@ -228,5 +229,21 @@ public class HttpServiceIml {
         return getService().getMoney(listBO).compose(RxResultHelper.httpRusult());
     }
 
+    /**
+     * 搜索商品
+     */
+    public static Observable<XianShiBO> searchList(GetShopRequest request) {
+        request.token = MyApplication.token;
+        return getService().searchList(request).compose(RxResultHelper.httpRusult());
+    }
+
+
+    /**
+     * 根据子类型查询商品
+     */
+    public static Observable<XianShiBO> getShopList(XianshiBO xianshiBO) {
+        xianshiBO.token = MyApplication.token;
+        return getService().getShopList(xianshiBO).compose(RxResultHelper.httpRusult());
+    }
 
 }

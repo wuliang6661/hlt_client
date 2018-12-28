@@ -1,12 +1,9 @@
 package com.wul.hlt_client.ui.classify;
 
-import android.content.Context;
-
 import com.wul.hlt_client.api.HttpResultSubscriber;
 import com.wul.hlt_client.api.HttpServiceIml;
 import com.wul.hlt_client.entity.CityGongGao;
 import com.wul.hlt_client.entity.ClassifyBO;
-import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.entity.XianShiBO;
 import com.wul.hlt_client.entity.request.PageBO;
 import com.wul.hlt_client.entity.request.XianshiBO;
@@ -89,7 +86,7 @@ public class ClassifyPresenter extends BasePresenterImpl<ClassifyContract.View>
         xianshiBO.pageSize = 1000;
         xianshiBO.categoryId = id + "";
         xianshiBO.subCategoryId = childId + "";
-        HttpServiceIml.getXianshiList(xianshiBO).subscribe(new HttpResultSubscriber<XianShiBO>() {
+        HttpServiceIml.getShopList(xianshiBO).subscribe(new HttpResultSubscriber<XianShiBO>() {
             @Override
             public void onSuccess(XianShiBO list) {
                 if (mView != null) {
