@@ -60,11 +60,6 @@
         android:layout_above="@+id/shop_car_layout"
         android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="24dp"
-            android:background="@color/white" />
-
         <include layout="@layout/title_bar1" />
 
         <View

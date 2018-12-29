@@ -1,4 +1,4 @@
-package com.wul.hlt_client.ui.salesgood;
+package com.wul.hlt_client.ui.main.salesgood;
 
 import com.wul.hlt_client.api.HttpResultSubscriber;
 import com.wul.hlt_client.api.HttpServiceIml;

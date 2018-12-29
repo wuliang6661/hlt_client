@@ -75,6 +75,16 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
 
     Timer timer;
 
+
+    public static ClassifyFragment getInstanse(int flowSelectPosition) {
+        Bundle bundle = new Bundle();
+        bundle.putInt("key", flowSelectPosition);
+        ClassifyFragment fragment = new ClassifyFragment();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -96,11 +106,17 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        flowSelectPosition = getArguments().getInt("key");
         initView();
-        mPresenter.getCityGongGao();
         mPresenter.getClassifyList();
     }
 
+
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        mPresenter.getCityGongGao();
+    }
 
     /**
      * 初始化布局
@@ -131,12 +147,17 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(SwitchFlow flow) {
+        flowSelectPosition = flow.position;
         if (adapter != null) {
             adapter.setSelectPosition(flow.position);
-            flowSelectPosition = flow.position;
             mPresenter.getChildClassify(classifyBOS.get(flowSelectPosition).getId());
         }
     }
+
+//    @Subscribe(threadMode = ThreadMode.MAIN)
+//    public void onEvent(FinishEvent event) {
+//        pop();
+//    }
 
 
     @Override
@@ -162,7 +183,7 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
     public void getClassify(List<ClassifyBO> list) {
         this.classifyBOS = list;
         if (list != null && list.size() > 0) {
-            mPresenter.getChildClassify(list.get(0).getId());
+            mPresenter.getChildClassify(list.get(flowSelectPosition).getId());
         }
         adapter = new FlowAdapter(getActivity(), list);
         adapter.setOnItemClickListener(R.id.flow_text, (view, position) -> {
@@ -170,6 +191,7 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
             flowSelectPosition = position;
             mPresenter.getChildClassify(list.get(position).getId());
         });
+        adapter.setSelectPosition(flowSelectPosition);
         zhuClassifyRecycle.setAdapter(adapter);
     }
 
@@ -225,6 +247,5 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
             timer.cancel();
         }
     }
-
 
 }

@@ -15,7 +15,7 @@ public class ShopCarPresenter extends BasePresenterImpl<ShopCarContract.View>
 
 
     public void getShopCarList() {
-        HttpServiceIml.getShopCarList().subscribe(new HttpResultSubscriber<ShopCarBO>(mView.getContext()) {
+        HttpServiceIml.getShopCarList().subscribe(new HttpResultSubscriber<ShopCarBO>() {
             @Override
             public void onSuccess(ShopCarBO s) {
                 if (mView != null) {

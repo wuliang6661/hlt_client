@@ -31,8 +31,8 @@ import com.wul.hlt_client.entity.event.SwitchFlow;
 import com.wul.hlt_client.entity.event.SwithFragment;
 import com.wul.hlt_client.mvp.MVPBaseFragment;
 import com.wul.hlt_client.ui.DowmTimer;
+import com.wul.hlt_client.ui.classify.ClassifyFragment;
 import com.wul.hlt_client.ui.opsgood.OpsGoodActivity;
-import com.wul.hlt_client.ui.salesgood.SalesGoodActivity;
 import com.wul.hlt_client.widget.lgrecycleadapter.LGRecycleViewAdapter;
 import com.wul.hlt_client.widget.lgrecycleadapter.LGViewHolder;
 
@@ -179,8 +179,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
             }
         };
         adapter.setOnItemClickListener(R.id.item_layout, (view, position) -> {
-            EventBus.getDefault().post(new SwithFragment(1));
-            EventBus.getDefault().post(new SwitchFlow(position));
+            start(ClassifyFragment.getInstanse(position));
         });
         classifyRecycle.setAdapter(adapter);
     }
@@ -304,7 +303,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
                 gotoActivity(OpsGoodActivity.class, false);
                 break;
             case R.id.xianshi_more:    //进入限时抢购
-                gotoActivity(SalesGoodActivity.class, false);
+                EventBus.getDefault().post(new SwithFragment(1));
                 break;
             case R.id.edit_select:    //进入搜索页面
 

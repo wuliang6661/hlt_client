@@ -21,6 +21,7 @@ import com.wul.hlt_client.entity.ShopCarBO;
 import com.wul.hlt_client.entity.event.SwithFragment;
 import com.wul.hlt_client.ui.classify.ClassifyFragment;
 import com.wul.hlt_client.ui.main.home.HomeFragment;
+import com.wul.hlt_client.ui.main.salesgood.SalesGoodFragment;
 import com.wul.hlt_client.ui.main.shopcar.ShopCarFragment;
 import com.wul.hlt_client.util.AppManager;
 import com.xyz.tabitem.BottmTabItem;
@@ -48,10 +49,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.main4)
     BottmTabItem main4;
 
-    HomeFragment fragment1;    //学习
-    ClassifyFragment fragment2;
-    ShopCarFragment fragment3;
-
     private int selectPosition = 0;
 
     private BottmTabItem[] buttms;
@@ -69,9 +66,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         EventBus.getDefault().register(this);
         buttms = new BottmTabItem[]{main1, main2, main3, main4};
-        fragment1 = new HomeFragment();
-        fragment2 = new ClassifyFragment();
-        fragment3 = new ShopCarFragment();
         initFragment();
         main1.setOnClickListener(this);
         main2.setOnClickListener(this);
@@ -94,7 +88,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         SupportFragment firstFragment = findFragment(HomeFragment.class);
         if (firstFragment == null) {
             mFragments[0] = new HomeFragment();
-            mFragments[1] = new ClassifyFragment();
+            mFragments[1] = new SalesGoodFragment();
             mFragments[2] = new ShopCarFragment();
             //mFragments[3] = ZhihuFourthFragment.newInstance();
 
@@ -106,24 +100,28 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             // 这里库已经做了Fragment恢复,所有不需要额外的处理了, 不会出现重叠问题
             // 这里我们需要拿到mFragments的引用
             mFragments[0] = firstFragment;
-            mFragments[1] = findFragment(ClassifyFragment.class);
+            mFragments[1] = findFragment(SalesGoodFragment.class);
             mFragments[2] = findFragment(ShopCarFragment.class);
             //  mFragments[3] = findFragment(ZhihuFourthFragment.class);
         }
     }
 
 
-    @Override
-    public void onBackPressedSupport() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
-            pop();
-        } else {
-            ActivityCompat.finishAfterTransition(this);
-        }
-    }
+//    @Override
+//    public void onBackPressedSupport() {
+//        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+//            pop();
+//        } else {
+//            ActivityCompat.finishAfterTransition(this);
+//        }
+//    }
 
     @Override
     public void onClick(View v) {
+        if (getTopFragment() instanceof ClassifyFragment) {
+            pop();
+            return;
+        }
         switch (v.getId()) {
             case R.id.main1:
                 if (selectPosition != 0) {

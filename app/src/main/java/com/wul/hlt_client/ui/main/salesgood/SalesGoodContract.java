@@ -1,4 +1,4 @@
-package com.wul.hlt_client.ui.salesgood;
+package com.wul.hlt_client.ui.main.salesgood;
 
 import com.wul.hlt_client.entity.CityGongGao;
 import com.wul.hlt_client.entity.XianShiBO;

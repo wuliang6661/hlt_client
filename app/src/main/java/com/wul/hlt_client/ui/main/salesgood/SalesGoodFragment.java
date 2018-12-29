@@ -1,4 +1,4 @@
-package com.wul.hlt_client.ui.salesgood;
+package com.wul.hlt_client.ui.main.salesgood;
 
 
 import android.annotation.SuppressLint;
@@ -6,9 +6,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,7 +22,7 @@ import com.wul.hlt_client.base.MyApplication;
 import com.wul.hlt_client.entity.CityGongGao;
 import com.wul.hlt_client.entity.XianShiBO;
 import com.wul.hlt_client.entity.event.ShopCarRefresh;
-import com.wul.hlt_client.mvp.MVPBaseActivity;
+import com.wul.hlt_client.mvp.MVPBaseFragment;
 import com.wul.hlt_client.ui.DowmTimer;
 import com.wul.hlt_client.ui.ShopAdapter;
 import com.wul.hlt_client.ui.ordercommit.OrderCommitActivity;
@@ -31,6 +35,8 @@ import java.util.List;
 import java.util.Timer;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 
 /**
@@ -38,7 +44,7 @@ import butterknife.BindView;
  * 邮箱 784787081@qq.com
  */
 
-public class SalesGoodActivity extends MVPBaseActivity<SalesGoodContract.View, SalesGoodPresenter>
+public class SalesGoodFragment extends MVPBaseFragment<SalesGoodContract.View, SalesGoodPresenter>
         implements SalesGoodContract.View {
 
     @BindView(R.id.shop_car_img)
@@ -61,28 +67,43 @@ public class SalesGoodActivity extends MVPBaseActivity<SalesGoodContract.View, S
     TextView downTime;
     @BindView(R.id.tixing_button)
     TextView tixingButton;
+    @BindView(R.id.back)
+    ImageView back;
+    @BindView(R.id.title_text)
+    TextView titleText;
+    Unbinder unbinder;
 
+
+    @Nullable
     @Override
-    protected int getLayout() {
-        return R.layout.act_sales_good;
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.act_sales_good, null);
+        unbinder = ButterKnife.bind(this, view);
+        EventBus.getDefault().register(this);
+        return view;
     }
 
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setTitleText("限时促销专场");
-        goBack();
-        EventBus.getDefault().register(this);
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        LinearLayoutManager manager = new LinearLayoutManager(this);
+        titleText.setText("限时促销专场");
+        back.setVisibility(View.GONE);
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recycle.setLayoutManager(manager);
 
+        shopCarButton.setOnClickListener(v -> mPresenter.testSkipe());
+        initShopCar();
+    }
+
+
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
         mPresenter.getCityGongGao();
         mPresenter.getXianshiList();
-        shopCarButton.setOnClickListener(view -> mPresenter.testSkipe());
-        initShopCar();
     }
 
     /**
@@ -132,10 +153,16 @@ public class SalesGoodActivity extends MVPBaseActivity<SalesGoodContract.View, S
 
     @Override
     public void getXianshiList(XianShiBO shopBOS) {
-        ShopAdapter adapter = new ShopAdapter(this, shopBOS.getList(), MyApplication.shopCarBO);
+        if (shopBOS.getStartTime() == 0) {
+            downTimeText.setText("暂无促销活动：");
+            tixingButton.setVisibility(View.GONE);
+        } else {
+            timer = new Timer();
+            timer.schedule(new DowmTimer(shopBOS.getStartTime(), shopBOS.getEndTime(), handler), 0, 1000);
+            tixingButton.setVisibility(View.VISIBLE);
+        }
+        ShopAdapter adapter = new ShopAdapter(getActivity(), shopBOS.getList(), MyApplication.shopCarBO);
         recycle.setAdapter(adapter);
-        timer = new Timer();
-        timer.schedule(new DowmTimer(shopBOS.getStartTime(), shopBOS.getEndTime(), handler), 0, 1000);
     }
 
     @Override
@@ -164,8 +191,9 @@ public class SalesGoodActivity extends MVPBaseActivity<SalesGoodContract.View, S
 
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
         if (timer != null) {
             timer.cancel();
         }
