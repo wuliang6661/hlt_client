@@ -20,6 +20,7 @@ import com.wul.hlt_client.base.MyApplication;
 import com.wul.hlt_client.entity.CityGongGao;
 import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.XianShiBO;
+import com.wul.hlt_client.entity.event.FinishEvent;
 import com.wul.hlt_client.entity.event.SwitchFlow;
 import com.wul.hlt_client.mvp.MVPBaseFragment;
 import com.wul.hlt_client.ui.DowmTimer;
@@ -154,10 +155,10 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
         }
     }
 
-//    @Subscribe(threadMode = ThreadMode.MAIN)
-//    public void onEvent(FinishEvent event) {
-//        pop();
-//    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(FinishEvent event) {
+        pop();
+    }
 
 
     @Override

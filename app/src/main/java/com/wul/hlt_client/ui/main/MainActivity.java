@@ -18,6 +18,7 @@ import com.wul.hlt_client.api.HttpServiceIml;
 import com.wul.hlt_client.base.BaseActivity;
 import com.wul.hlt_client.base.MyApplication;
 import com.wul.hlt_client.entity.ShopCarBO;
+import com.wul.hlt_client.entity.event.FinishEvent;
 import com.wul.hlt_client.entity.event.SwithFragment;
 import com.wul.hlt_client.ui.classify.ClassifyFragment;
 import com.wul.hlt_client.ui.main.home.HomeFragment;
@@ -119,7 +120,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         if (getTopFragment() instanceof ClassifyFragment) {
-            pop();
+            EventBus.getDefault().post(new FinishEvent());
             return;
         }
         switch (v.getId()) {
