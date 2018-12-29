@@ -72,8 +72,14 @@ public class ShopCarFragment extends MVPBaseFragment<ShopCarContract.View, ShopC
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         shopCarRecycle.setLayoutManager(manager);
 
-        shopCarButton.setOnClickListener(view1 -> mPresenter.testSkipe());
-        clearCar.setOnClickListener(v -> mPresenter.clearShoppingCar());
+        shopCarButton.setOnClickListener(view1 -> {
+            showProgress();
+            mPresenter.testSkipe();
+        });
+        clearCar.setOnClickListener(v -> {
+            showProgress();
+            mPresenter.clearShoppingCar();
+        });
         goShopping.setOnClickListener(v -> start(ClassifyFragment.getInstanse(0)));
     }
 
@@ -81,6 +87,7 @@ public class ShopCarFragment extends MVPBaseFragment<ShopCarContract.View, ShopC
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
+        showProgress();
         mPresenter.getShopCarList();
     }
 
@@ -113,6 +120,7 @@ public class ShopCarFragment extends MVPBaseFragment<ShopCarContract.View, ShopC
 
     @Override
     public void onRequestError(String msg) {
+        stopProgress();
         showToast(msg);
     }
 
@@ -123,6 +131,7 @@ public class ShopCarFragment extends MVPBaseFragment<ShopCarContract.View, ShopC
 
     @Override
     public void getShopCar(ShopCarBO carBO) {
+        stopProgress();
         MyApplication.shopCarBO = carBO;
         if (carBO.getAmount() == 0) {
             clearCar.setVisibility(View.GONE);
@@ -142,6 +151,7 @@ public class ShopCarFragment extends MVPBaseFragment<ShopCarContract.View, ShopC
 
     @Override
     public void testSuress() {
+        stopProgress();
         gotoActivity(OrderCommitActivity.class, false);
     }
 }

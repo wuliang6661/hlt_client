@@ -77,6 +77,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
             case R.id.btn_login:
                 if (isLogin()) {
                     mPresenter.login(strPhone, strShop, strPwd);
+                    showProgress();
                 }
                 break;
             case R.id.tx_register:
@@ -107,6 +108,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
 
     @Override
     public void onRequestError(String msg) {
+        stopProgress();
         showToast(msg);
     }
 
@@ -117,6 +119,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
 
     @Override
     public void loginSuress(UserBo userBo) {
+        stopProgress();
         if (isHaveMe) {
             MyApplication.spUtils.put("phone", strPhone);
             MyApplication.spUtils.put("pwd", strPwd);

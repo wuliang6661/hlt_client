@@ -54,8 +54,8 @@ public abstract class BaseFragment extends SupportFragment {
     /**
      * 显示加载进度弹窗
      */
-    protected void showProgress(String msg) {
-        svProgressHUD.showWithStatus(msg, SVProgressHUD.SVProgressHUDMaskType.BlackCancel);
+    protected void showProgress() {
+        svProgressHUD.showWithStatus("加载中...", SVProgressHUD.SVProgressHUDMaskType.BlackCancel);
     }
 
     /**
@@ -67,6 +67,12 @@ public abstract class BaseFragment extends SupportFragment {
         }
     }
 
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        stopProgress();
+    }
 
     /**
      * 初始化下拉刷新控件

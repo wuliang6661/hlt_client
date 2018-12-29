@@ -9,6 +9,7 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.blankj.utilcode.util.ToastUtils;
 import com.gyf.barlibrary.ImmersionBar;
 import com.wul.hlt_client.R;
@@ -24,6 +25,10 @@ import me.yokeyword.fragmentation.SupportActivity;
  */
 
 public abstract class BaseActivity extends SupportActivity {
+
+
+    private SVProgressHUD svProgressHUD;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +37,7 @@ public abstract class BaseActivity extends SupportActivity {
         ButterKnife.bind(this);
         ImmersionBar.with(this).statusBarDarkFont(true).init();   //解决虚拟按键与状态栏沉浸冲突
         AppManager.getAppManager().addActivity(this);
+        svProgressHUD = new SVProgressHUD(this);
     }
 
     @Override
@@ -61,6 +67,28 @@ public abstract class BaseActivity extends SupportActivity {
         }
     }
 
+
+    /**
+     * 显示加载进度弹窗
+     */
+    protected void showProgress() {
+        svProgressHUD.showWithStatus("加载中...", SVProgressHUD.SVProgressHUDMaskType.BlackCancel);
+    }
+
+    /**
+     * 停止弹窗
+     */
+    protected void stopProgress() {
+        if (svProgressHUD.isShowing()) {
+            svProgressHUD.dismiss();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopProgress();
+    }
 
     /**
      * 设置返回

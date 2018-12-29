@@ -42,7 +42,7 @@ public class OrderCommitPresenter extends BasePresenterImpl<OrderCommitContract.
      * 获取购物车购物清单
      */
     public void getShoppingList(int orderType) {
-        HttpServiceIml.getShoppingList(orderType).subscribe(new HttpResultSubscriber<ShoppingCarBO>(mView.getContext()) {
+        HttpServiceIml.getShoppingList(orderType).subscribe(new HttpResultSubscriber<ShoppingCarBO>() {
             @Override
             public void onSuccess(ShoppingCarBO s) {
                 if (mView != null) {

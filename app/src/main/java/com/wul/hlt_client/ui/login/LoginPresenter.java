@@ -5,8 +5,6 @@ import com.wul.hlt_client.api.HttpServiceIml;
 import com.wul.hlt_client.entity.UserBo;
 import com.wul.hlt_client.mvp.BasePresenterImpl;
 
-import rx.Subscriber;
-
 /**
  * MVPPlugin
  * 邮箱 784787081@qq.com
@@ -16,7 +14,7 @@ public class LoginPresenter extends BasePresenterImpl<LoginContract.View> implem
 
     @Override
     public void login(String phone, String shopNum, String password) {
-        HttpServiceIml.login(shopNum, phone, password).subscribe(new HttpResultSubscriber<UserBo>(mView.getContext()) {
+        HttpServiceIml.login(shopNum, phone, password).subscribe(new HttpResultSubscriber<UserBo>() {
 
             @Override
             public void onSuccess(UserBo userBo) {
