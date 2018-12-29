@@ -82,7 +82,7 @@ public class OrderCommitPresenter extends BasePresenterImpl<OrderCommitContract.
 
 
     public void testSkipe() {
-        HttpServiceIml.testSpike().subscribe(new HttpResultSubscriber<String>(mView.getContext()) {
+        HttpServiceIml.testSpike().subscribe(new HttpResultSubscriber<String>() {
             @Override
             public void onSuccess(String s) {
                 if (mView != null) {

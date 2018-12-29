@@ -18,7 +18,7 @@ public class RegisterPresenter extends BasePresenterImpl<RegisterContract.View>
         implements RegisterContract.Presenter {
 
     public void getCity() {
-        HttpServiceIml.getAllCity().subscribe(new HttpResultSubscriber<List<CityBO>>(mView.getContext()) {
+        HttpServiceIml.getAllCity().subscribe(new HttpResultSubscriber<List<CityBO>>() {
             @Override
             public void onSuccess(List<CityBO> s) {
                 if (mView != null) {

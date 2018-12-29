@@ -112,7 +112,7 @@ public class ShopCarAdapter extends LGRecycleViewAdapter<ShopBO> {
      * 查询购物车商品
      */
     private void getShopCarList() {
-        HttpServiceIml.getShopCarList().subscribe(new HttpResultSubscriber<ShopCarBO>(context) {
+        HttpServiceIml.getShopCarList().subscribe(new HttpResultSubscriber<ShopCarBO>() {
             @Override
             public void onSuccess(ShopCarBO s) {
                 MyApplication.shopCarBO = s;

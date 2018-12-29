@@ -22,7 +22,7 @@ public class OpsGoodPresenter extends BasePresenterImpl<OpsGoodContract.View>
         PageBO pageBO = new PageBO();
         pageBO.pageSize = 1000;
         pageBO.pageNum = 1;
-        HttpServiceIml.getComstonList(pageBO).subscribe(new HttpResultSubscriber<List<ShopBO>>(mView.getContext()) {
+        HttpServiceIml.getComstonList(pageBO).subscribe(new HttpResultSubscriber<List<ShopBO>>() {
             @Override
             public void onSuccess(List<ShopBO> shopBOS) {
                 if (mView != null) {
