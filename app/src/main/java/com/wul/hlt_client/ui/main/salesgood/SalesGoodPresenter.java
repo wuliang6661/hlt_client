@@ -41,7 +41,7 @@ public class SalesGoodPresenter extends BasePresenterImpl<SalesGoodContract.View
         XianshiBO xianshiBO = new XianshiBO();
         xianshiBO.pageNum = 1;
         xianshiBO.pageSize = 1000;
-        HttpServiceIml.getXianshiList(xianshiBO).subscribe(new HttpResultSubscriber<XianShiBO>(mView.getContext()) {
+        HttpServiceIml.getXianshiList(xianshiBO).subscribe(new HttpResultSubscriber<XianShiBO>() {
             @Override
             public void onSuccess(XianShiBO list) {
                 if (mView != null) {

@@ -20,10 +20,10 @@ import com.wul.hlt_client.base.MyApplication;
 import com.wul.hlt_client.entity.ShopCarBO;
 import com.wul.hlt_client.entity.event.FinishEvent;
 import com.wul.hlt_client.entity.event.SwithFragment;
+import com.wul.hlt_client.ui.NoneFragment1;
+import com.wul.hlt_client.ui.NoneFragment2;
+import com.wul.hlt_client.ui.NoneFragment3;
 import com.wul.hlt_client.ui.classify.ClassifyFragment;
-import com.wul.hlt_client.ui.main.home.HomeFragment;
-import com.wul.hlt_client.ui.main.salesgood.SalesGoodFragment;
-import com.wul.hlt_client.ui.main.shopcar.ShopCarFragment;
 import com.wul.hlt_client.util.AppManager;
 import com.xyz.tabitem.BottmTabItem;
 
@@ -86,11 +86,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
      * 初始化fragment
      */
     private void initFragment() {
-        SupportFragment firstFragment = findFragment(HomeFragment.class);
+        SupportFragment firstFragment = findFragment(NoneFragment1.class);
         if (firstFragment == null) {
-            mFragments[0] = new HomeFragment();
-            mFragments[1] = new SalesGoodFragment();
-            mFragments[2] = new ShopCarFragment();
+            mFragments[0] = NoneFragment1.newInstance();
+            mFragments[1] = new NoneFragment2();
+            mFragments[2] = new NoneFragment3();
             //mFragments[3] = ZhihuFourthFragment.newInstance();
 
             loadMultipleRootFragment(R.id.fragment_container, 0,
@@ -101,8 +101,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             // 这里库已经做了Fragment恢复,所有不需要额外的处理了, 不会出现重叠问题
             // 这里我们需要拿到mFragments的引用
             mFragments[0] = firstFragment;
-            mFragments[1] = findFragment(SalesGoodFragment.class);
-            mFragments[2] = findFragment(ShopCarFragment.class);
+            mFragments[1] = findFragment(NoneFragment2.class);
+            mFragments[2] = findFragment(NoneFragment3.class);
             //  mFragments[3] = findFragment(ZhihuFourthFragment.class);
         }
     }
@@ -119,31 +119,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        if (getTopFragment() instanceof ClassifyFragment) {
-            EventBus.getDefault().post(new FinishEvent());
-            return;
-        }
+        EventBus.getDefault().post(new FinishEvent());
         switch (v.getId()) {
             case R.id.main1:
-                if (selectPosition != 0) {
-                    showHideFragment(mFragments[0], mFragments[selectPosition]);
-                    selectPosition = 0;
-                    setButtom(0);
-                }
+                showHideFragment(mFragments[0], mFragments[selectPosition]);
+                selectPosition = 0;
+                setButtom(0);
                 break;
             case R.id.main2:
-                if (selectPosition != 1) {
-                    showHideFragment(mFragments[1], mFragments[selectPosition]);
-                    selectPosition = 1;
-                    setButtom(1);
-                }
+                showHideFragment(mFragments[1], mFragments[selectPosition]);
+                selectPosition = 1;
+                setButtom(1);
                 break;
             case R.id.main3:
-                if (selectPosition != 2) {
-                    showHideFragment(mFragments[2], mFragments[selectPosition]);
-                    selectPosition = 2;
-                    setButtom(2);
-                }
+                showHideFragment(mFragments[2], mFragments[selectPosition]);
+                selectPosition = 2;
+                setButtom(2);
                 break;
             case R.id.main4:
                 selectPosition = 3;

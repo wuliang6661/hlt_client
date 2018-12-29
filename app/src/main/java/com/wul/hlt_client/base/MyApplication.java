@@ -10,6 +10,7 @@ import com.blankj.utilcode.util.Utils;
 import com.wul.hlt_client.entity.ShopCarBO;
 
 import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
+import me.yokeyword.fragmentation.Fragmentation;
 
 /**
  * 作者 by wuliang 时间 16/10/26.
@@ -35,6 +36,7 @@ public class MyApplication extends Application {
         /***初始化工具类*/
         Utils.init(this);
         spUtils = SPUtils.getInstance(TAG);
+        Fragmentation.getDefault().setMode(Fragmentation.BUBBLE);
     }
 
     @Override
