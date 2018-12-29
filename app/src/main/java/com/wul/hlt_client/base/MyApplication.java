@@ -36,7 +36,7 @@ public class MyApplication extends Application {
         /***初始化工具类*/
         Utils.init(this);
         spUtils = SPUtils.getInstance(TAG);
-        Fragmentation.getDefault().setMode(Fragmentation.BUBBLE);
+//        Fragmentation.getDefault().setMode(Fragmentation.BUBBLE);
     }
 
     @Override
