@@ -97,9 +97,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="33dp"
+            android:layout_marginRight="15dp"
             android:layout_weight="1"
             android:background="@null"
             android:hint="请输入门店名称"
+            android:singleLine="true"
             android:textColor="#333333"
             android:textSize="13sp" />
 
@@ -134,9 +136,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="3dp"
+            android:layout_marginRight="15dp"
             android:layout_weight="1"
             android:background="@null"
             android:hint="请输入门店详细地址"
+            android:singleLine="true"
             android:textColor="#333333"
             android:textSize="13sp" />
 
@@ -171,9 +175,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="49dp"
+            android:layout_marginRight="15dp"
             android:layout_weight="1"
             android:background="@null"
             android:hint="请输入联系人"
+            android:singleLine="true"
             android:textColor="#333333"
             android:textSize="13sp" />
 

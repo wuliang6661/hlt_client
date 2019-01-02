@@ -222,9 +222,10 @@ public class HttpServiceIml {
     /**
      * 获取结算时的金额
      */
-    public static Observable<MoneyBO> getMoney(int orderType) {
+    public static Observable<MoneyBO> getMoney(int orderType, int blanceStatus) {
         ShoppingListBO listBO = new ShoppingListBO();
         listBO.orderType = orderType;
+        listBO.balancePayStatus = blanceStatus;
         listBO.token = MyApplication.token;
         return getService().getMoney(listBO).compose(RxResultHelper.httpRusult());
     }

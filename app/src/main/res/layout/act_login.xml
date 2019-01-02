@@ -46,6 +46,7 @@
             android:layout_marginLeft="15dp"
             android:background="@null"
             android:hint="请输入商户编号"
+            android:maxLength="6"
             android:textColor="#333333"
             android:textColorHint="#cccccc"
             android:textSize="13dp" />
@@ -78,6 +79,7 @@
             android:layout_marginLeft="15dp"
             android:background="@null"
             android:hint="请输入登录密码"
+            android:maxLength="6"
             android:password="true"
             android:textColor="#333333"
             android:textColorHint="#cccccc"

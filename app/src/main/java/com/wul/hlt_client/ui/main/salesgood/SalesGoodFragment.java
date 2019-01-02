@@ -157,6 +157,10 @@ public class SalesGoodFragment extends MVPBaseFragment<SalesGoodContract.View, S
             downTimeText.setText("暂无促销活动：");
             tixingButton.setVisibility(View.GONE);
         } else {
+            if (timer != null) {
+                timer.cancel();
+                handler.removeCallbacksAndMessages(null);
+            }
             timer = new Timer();
             timer.schedule(new DowmTimer(shopBOS.getStartTime(), shopBOS.getEndTime(), handler), 0, 1000);
             tixingButton.setVisibility(View.VISIBLE);
@@ -197,6 +201,7 @@ public class SalesGoodFragment extends MVPBaseFragment<SalesGoodContract.View, S
         if (timer != null) {
             timer.cancel();
         }
+        handler.removeCallbacksAndMessages(null);
         EventBus.getDefault().unregister(this);
     }
 }

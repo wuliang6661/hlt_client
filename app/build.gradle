@@ -89,5 +89,5 @@ dependencies {
     compile 'com.makeramen:roundedimageview:2.3.0'
     compile 'org.greenrobot:eventbus:3.1.1'
     compile 'me.yokeyword:fragmentation:1.3.6'
-    compile (name: 'alipaySdk-15.5.9-20181123210601', ext: 'aar')
+    compile(name: 'alipaySdk-15.5.9-20181123210601', ext: 'aar')
 }

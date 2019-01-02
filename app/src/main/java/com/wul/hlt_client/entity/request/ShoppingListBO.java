@@ -9,4 +9,6 @@ public class ShoppingListBO extends BaseRequest {
 
     public int orderType;
 
+    public int balancePayStatus;
+
 }

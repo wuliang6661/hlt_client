@@ -3,6 +3,7 @@ package com.wul.hlt_client.ui.register;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.InputFilter;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -15,6 +16,7 @@ import com.wul.hlt_client.entity.CityBO;
 import com.wul.hlt_client.entity.CityRegionBO;
 import com.wul.hlt_client.entity.request.RegisterBO;
 import com.wul.hlt_client.mvp.MVPBaseActivity;
+import com.wul.hlt_client.util.EditFilter;
 
 import java.util.List;
 
@@ -73,7 +75,13 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
         city.setOnClickListener(this);
         cityQu.setOnClickListener(this);
         registerButton.setOnClickListener(this);
+        yonghuXieyi.setOnClickListener(this);
         mPresenter.getCity();
+
+        //给editText设置filter
+        editShopName.setFilters(new InputFilter[]{new EditFilter(), new InputFilter.LengthFilter(50)});
+        editAddress.setFilters(new InputFilter[]{new EditFilter(), new InputFilter.LengthFilter(200)});
+        editPerson.setFilters(new InputFilter[]{new EditFilter(), new InputFilter.LengthFilter(10)});
     }
 
     @Override
@@ -144,13 +152,16 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
                 if (isRegister()) {
                     RegisterBO registerBO = new RegisterBO();
                     registerBO.setAddress(strAddress);
-                    registerBO.setCityId(selectCityRegionBO.getCityId() + "");
-                    registerBO.setRegionId(selectCityRegionBO.getAreaId() + "");
+                    registerBO.setCityId(selectCity.getId() + "");
+                    registerBO.setRegionId(selectCityRegionBO.getId() + "");
                     registerBO.setContact(strPerson);
                     registerBO.setContactPhone(strPhone);
                     registerBO.setName(strShopName);
                     mPresenter.registerUser(registerBO);
                 }
+                break;
+            case R.id.yonghu_xieyi:
+                gotoActivity(PersonXieyIAct.class, false);
                 break;
         }
     }
@@ -184,6 +195,7 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
             showToast("请输入联系人电话！");
             return false;
         }
+
         if (!checkbox.isChecked()) {
             showToast("请同意用户协议！");
             return false;

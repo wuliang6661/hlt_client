@@ -8,6 +8,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.wul.hlt_client.R;
 import com.wul.hlt_client.base.MyApplication;
@@ -95,12 +96,16 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
             showToast("请输入商户编号！");
             return false;
         }
+        if (StringUtils.isEmpty(strPwd)) {
+            showToast("请输入密码！");
+            return false;
+        }
         if (StringUtils.isEmpty(strPhone)) {
             showToast("请输入手机号！");
             return false;
         }
-        if (StringUtils.isEmpty(strPwd)) {
-            showToast("请输入密码！");
+        if (!RegexUtils.isMobileExact(strPhone)) {
+            showToast("请输入正确手机号！");
             return false;
         }
         return true;

@@ -194,6 +194,7 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
         });
         adapter.setSelectPosition(flowSelectPosition);
         zhuClassifyRecycle.setAdapter(adapter);
+        zhuClassifyRecycle.scrollToPosition(flowSelectPosition);
     }
 
     @Override
@@ -231,22 +232,30 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
             String time = (String) msg.obj;
             switch (msg.what) {
                 case 0x11:
-                    downTimeText.setText("距离开始时间还有：");
+                    if (downTimeText != null) {
+                        downTimeText.setText("距离开始时间还有：");
+                    }
                     break;
                 case 0x22:
-                    downTimeText.setText("距离结束时间还有：");
+                    if (downTimeText != null) {
+                        downTimeText.setText("距离结束时间还有：");
+                    }
                     break;
             }
-            downTime.setText(time);
+            if (downTime != null) {
+                downTime.setText(time);
+            }
         }
     };
 
+
     @Override
     public void onDestroy() {
-        super.onDestroy();
+        handler.removeCallbacksAndMessages(null);
         if (timer != null) {
             timer.cancel();
         }
+        super.onDestroy();
     }
 
 }

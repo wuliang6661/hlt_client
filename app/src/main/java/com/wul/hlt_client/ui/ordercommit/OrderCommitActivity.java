@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ import com.wul.hlt_client.entity.request.CommitOrderBO;
 import com.wul.hlt_client.mvp.MVPBaseActivity;
 import com.wul.hlt_client.ui.ordershop.OrderShopActivity;
 import com.wul.hlt_client.util.AppManager;
+import com.wul.hlt_client.util.BarUtils;
 import com.wul.hlt_client.widget.AlertDialog;
 import com.wul.hlt_client.widget.PayDialog;
 
@@ -113,9 +115,11 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
     TimePickerBuilder builder;
 
     private String selectTime;    //选择的配送时间
-    private Date selectDate;      //选择的时间
+    private Date selectDate = new Date();      //选择的时间 默认为今天
 
     private int orderType = 0;     //默认按正单计算
+
+    private int PayStatus = 1;    //默认不使用余额
 
     @Override
     protected int getLayout() {
@@ -138,7 +142,7 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
         shopCarButton.setOnClickListener(this);
         mPresenter.getAddressInfo();
         mPresenter.getShoppingList(orderType);
-        mPresenter.getMoney(orderType);
+        mPresenter.getMoney(orderType, PayStatus);
         setListener();
         requestPermission();
     }
@@ -152,13 +156,15 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
                 if (strPayType != 2) {
                     showToast("余额抵扣只支持支付宝支付！");
                     checkbox.setChecked(false);
+                    PayStatus = 1;
                 } else {
                     checkbox.setChecked(true);
-                    orderPrice.setText("¥ " + (moneyBO.getAmount() - moneyBO.getBalancePay()));
+                    PayStatus = 0;
                 }
             } else {
-                orderPrice.setText("¥ " + moneyBO.getAmount());
+                PayStatus = 1;
             }
+            mPresenter.getMoney(orderType, PayStatus);
         });
     }
 
@@ -264,6 +270,7 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
         blancePrice.setText("余额可抵用" + moneyBO.getBalancePay());
         dispatchingPrice.setText("¥ " + moneyBO.getDistributionFee());
         orderPrice.setText("¥ " + moneyBO.getAmount());
+        orderPrice.setText("¥ " + moneyBO.getPayableAmount());
     }
 
     @Override
@@ -344,7 +351,6 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
         Calendar endDate = Calendar.getInstance();
         endDate.set(Calendar.DAY_OF_YEAR, endDate.get(Calendar.DAY_OF_YEAR) + 7);   //默认设置可选择7天，可配置
 
-        View view = getLayoutInflater().inflate(R.layout.dialog_time, null);
         builder = new TimePickerBuilder(this, (date, v) -> {
             switch (selectView) {
                 case 1:
@@ -359,15 +365,18 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
                                     .setCancelable(false)
                                     .setNegativeButton("确定", v12 -> {
                                         mPresenter.getShoppingList(orderType);
-                                        mPresenter.getMoney(orderType);
+                                        mPresenter.getMoney(orderType, PayStatus);
                                     }).show();
                         } else {
                             mPresenter.getShoppingList(orderType);
-                            mPresenter.getMoney(orderType);
+                            mPresenter.getMoney(orderType, PayStatus);
                         }
                     } else {
                         mPresenter.getShoppingList(orderType);
-                        mPresenter.getMoney(orderType);
+                        mPresenter.getMoney(orderType, PayStatus);
+                        new AlertDialog(this).builder().setGone().setMsg("当前时间不能临时补单\n请重新选择配送时间")
+                                .setNegativeButton("确定", null).show();
+                        dispatchingTime.setText("");
                     }
                     pvView.dismiss();
                     break;
@@ -420,7 +429,11 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
         builder.isCenterLabel(false).setDividerColor(Color.WHITE);
         builder.setContentTextSize(15);
         pvView = builder.build();
-        pvView.show(view, true);
+        FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) pvView.getDialogContainerLayout().getLayoutParams();
+        layoutParams.bottomMargin = BarUtils.getNavigationBarHeight(this);
+        pvView.getDialogContainerLayout().setLayoutParams(layoutParams);
+        pvView.show(mianView);
+
     }
 
 

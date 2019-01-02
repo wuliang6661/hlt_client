@@ -16,6 +16,7 @@ public class MoneyBO {
     private float balancePay;
     private float amount;
     private float distributionFee;
+    private float payableAmount;
 
     public float getBalancePay() {
         return balancePay;
@@ -39,5 +40,13 @@ public class MoneyBO {
 
     public void setDistributionFee(float distributionFee) {
         this.distributionFee = distributionFee;
+    }
+
+    public float getPayableAmount() {
+        return payableAmount;
+    }
+
+    public void setPayableAmount(float payableAmount) {
+        this.payableAmount = payableAmount;
     }
 }

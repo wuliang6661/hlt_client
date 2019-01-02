@@ -103,8 +103,8 @@ public class OrderCommitPresenter extends BasePresenterImpl<OrderCommitContract.
     /**
      * 获取订单金额
      */
-    public void getMoney(int orderType) {
-        HttpServiceIml.getMoney(orderType).subscribe(new HttpResultSubscriber<MoneyBO>() {
+    public void getMoney(int orderType, int banlanceStatus) {
+        HttpServiceIml.getMoney(orderType, banlanceStatus).subscribe(new HttpResultSubscriber<MoneyBO>() {
             @Override
             public void onSuccess(MoneyBO s) {
                 if (mView != null) {
