@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -72,6 +73,8 @@ public class SalesGoodFragment extends MVPBaseFragment<SalesGoodContract.View, S
     @BindView(R.id.title_text)
     TextView titleText;
     Unbinder unbinder;
+    @BindView(R.id.none_layout)
+    LinearLayout noneLayout;
 
 
     @Nullable

@@ -26,6 +26,7 @@ import com.wul.hlt_client.mvp.MVPBaseFragment;
 import com.wul.hlt_client.ui.DowmTimer;
 import com.wul.hlt_client.ui.ShopAdapter;
 import com.wul.hlt_client.ui.opsgood.OpsGoodActivity;
+import com.wul.hlt_client.ui.select.SelectActivity;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -133,6 +134,7 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
         manager2.setOrientation(LinearLayoutManager.VERTICAL);
         recycle.setLayoutManager(manager2);
         changyongLayout.setOnClickListener(this);
+        editSelect.setOnClickListener(this);
     }
 
 
@@ -142,7 +144,9 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
             case R.id.changyong_layout:
                 gotoActivity(OpsGoodActivity.class, false);
                 break;
-
+            case R.id.edit_select:
+                gotoActivity(SelectActivity.class, false);
+                break;
         }
     }
 

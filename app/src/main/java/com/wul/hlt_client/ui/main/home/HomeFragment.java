@@ -27,12 +27,12 @@ import com.wul.hlt_client.entity.BannerBo;
 import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.entity.XianShiBO;
-import com.wul.hlt_client.entity.event.SwitchFlow;
 import com.wul.hlt_client.entity.event.SwithFragment;
 import com.wul.hlt_client.mvp.MVPBaseFragment;
 import com.wul.hlt_client.ui.DowmTimer;
 import com.wul.hlt_client.ui.classify.ClassifyFragment;
 import com.wul.hlt_client.ui.opsgood.OpsGoodActivity;
+import com.wul.hlt_client.ui.select.SelectActivity;
 import com.wul.hlt_client.widget.lgrecycleadapter.LGRecycleViewAdapter;
 import com.wul.hlt_client.widget.lgrecycleadapter.LGViewHolder;
 
@@ -80,6 +80,10 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     Timer timer;
     @BindView(R.id.xianshi_layout)
     LinearLayout xianshiLayout;
+    @BindView(R.id.none1)
+    LinearLayout none1;
+    @BindView(R.id.none2)
+    LinearLayout none2;
 
 
     @Nullable
@@ -196,6 +200,14 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     @Override
     public void getChangyongShop(List<ShopBO> list) {
         swipe.setRefreshing(false);
+        if (list == null || list.size() == 0) {
+            changyongRecycle.setVisibility(View.GONE);
+            none2.setVisibility(View.VISIBLE);
+            return;
+        } else {
+            changyongRecycle.setVisibility(View.VISIBLE);
+            none2.setVisibility(View.GONE);
+        }
         LGRecycleViewAdapter<ShopBO> adapter = new LGRecycleViewAdapter<ShopBO>(list) {
             @Override
             public int getLayoutId(int viewType) {
@@ -221,11 +233,11 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         swipe.setRefreshing(false);
         if (list.getList() == null || list.getList().size() == 0) {
             xianshiRecycle.setVisibility(View.GONE);
-            xianshiLayout.setVisibility(View.GONE);
+            none1.setVisibility(View.VISIBLE);
             return;
         } else {
             xianshiRecycle.setVisibility(View.VISIBLE);
-            xianshiLayout.setVisibility(View.VISIBLE);
+            none1.setVisibility(View.GONE);
         }
         LGRecycleViewAdapter<ShopBO> adapter = new LGRecycleViewAdapter<ShopBO>(list.getList()) {
             @Override
@@ -306,7 +318,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
                 EventBus.getDefault().post(new SwithFragment(1));
                 break;
             case R.id.edit_select:    //进入搜索页面
-
+                gotoActivity(SelectActivity.class, false);
                 break;
         }
     }

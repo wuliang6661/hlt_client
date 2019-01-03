@@ -177,11 +177,14 @@ public class ShopAdapter extends LGRecycleViewAdapter<ShopBO> {
             @Override
             public void onSuccess(ShopCarBO s) {
                 shopCars.clear();
+                MyApplication.shopCarBO = s;
+                EventBus.getDefault().post(new ShopCarRefresh());
+                if (s.getShoppingCartList() == null || s.getShoppingCartList().size() == 0) {
+                    return;
+                }
                 for (ShopBO shopBO : s.getShoppingCartList()) {
                     shopCars.put(shopBO.getProductId(), shopBO);
                 }
-                MyApplication.shopCarBO = s;
-                EventBus.getDefault().post(new ShopCarRefresh());
                 notifyDataSetChanged();
             }
 

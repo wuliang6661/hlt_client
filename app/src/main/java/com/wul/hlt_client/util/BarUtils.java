@@ -75,4 +75,5 @@ public class BarUtils {
         }
         return sNavBarOverride;
     }
+
 }
