@@ -95,6 +95,11 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing" />
 
+        <activity
+            android:name=".ui.ZiZhiActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing" />
+
     </application>
 
 </manifest>

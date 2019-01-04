@@ -16,6 +16,7 @@ import com.wul.hlt_client.entity.ShopInfoBO;
 import com.wul.hlt_client.mvp.MVPBaseFragment;
 import com.wul.hlt_client.ui.SettingActivty;
 import com.wul.hlt_client.ui.ShopInfoActivty;
+import com.wul.hlt_client.ui.ZiZhiActivity;
 import com.wul.hlt_client.ui.tousu.TousuActivity;
 
 import butterknife.BindView;
@@ -116,7 +117,7 @@ public class MineFragment extends MVPBaseFragment<MineContract.View, MinePresent
                 gotoActivity(TousuActivity.class, false);
                 break;
             case R.id.zizhi_layout:   //好菜通资质
-
+                gotoActivity(ZiZhiActivity.class, false);
                 break;
             case R.id.phone_layout:    //联系客服
 
