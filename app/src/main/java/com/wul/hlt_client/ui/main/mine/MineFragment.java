@@ -1,6 +1,8 @@
 package com.wul.hlt_client.ui.main.mine;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,7 +19,10 @@ import com.wul.hlt_client.mvp.MVPBaseFragment;
 import com.wul.hlt_client.ui.SettingActivty;
 import com.wul.hlt_client.ui.ShopInfoActivty;
 import com.wul.hlt_client.ui.ZiZhiActivity;
+import com.wul.hlt_client.ui.login.LoginActivity;
 import com.wul.hlt_client.ui.tousu.TousuActivity;
+import com.wul.hlt_client.util.AppManager;
+import com.wul.hlt_client.widget.AlertDialog;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -120,7 +125,13 @@ public class MineFragment extends MVPBaseFragment<MineContract.View, MinePresent
                 gotoActivity(ZiZhiActivity.class, false);
                 break;
             case R.id.phone_layout:    //联系客服
-
+                new AlertDialog(getActivity()).builder().setGone().setTitle("拨打")
+                        .setMsg(phoneNum.getText().toString().trim())
+                        .setCancelable(false)
+                        .setNegativeButton("取消", null)
+                        .setPositiveButton("确定", v1 -> {
+                            callPhone(phoneNum.getText().toString().trim());
+                        }).show();
                 break;
         }
 
@@ -154,5 +165,18 @@ public class MineFragment extends MVPBaseFragment<MineContract.View, MinePresent
         } else {
             shopType.setText("门店状态：已确认");
         }
+    }
+
+
+    /**
+     * 拨打电话（跳转到拨号界面，用户手动点击拨打）
+     *
+     * @param phoneNum 电话号码
+     */
+    public void callPhone(String phoneNum) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        Uri data = Uri.parse("tel:" + phoneNum);
+        intent.setData(data);
+        startActivity(intent);
     }
 }
