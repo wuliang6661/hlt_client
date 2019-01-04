@@ -12,6 +12,7 @@ import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.entity.ShopCarBO;
 import com.wul.hlt_client.entity.ShopInfoBO;
 import com.wul.hlt_client.entity.ShoppingCarBO;
+import com.wul.hlt_client.entity.TousuBO;
 import com.wul.hlt_client.entity.UserBo;
 import com.wul.hlt_client.entity.XianShiBO;
 import com.wul.hlt_client.entity.request.BaseRequest;
@@ -186,7 +187,7 @@ public interface HttpService {
      * 投诉建议
      */
     @POST("/hct_webservice/app/address/my/addFeedback")
-    Observable<BaseResult<String>> addFeedback();
+    Observable<BaseResult<String>> addFeedback(@Body TousuBO tousuBO);
 
 
 }

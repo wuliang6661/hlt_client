@@ -12,6 +12,7 @@ import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.entity.ShopCarBO;
 import com.wul.hlt_client.entity.ShopInfoBO;
 import com.wul.hlt_client.entity.ShoppingCarBO;
+import com.wul.hlt_client.entity.TousuBO;
 import com.wul.hlt_client.entity.UserBo;
 import com.wul.hlt_client.entity.XianShiBO;
 import com.wul.hlt_client.entity.request.BaseRequest;
@@ -262,7 +263,15 @@ public class HttpServiceIml {
     }
 
 
-
+    /**
+     * 投诉建议
+     */
+    public static Observable<String> tousu(String content) {
+        TousuBO tousuBO = new TousuBO();
+        tousuBO.token = MyApplication.token;
+        tousuBO.setContent(content);
+        return getService().addFeedback(tousuBO).compose(RxResultHelper.httpRusult());
+    }
 
 
 }

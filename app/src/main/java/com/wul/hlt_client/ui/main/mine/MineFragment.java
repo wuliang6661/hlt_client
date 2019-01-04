@@ -15,6 +15,8 @@ import com.wul.hlt_client.R;
 import com.wul.hlt_client.entity.ShopInfoBO;
 import com.wul.hlt_client.mvp.MVPBaseFragment;
 import com.wul.hlt_client.ui.SettingActivty;
+import com.wul.hlt_client.ui.ShopInfoActivty;
+import com.wul.hlt_client.ui.tousu.TousuActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,6 +56,9 @@ public class MineFragment extends MVPBaseFragment<MineContract.View, MinePresent
 
     Unbinder unbinder;
 
+    ShopInfoBO infoBO;
+    private boolean goinfo = false;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -68,6 +73,11 @@ public class MineFragment extends MVPBaseFragment<MineContract.View, MinePresent
         super.onViewCreated(view, savedInstanceState);
 
         settingImg.setOnClickListener(this);
+        myOrder.setOnClickListener(this);
+        shopMessage.setOnClickListener(this);
+        tousuLayout.setOnClickListener(this);
+        zizhiLayout.setOnClickListener(this);
+        phoneLayout.setOnClickListener(this);
     }
 
 
@@ -89,8 +99,28 @@ public class MineFragment extends MVPBaseFragment<MineContract.View, MinePresent
             case R.id.setting_img:
                 gotoActivity(SettingActivty.class, false);
                 break;
+            case R.id.my_order:   //我的订单
 
+                break;
+            case R.id.shop_message:   //门店信息
+                if (infoBO != null) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("info", infoBO);
+                    gotoActivity(ShopInfoActivty.class, bundle, false);
+                } else {
+                    goinfo = true;
+                    mPresenter.getShopInfo();
+                }
+                break;
+            case R.id.tousu_layout:   //投诉建议
+                gotoActivity(TousuActivity.class, false);
+                break;
+            case R.id.zizhi_layout:   //好菜通资质
 
+                break;
+            case R.id.phone_layout:    //联系客服
+
+                break;
         }
 
     }
@@ -107,9 +137,21 @@ public class MineFragment extends MVPBaseFragment<MineContract.View, MinePresent
 
     @Override
     public void getShopInfo(ShopInfoBO infoBO) {
+        this.infoBO = infoBO;
+        if (goinfo) {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("info", infoBO);
+            gotoActivity(ShopInfoActivty.class, bundle, false);
+            goinfo = false;
+        }
         shopNum.setText("门店编号：" + infoBO.getNumber());
         shopPerson.setText("登录用户：" + infoBO.getContact());
         yuePrice.setText("¥ " + infoBO.getBalance());
         phoneNum.setText(infoBO.getCustomerServicePhone());
+        if (infoBO.getIsConfirmed() == 0) {
+            shopType.setText("门店状态：未确认");
+        } else {
+            shopType.setText("门店状态：已确认");
+        }
     }
 }
