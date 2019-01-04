@@ -65,7 +65,7 @@
                     android:id="@+id/shop_num"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="门店编号：666666"
+                    android:text="门店编号："
                     android:textColor="@color/white"
                     android:textSize="13sp" />
 
@@ -74,7 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
-                    android:text="门店状态：未确认"
+                    android:text="门店状态："
                     android:textColor="@color/white"
                     android:textSize="13sp" />
 
@@ -84,7 +84,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
-                    android:text="登录用户：111111111"
+                    android:text="登录用户："
                     android:textColor="@color/white"
                     android:textSize="13sp" />
 
@@ -276,7 +276,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="13dp"
-            android:text="¥ 0.00"
+            android:text=""
             android:textColor="#61C95F"
             android:textSize="12sp" />
 
@@ -317,7 +317,7 @@
             android:layout_marginLeft="4dp"
             android:layout_marginRight="13dp"
             android:maxLength="11"
-            android:text="111111111"
+            android:text=""
             android:textColor="#61C95F"
             android:textSize="12sp" />
 

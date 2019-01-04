@@ -10,6 +10,7 @@ import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.MoneyBO;
 import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.entity.ShopCarBO;
+import com.wul.hlt_client.entity.ShopInfoBO;
 import com.wul.hlt_client.entity.ShoppingCarBO;
 import com.wul.hlt_client.entity.UserBo;
 import com.wul.hlt_client.entity.XianShiBO;
@@ -250,5 +251,18 @@ public class HttpServiceIml {
         xianshiBO.token = MyApplication.token;
         return getService().getShopList(xianshiBO).compose(RxResultHelper.httpRusult());
     }
+
+    /**
+     * 获取门店信息
+     */
+    public static Observable<ShopInfoBO> getShopInfo() {
+        BaseRequest request = new BaseRequest();
+        request.token = MyApplication.token;
+        return getService().getShopInfo(request).compose(RxResultHelper.httpRusult());
+    }
+
+
+
+
 
 }

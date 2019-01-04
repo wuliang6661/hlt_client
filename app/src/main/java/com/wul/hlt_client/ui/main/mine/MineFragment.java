@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.wul.hlt_client.R;
+import com.wul.hlt_client.entity.ShopInfoBO;
 import com.wul.hlt_client.mvp.MVPBaseFragment;
 import com.wul.hlt_client.ui.SettingActivty;
 
@@ -71,6 +72,12 @@ public class MineFragment extends MVPBaseFragment<MineContract.View, MinePresent
 
 
     @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        mPresenter.getShopInfo();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
@@ -86,5 +93,23 @@ public class MineFragment extends MVPBaseFragment<MineContract.View, MinePresent
 
         }
 
+    }
+
+    @Override
+    public void onRequestError(String msg) {
+        showToast(msg);
+    }
+
+    @Override
+    public void onRequestEnd() {
+
+    }
+
+    @Override
+    public void getShopInfo(ShopInfoBO infoBO) {
+        shopNum.setText("门店编号：" + infoBO.getNumber());
+        shopPerson.setText("登录用户：" + infoBO.getContact());
+        yuePrice.setText("¥ " + infoBO.getBalance());
+        phoneNum.setText(infoBO.getCustomerServicePhone());
     }
 }

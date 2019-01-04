@@ -10,6 +10,7 @@ import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.MoneyBO;
 import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.entity.ShopCarBO;
+import com.wul.hlt_client.entity.ShopInfoBO;
 import com.wul.hlt_client.entity.ShoppingCarBO;
 import com.wul.hlt_client.entity.UserBo;
 import com.wul.hlt_client.entity.XianShiBO;
@@ -174,6 +175,18 @@ public interface HttpService {
      */
     @POST("/hct_webservice/app/address/home/getProductListByCategoryAndSubCategory")
     Observable<BaseResult<XianShiBO>> getShopList(@Body XianshiBO xianshiBO);
+
+    /**
+     * 获取门店信息
+     */
+    @POST("/hct_webservice/app/address/my/getAddressInfo")
+    Observable<BaseResult<ShopInfoBO>> getShopInfo(@Body BaseRequest request);
+
+    /**
+     * 投诉建议
+     */
+    @POST("/hct_webservice/app/address/my/addFeedback")
+    Observable<BaseResult<String>> addFeedback();
 
 
 }

@@ -69,12 +69,13 @@ public class SettingActivty extends BaseActivity implements View.OnClickListener
                 new AlertDialog(this).builder().setGone().setTitle("请注意")
                         .setMsg("是否确认清除缓存？")
                         .setCancelable(false)
-                        .setNegativeButton("确定", null)
-                        .setPositiveButton("取消", v12 -> {
+                        .setNegativeButton("取消", null)
+                        .setPositiveButton("确定", v12 -> {
                             DataCleanManager.cleanInternalCache(SettingActivty.this);
                             DataCleanManager.cleanDatabases(SettingActivty.this);
                             DataCleanManager.cleanSharedPreference(SettingActivty.this);
                             showToast("清除成功");
+                            cacheSize.setText("0K");
                         }).show();
                 break;
         }
