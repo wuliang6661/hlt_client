@@ -233,8 +233,12 @@ public class HttpServiceIml {
     /**
      * 搜索商品
      */
-    public static Observable<XianShiBO> searchList(GetShopRequest request) {
+    public static Observable<XianShiBO> searchList(String shopName) {
+        GetShopRequest request = new GetShopRequest();
         request.token = MyApplication.token;
+        request.pageNum = 1;
+        request.pageSize = 1000;
+        request.productName = shopName;
         return getService().searchList(request).compose(RxResultHelper.httpRusult());
     }
 

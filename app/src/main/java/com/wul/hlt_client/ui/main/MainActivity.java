@@ -23,7 +23,7 @@ import com.wul.hlt_client.entity.event.SwithFragment;
 import com.wul.hlt_client.ui.NoneFragment1;
 import com.wul.hlt_client.ui.NoneFragment2;
 import com.wul.hlt_client.ui.NoneFragment3;
-import com.wul.hlt_client.ui.classify.ClassifyFragment;
+import com.wul.hlt_client.ui.NoneFragment4;
 import com.wul.hlt_client.util.AppManager;
 import com.xyz.tabitem.BottmTabItem;
 
@@ -91,19 +91,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             mFragments[0] = NoneFragment1.newInstance();
             mFragments[1] = new NoneFragment2();
             mFragments[2] = new NoneFragment3();
-            //mFragments[3] = ZhihuFourthFragment.newInstance();
+            mFragments[3] = new NoneFragment4();
 
             loadMultipleRootFragment(R.id.fragment_container, 0,
                     mFragments[0],
                     mFragments[1],
-                    mFragments[2]);
+                    mFragments[2],
+                    mFragments[3]);
         } else {
             // 这里库已经做了Fragment恢复,所有不需要额外的处理了, 不会出现重叠问题
             // 这里我们需要拿到mFragments的引用
             mFragments[0] = firstFragment;
             mFragments[1] = findFragment(NoneFragment2.class);
             mFragments[2] = findFragment(NoneFragment3.class);
-            //  mFragments[3] = findFragment(ZhihuFourthFragment.class);
+            mFragments[3] = findFragment(NoneFragment4.class);
         }
     }
 
@@ -137,6 +138,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 setButtom(2);
                 break;
             case R.id.main4:
+                showHideFragment(mFragments[3], mFragments[selectPosition]);
                 selectPosition = 3;
                 setButtom(3);
                 break;

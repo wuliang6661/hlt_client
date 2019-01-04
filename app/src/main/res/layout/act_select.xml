@@ -12,6 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <ImageView
@@ -23,16 +24,18 @@
 
 
         <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
 
             <EditText
+                android:id="@+id/edit_shop"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="5dp"
-                android:layout_marginRight="10dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="5dp"
                 android:background="@drawable/select_edit_bg"
                 android:hint="请输入搜索内容"
                 android:paddingLeft="30dp"
@@ -50,6 +53,17 @@
 
 
         </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/txt_select"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingRight="15dp"
+            android:text="搜索"
+            android:textColor="#333333"
+            android:textSize="13sp" />
 
     </LinearLayout>
 
@@ -70,10 +84,10 @@
         <ImageView
             android:layout_width="16dp"
             android:layout_height="16dp"
-            android:layout_marginBottom="8dp"
             android:layout_marginLeft="12dp"
-            android:layout_marginRight="15dp"
             android:layout_marginTop="8dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="8dp"
             android:src="@drawable/gonggao_red" />
 
 

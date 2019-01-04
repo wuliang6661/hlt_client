@@ -234,6 +234,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         if (list.getList() == null || list.getList().size() == 0) {
             xianshiRecycle.setVisibility(View.GONE);
             none1.setVisibility(View.VISIBLE);
+            downTimeText.setText("暂无促销活动：");
             return;
         } else {
             xianshiRecycle.setVisibility(View.VISIBLE);

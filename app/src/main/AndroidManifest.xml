@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.wul.hlt_client">
 
 
@@ -26,7 +27,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
 
 
         <meta-data
@@ -73,6 +75,12 @@
 
         <activity
             android:name=".ui.select.SelectActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustNothing" />
+
+
+        <activity
+            android:name=".ui.SettingActivty"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustNothing" />
 
