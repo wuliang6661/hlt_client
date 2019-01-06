@@ -42,19 +42,6 @@
     </RelativeLayout>
 
 
-    <TextView
-        android:id="@+id/order_taking"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:background="#61c95f"
-        android:gravity="center"
-        android:text="接单"
-        android:textColor="@color/white"
-        android:textSize="23sp"
-        android:visibility="gone" />
-
-
     <RelativeLayout
         android:id="@+id/all_price_layout"
         android:layout_width="match_parent"
@@ -67,6 +54,14 @@
             android:layout_height="1px"
             android:background="#979797" />
 
+        <ImageView
+            android:id="@+id/image1"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/checked" />
+
 
         <TextView
             android:id="@+id/text1"
@@ -74,9 +69,10 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:text="总金额："
+            android:layout_toRightOf="@+id/image1"
+            android:text="总记："
             android:textColor="#666666"
-            android:textSize="19sp" />
+            android:textSize="16sp" />
 
 
         <TextView
@@ -84,11 +80,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="3dp"
             android:layout_toRightOf="@+id/text1"
             android:text="¥ 0.00"
             android:textColor="#f5142f"
-            android:textSize="19sp" />
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/shop_car_button"
+            android:layout_width="102dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/shop_car_button_yes"
+            android:enabled="false"
+            android:gravity="center"
+            android:text="去付款"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
 
     </RelativeLayout>
@@ -152,8 +160,8 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp">
 
 
                     <com.dinuscxj.progressbar.CircleProgressBar
@@ -239,8 +247,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginRight="10dp"
                     android:text="待接单"
                     android:textColor="#ff722b"
                     android:textSize="13sp" />
@@ -250,8 +258,8 @@
                     android:id="@+id/pay_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="23dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginRight="23dp"
                     android:layout_toLeftOf="@+id/order_type"
                     android:text="未支付"
                     android:textColor="#f5142f"
@@ -272,9 +280,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/address_img"
-                    android:layout_marginBottom="8dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="15dp"
+                    android:layout_marginBottom="8dp"
                     android:layout_toRightOf="@+id/address_img"
                     android:orientation="vertical">
 
@@ -330,9 +338,9 @@
                 android:id="@+id/customer_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:layout_marginLeft="42dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:textColor="#61c95f"
                 android:textSize="13sp" />
 
@@ -357,9 +365,9 @@
                 android:id="@+id/take_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:layout_marginLeft="42dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:text="客户要求尽快配送"
                 android:textColor="#666666"
                 android:textSize="13sp" />
@@ -385,9 +393,9 @@
                 android:id="@+id/order_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
                 android:layout_marginLeft="42dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
                 android:text="2018年11月15日"
                 android:textColor="#666666"
                 android:textSize="13sp" />

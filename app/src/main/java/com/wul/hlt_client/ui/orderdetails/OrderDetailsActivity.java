@@ -1,4 +1,4 @@
-package com.wul.hlt_client.ui.myorder;
+package com.wul.hlt_client.ui.orderdetails;
 
 
 import android.os.Bundle;
@@ -10,22 +10,20 @@ import com.wul.hlt_client.mvp.MVPBaseActivity;
 
 /**
  * MVPPlugin
- * 邮箱 784787081@qq.com
+ *  邮箱 784787081@qq.com
  */
 
-public class MyOrderActivity extends MVPBaseActivity<MyOrderContract.View, MyOrderPresenter>
-        implements MyOrderContract.View {
+public class OrderDetailsActivity extends MVPBaseActivity<OrderDetailsContract.View, OrderDetailsPresenter>
+        implements OrderDetailsContract.View {
 
     @Override
     protected int getLayout() {
-        return R.layout.act_myorder;
+        return R.layout.act_order_details;
     }
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        goBack();
-        setTitleText("我的订单");
     }
 }

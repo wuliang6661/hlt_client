@@ -2,7 +2,122 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#f2f2f2"
     android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="24dp"
+        android:background="@color/white" />
+
+
+    <include layout="@layout/title_bar1" />
+
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="67dp"
+        android:layout_marginTop="3dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/order_radio_button"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center"
+            android:text="订单状态"
+            android:textColor="@color/white"
+            android:textSize="13sp" />
+
+
+        <RadioButton
+            android:layout_width="0dp"
+            android:layout_height="38dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/order_radio_button"
+            android:button="@null"
+            android:gravity="center"
+            android:text="支付状态"
+            android:textColor="#61C95F"
+            android:textSize="13sp" />
+
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="1dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="19dp"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/my_order_shaixuan" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/order_shaixuan"
+            android:paddingLeft="21dp"
+            android:paddingTop="5dp"
+            android:paddingRight="21dp"
+            android:paddingBottom="5dp"
+            android:text="正单"
+            android:textColor="@color/white"
+            android:textSize="13sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/order_shaixuan"
+            android:paddingLeft="21dp"
+            android:paddingTop="5dp"
+            android:paddingRight="21dp"
+            android:paddingBottom="5dp"
+            android:text="已完成"
+            android:textColor="@color/white"
+            android:textSize="13sp" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/order_shaixuan"
+            android:paddingLeft="21dp"
+            android:paddingTop="5dp"
+            android:paddingRight="21dp"
+            android:paddingBottom="5dp"
+            android:text="按日显示"
+            android:textColor="@color/white"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+
+
 
 </LinearLayout>

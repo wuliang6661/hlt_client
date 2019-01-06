@@ -19,9 +19,8 @@ import com.wul.hlt_client.mvp.MVPBaseFragment;
 import com.wul.hlt_client.ui.SettingActivty;
 import com.wul.hlt_client.ui.ShopInfoActivty;
 import com.wul.hlt_client.ui.ZiZhiActivity;
-import com.wul.hlt_client.ui.login.LoginActivity;
+import com.wul.hlt_client.ui.myorder.MyOrderActivity;
 import com.wul.hlt_client.ui.tousu.TousuActivity;
-import com.wul.hlt_client.util.AppManager;
 import com.wul.hlt_client.widget.AlertDialog;
 
 import butterknife.BindView;
@@ -106,7 +105,7 @@ public class MineFragment extends MVPBaseFragment<MineContract.View, MinePresent
                 gotoActivity(SettingActivty.class, false);
                 break;
             case R.id.my_order:   //我的订单
-
+                gotoActivity(MyOrderActivity.class, false);
                 break;
             case R.id.shop_message:   //门店信息
                 if (infoBO != null) {
