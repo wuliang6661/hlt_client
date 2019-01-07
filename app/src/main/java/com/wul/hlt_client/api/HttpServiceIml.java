@@ -8,6 +8,8 @@ import com.wul.hlt_client.entity.CityGongGao;
 import com.wul.hlt_client.entity.CityRegionBO;
 import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.MoneyBO;
+import com.wul.hlt_client.entity.OrderDayBo;
+import com.wul.hlt_client.entity.OrderMonthBO;
 import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.entity.ShopCarBO;
 import com.wul.hlt_client.entity.ShopInfoBO;
@@ -276,11 +278,20 @@ public class HttpServiceIml {
 
 
     /**
-     * 获取我的订单
+     * 获取我的订单(按日)
      */
-    public static Observable<String> getMyOrderList(ScreenBO screenBO) {
+    public static Observable<OrderDayBo> getMyOrderList(ScreenBO screenBO) {
         screenBO.token = MyApplication.token;
         return getService().getMyOrderList(screenBO).compose(RxResultHelper.httpRusult());
     }
+
+    /**
+     * 获取我的订单(按周、月)
+     */
+    public static Observable<OrderMonthBO> getMyOrderListByMonth(ScreenBO screenBO) {
+        screenBO.token = MyApplication.token;
+        return getService().getMyOrderListByMonth(screenBO).compose(RxResultHelper.httpRusult());
+    }
+
 
 }

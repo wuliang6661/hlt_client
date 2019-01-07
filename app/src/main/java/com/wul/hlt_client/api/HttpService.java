@@ -8,6 +8,8 @@ import com.wul.hlt_client.entity.CityGongGao;
 import com.wul.hlt_client.entity.CityRegionBO;
 import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.MoneyBO;
+import com.wul.hlt_client.entity.OrderDayBo;
+import com.wul.hlt_client.entity.OrderMonthBO;
 import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.entity.ShopCarBO;
 import com.wul.hlt_client.entity.ShopInfoBO;
@@ -192,10 +194,16 @@ public interface HttpService {
 
 
     /**
-     * 获取我的订单列表
+     * 获取我的订单列表(按日)
      */
     @POST("/hct_webservice/app/address/my/getMyOrderList")
-    Observable<BaseResult<String>> getMyOrderList(@Body ScreenBO screenBO);
+    Observable<BaseResult<OrderDayBo>> getMyOrderList(@Body ScreenBO screenBO);
 
+
+    /**
+     * 获取我的订单列表(按周或月)
+     */
+    @POST("/hct_webservice/app/address/my/getMyOrderList")
+    Observable<BaseResult<OrderMonthBO>> getMyOrderListByMonth(@Body ScreenBO screenBO);
 
 }

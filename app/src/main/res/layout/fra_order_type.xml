@@ -139,6 +139,13 @@
             android:layout_height="match_parent"
             android:layout_above="@+id/all_price_layout" />
 
+        <ExpandableListView
+            android:id="@+id/expand_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/all_price_layout"
+            android:visibility="gone" />
+
 
     </RelativeLayout>
 

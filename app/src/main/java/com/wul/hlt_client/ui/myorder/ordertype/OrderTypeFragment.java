@@ -9,10 +9,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ExpandableListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.wul.hlt_client.R;
+import com.wul.hlt_client.entity.OrderDayBo;
+import com.wul.hlt_client.entity.OrderMonthBO;
 import com.wul.hlt_client.entity.request.ScreenBO;
 import com.wul.hlt_client.mvp.MVPBaseFragment;
 import com.wul.hlt_client.ui.myorder.ScreenPopWindow;
@@ -46,6 +49,8 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
     @BindView(R.id.recycle)
     RecyclerView recycle;
     Unbinder unbinder;
+    @BindView(R.id.expand_list)
+    ExpandableListView expandList;
 
 
     private String[] zhengdans = new String[]{"正单", "补单", "全部"};
@@ -166,4 +171,13 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
         mPresenter.getMyOrderList(screenBO);
     }
 
+    @Override
+    public void getOrderListDay(OrderDayBo orderDayBo) {
+
+    }
+
+    @Override
+    public void getOrderListMonth(OrderMonthBO orderMonthBO) {
+
+    }
 }
