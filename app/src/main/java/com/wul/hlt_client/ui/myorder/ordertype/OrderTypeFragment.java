@@ -18,9 +18,13 @@ import com.wul.hlt_client.entity.OrderDayBo;
 import com.wul.hlt_client.entity.OrderMonthBO;
 import com.wul.hlt_client.entity.request.ScreenBO;
 import com.wul.hlt_client.mvp.MVPBaseFragment;
+import com.wul.hlt_client.ui.myorder.ExpandListAdapter;
+import com.wul.hlt_client.ui.myorder.RecycleAdapter;
 import com.wul.hlt_client.ui.myorder.ScreenPopWindow;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,6 +66,8 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
     private int displayType = 1;   //默认按日显示  1是日  2是周  3是月
     private String statusIds = "1";    // 默认已接单   1是已接单 ，2是已完成  3是已终止  0是待接单（只有补单状态才有）
 
+    private List<Integer> orderIds;
+
 
     @Nullable
     @Override
@@ -79,6 +85,7 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recycle.setLayoutManager(manager);
 
+        orderIds = new ArrayList<>();
         orderTypeZhengdan.setOnClickListener(this);
         orderTypeWancheng.setOnClickListener(this);
         orderTypeTime.setOnClickListener(this);
@@ -129,13 +136,26 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
      * 筛选完成状态
      */
     private void screenWancheng() {
-
-        ScreenPopWindow popWindow = new ScreenPopWindow(getActivity(), Arrays.asList(wanchengs));
-        popWindow.setOnSelecte(new ScreenPopWindow.onSelecte() {
-            @Override
-            public void onClick(String select, int position) {
-                orderTypeWancheng.setText(select);
+        List<String> types = new ArrayList<>();
+        if (!"0".equals(orderTypes)) {   //包含补单
+            types.add("待接单");
+            types.add("已接单");
+            types.add("已完成");
+            types.add("已终止");
+        } else {
+            types.add("已接单");
+            types.add("已完成");
+            types.add("已终止");
+        }
+        ScreenPopWindow popWindow = new ScreenPopWindow(getActivity(), types);
+        popWindow.setOnSelecte((select, position) -> {
+            orderTypeWancheng.setText(select);
+            if ("0".equals(orderTypes)) {
+                statusIds = position + 1 + "";
+            } else {
+                statusIds = position + "";
             }
+            syncHttp();
         });
         popWindow.showAsDropDown(orderTypeWancheng);
     }
@@ -168,16 +188,66 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
         screenBO.setDisplayType(displayType);
         screenBO.setOrderTypes(orderTypes);
         screenBO.setStatusIds(statusIds);
-        mPresenter.getMyOrderList(screenBO);
+        if (displayType == 1) {
+            mPresenter.getMyOrderList(screenBO);
+        } else {
+            mPresenter.getMyOrderByMonth(screenBO);
+        }
     }
 
     @Override
     public void getOrderListDay(OrderDayBo orderDayBo) {
+        recycle.setVisibility(View.VISIBLE);
+        expandList.setVisibility(View.GONE);
+        RecycleAdapter adapter = new RecycleAdapter(getActivity(), "1".equals(orderTypes), orderDayBo.getAddressMyOrderList());
+        adapter.setIds(orderIds);
+        adapter.setOnSelector(new RecycleAdapter.onSelector() {
+            @Override
+            public void select(int id) {
+                orderIds.add(id);
+                adapter.setIds(orderIds);
+            }
 
+            @Override
+            public void cancle(int id) {
+                for (int i = 0; i < orderIds.size(); i++) {
+                    if (orderIds.get(i) == id) {
+                        orderIds.remove(i);
+                    }
+                }
+                adapter.setIds(orderIds);
+            }
+        });
+        recycle.setAdapter(adapter);
     }
 
     @Override
     public void getOrderListMonth(OrderMonthBO orderMonthBO) {
+        recycle.setVisibility(View.GONE);
+        expandList.setVisibility(View.VISIBLE);
+        ExpandListAdapter adapter = new ExpandListAdapter(getActivity(), "1".equals(orderTypes), orderMonthBO.getAddressMyOrderList());
+        adapter.setIds(orderIds);
+        adapter.setOnSelector(new ExpandListAdapter.onSelector() {
+            @Override
+            public void select(int id) {
+                orderIds.add(id);
+                adapter.setIds(orderIds);
+            }
 
+            @Override
+            public void cancle(int id) {
+                for (int i = 0; i < orderIds.size(); i++) {
+                    if (orderIds.get(i) == id) {
+                        orderIds.remove(i);
+                    }
+                }
+                adapter.setIds(orderIds);
+            }
+        });
+        expandList.setAdapter(adapter);
+        for (int i = 0; i < orderMonthBO.getAddressMyOrderList().size(); i++) {
+            expandList.expandGroup(i);
+        }
+        expandList.setOnGroupClickListener((expandableListView, view, i, l) -> true);
     }
 }

@@ -43,11 +43,11 @@ public class OrderDayBo {
 
         private double amount;
         private String requireDeliverOn;
-        private int statusId;
+        private double statusId;
         private String orderDisplayId;
         private String deliverDate;
-        private int id;
-        private int payStatus;
+        private double id;
+        private double payStatus;
         private List<ProductDetailListBean> productDetailList;
 
         public double getAmount() {
@@ -66,11 +66,11 @@ public class OrderDayBo {
             this.requireDeliverOn = requireDeliverOn;
         }
 
-        public int getStatusId() {
+        public double getStatusId() {
             return statusId;
         }
 
-        public void setStatusId(int statusId) {
+        public void setStatusId(double statusId) {
             this.statusId = statusId;
         }
 
@@ -90,19 +90,19 @@ public class OrderDayBo {
             this.deliverDate = deliverDate;
         }
 
-        public int getId() {
+        public double getId() {
             return id;
         }
 
-        public void setId(int id) {
+        public void setId(double id) {
             this.id = id;
         }
 
-        public int getPayStatus() {
+        public double getPayStatus() {
             return payStatus;
         }
 
-        public void setPayStatus(int payStatus) {
+        public void setPayStatus(double payStatus) {
             this.payStatus = payStatus;
         }
 
@@ -138,19 +138,19 @@ public class OrderDayBo {
 
             private String price0MeasureUnit;
             private String img;
-            private int measureUnit1And2Relation;
-            private int quantity;
-            private int cost;
-            private int productId;
+            private double measureUnit1And2Relation;
+            private double quantity;
+            private double cost;
+            private double productId;
             private String productDetail;
             private String price2MeasureUnit;
             private String datedProductId;
-            private int consumption;
+            private double consumption;
             private String source;
-            private int number2;
+            private double number2;
             private String productName;
             private double amountOfMoney;
-            private int price0;
+            private double price0;
             private String price1MeasureUnit;
             private double price1;
             private double price2;
@@ -171,35 +171,35 @@ public class OrderDayBo {
                 this.img = img;
             }
 
-            public int getMeasureUnit1And2Relation() {
+            public double getMeasureUnit1And2Relation() {
                 return measureUnit1And2Relation;
             }
 
-            public void setMeasureUnit1And2Relation(int measureUnit1And2Relation) {
+            public void setMeasureUnit1And2Relation(double measureUnit1And2Relation) {
                 this.measureUnit1And2Relation = measureUnit1And2Relation;
             }
 
-            public int getQuantity() {
+            public double getQuantity() {
                 return quantity;
             }
 
-            public void setQuantity(int quantity) {
+            public void setQuantity(double quantity) {
                 this.quantity = quantity;
             }
 
-            public int getCost() {
+            public double getCost() {
                 return cost;
             }
 
-            public void setCost(int cost) {
+            public void setCost(double cost) {
                 this.cost = cost;
             }
 
-            public int getProductId() {
+            public double getProductId() {
                 return productId;
             }
 
-            public void setProductId(int productId) {
+            public void setProductId(double productId) {
                 this.productId = productId;
             }
 
@@ -227,11 +227,11 @@ public class OrderDayBo {
                 this.datedProductId = datedProductId;
             }
 
-            public int getConsumption() {
+            public double getConsumption() {
                 return consumption;
             }
 
-            public void setConsumption(int consumption) {
+            public void setConsumption(double consumption) {
                 this.consumption = consumption;
             }
 
@@ -243,11 +243,11 @@ public class OrderDayBo {
                 this.source = source;
             }
 
-            public int getNumber2() {
+            public double getNumber2() {
                 return number2;
             }
 
-            public void setNumber2(int number2) {
+            public void setNumber2(double number2) {
                 this.number2 = number2;
             }
 
@@ -267,11 +267,11 @@ public class OrderDayBo {
                 this.amountOfMoney = amountOfMoney;
             }
 
-            public int getPrice0() {
+            public double getPrice0() {
                 return price0;
             }
 
-            public void setPrice0(int price0) {
+            public void setPrice0(double price0) {
                 this.price0 = price0;
             }
 

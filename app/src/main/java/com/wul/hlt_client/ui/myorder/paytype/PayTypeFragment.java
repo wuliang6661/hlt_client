@@ -44,6 +44,7 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
     RelativeLayout allPriceLayout;
     @BindView(R.id.recycle)
     RecyclerView recycle;
+
     Unbinder unbinder;
 
     private String[] zhengdans = new String[]{"正单", "补单", "全部"};
