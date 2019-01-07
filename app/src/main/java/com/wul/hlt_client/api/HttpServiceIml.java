@@ -23,6 +23,7 @@ import com.wul.hlt_client.entity.request.LoginBo;
 import com.wul.hlt_client.entity.request.PageBO;
 import com.wul.hlt_client.entity.request.RegionBO;
 import com.wul.hlt_client.entity.request.RegisterBO;
+import com.wul.hlt_client.entity.request.ScreenBO;
 import com.wul.hlt_client.entity.request.ShopCarSetBO;
 import com.wul.hlt_client.entity.request.ShoppingListBO;
 import com.wul.hlt_client.entity.request.XianshiBO;
@@ -273,5 +274,13 @@ public class HttpServiceIml {
         return getService().addFeedback(tousuBO).compose(RxResultHelper.httpRusult());
     }
 
+
+    /**
+     * 获取我的订单
+     */
+    public static Observable<String> getMyOrderList(ScreenBO screenBO) {
+        screenBO.token = MyApplication.token;
+        return getService().getMyOrderList(screenBO).compose(RxResultHelper.httpRusult());
+    }
 
 }

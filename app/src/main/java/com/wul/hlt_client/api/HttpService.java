@@ -22,6 +22,7 @@ import com.wul.hlt_client.entity.request.LoginBo;
 import com.wul.hlt_client.entity.request.PageBO;
 import com.wul.hlt_client.entity.request.RegionBO;
 import com.wul.hlt_client.entity.request.RegisterBO;
+import com.wul.hlt_client.entity.request.ScreenBO;
 import com.wul.hlt_client.entity.request.ShopCarSetBO;
 import com.wul.hlt_client.entity.request.ShoppingListBO;
 import com.wul.hlt_client.entity.request.XianshiBO;
@@ -188,6 +189,13 @@ public interface HttpService {
      */
     @POST("/hct_webservice/app/address/my/addFeedback")
     Observable<BaseResult<String>> addFeedback(@Body TousuBO tousuBO);
+
+
+    /**
+     * 获取我的订单列表
+     */
+    @POST("/hct_webservice/app/address/my/getMyOrderList")
+    Observable<BaseResult<String>> getMyOrderList(@Body ScreenBO screenBO);
 
 
 }
