@@ -64,6 +64,7 @@ public class OrderDetailsPresenter extends BasePresenterImpl<OrderDetailsContrac
             @Override
             public void onSuccess(String s) {
                 if (mView != null) {
+                    mView.cancleSuress(s);
                 }
             }
 
@@ -84,7 +85,9 @@ public class OrderDetailsPresenter extends BasePresenterImpl<OrderDetailsContrac
         HttpServiceIml.orderTuiKuan(id, money).subscribe(new HttpResultSubscriber<String>() {
             @Override
             public void onSuccess(String s) {
+                if (mView != null) {
 
+                }
             }
 
             @Override

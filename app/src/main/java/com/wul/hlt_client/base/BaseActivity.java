@@ -2,14 +2,18 @@ package com.wul.hlt_client.base;
 
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
+import com.blankj.utilcode.util.SizeUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.gyf.barlibrary.ImmersionBar;
 import com.wul.hlt_client.R;
@@ -128,6 +132,14 @@ public abstract class BaseActivity extends SupportActivity {
     protected void showToast(String message) {
         ToastUtils.showShort(message);
     }
+
+
+//    protected void showToastView(String message) {
+//        View view = LayoutInflater.from(this).inflate(R.layout.toast_layout, null);
+//        TextView msg = view.findViewById(R.id.message);
+//        msg.setText(message);
+//        ToastUtils.showLong();
+//    }
 
 
     protected abstract int getLayout();

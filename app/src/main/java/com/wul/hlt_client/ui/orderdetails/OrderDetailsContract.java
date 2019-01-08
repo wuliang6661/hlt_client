@@ -6,7 +6,7 @@ import com.wul.hlt_client.mvp.BaseRequestView;
 
 /**
  * MVPPlugin
- *  邮箱 784787081@qq.com
+ * 邮箱 784787081@qq.com
  */
 
 public class OrderDetailsContract {
@@ -15,9 +15,13 @@ public class OrderDetailsContract {
         void getOrder(OrderDetailsBO orderDetailsBO);
 
         void goPay(String orderInfo);
+
+        void cancleSuress(String message);
+
+        void tuikuanSuress(String message);
     }
 
-    interface  Presenter extends BasePresenter<View> {
-        
+    interface Presenter extends BasePresenter<View> {
+
     }
 }

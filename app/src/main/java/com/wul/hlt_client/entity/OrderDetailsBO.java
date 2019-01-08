@@ -36,6 +36,15 @@ public class OrderDetailsBO {
     private List<ProductDetailListBean> productDetailList;
     private String greengrocerPhone;
     private String customerServicePhone;
+    private int isDisplay;
+
+    public int getIsDisplay() {
+        return isDisplay;
+    }
+
+    public void setIsDisplay(int isDisplay) {
+        this.isDisplay = isDisplay;
+    }
 
     public String getCustomerServicePhone() {
         return customerServicePhone;

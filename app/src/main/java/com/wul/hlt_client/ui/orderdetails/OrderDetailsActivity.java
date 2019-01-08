@@ -142,6 +142,15 @@ public class OrderDetailsActivity extends MVPBaseActivity<OrderDetailsContract.V
             kefuName.setText("商户电话");
             kefuPhone.setText(orderDetailsBO.getGreengrocerPhone());
         }
+        if (orderDetailsBO.getIsDisplay() == 0) {
+            orderSetting.setVisibility(View.GONE);
+        } else if (orderDetailsBO.getIsDisplay() == 1) {
+            orderSetting.setVisibility(View.VISIBLE);
+            orderSetting.setText("取消订单");
+        } else if (orderDetailsBO.getIsDisplay() == 2) {
+            orderSetting.setVisibility(View.VISIBLE);
+            orderSetting.setText("申请退款");
+        }
         switch ((int) orderDetailsBO.getStatusId()) {
             case 0:    //待接单
                 orderType.setText("待接单");
@@ -180,7 +189,11 @@ public class OrderDetailsActivity extends MVPBaseActivity<OrderDetailsContract.V
                 mPresenter.combinePay(id);
                 break;
             case R.id.order_setting:
-                showTuiKuanDialog();
+                if (orderDetailsBO.getIsDisplay() == 1) {
+                    cancleOrder();
+                } else {
+                    showTuiKuanDialog();
+                }
                 break;
         }
     }
@@ -248,6 +261,18 @@ public class OrderDetailsActivity extends MVPBaseActivity<OrderDetailsContract.V
     @Override
     public void goPay(String orderInfo) {
         aliPay(orderInfo);
+    }
+
+    @Override
+    public void cancleSuress(String message) {
+        showToast("您的订单已取消");
+        finish();
+    }
+
+    @Override
+    public void tuikuanSuress(String message) {
+        showToast("您的退款申请已提交审核！");
+        finish();
     }
 
 

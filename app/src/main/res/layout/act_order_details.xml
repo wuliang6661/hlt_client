@@ -325,7 +325,8 @@
                         android:paddingBottom="3dp"
                         android:text="申请退款"
                         android:textColor="@color/white"
-                        android:textSize="13sp" />
+                        android:textSize="13sp"
+                        android:visibility="gone" />
 
 
                 </LinearLayout>
