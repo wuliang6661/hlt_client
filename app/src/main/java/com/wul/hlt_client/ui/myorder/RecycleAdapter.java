@@ -2,6 +2,7 @@ package com.wul.hlt_client.ui.myorder;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Handler;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -30,7 +31,7 @@ public class RecycleAdapter extends LGRecycleViewAdapter<OrderDayBo.AddressMyOrd
 
     public void setIds(List<Integer> ids) {
         this.ids = ids;
-        notifyDataSetChanged();
+        new Handler().post(() -> notifyDataSetChanged());
     }
 
     @Override
@@ -94,6 +95,7 @@ public class RecycleAdapter extends LGRecycleViewAdapter<OrderDayBo.AddressMyOrd
         } else {
             holder.getView(R.id.order_budan).setVisibility(View.GONE);
         }
+        checkBox.setOnCheckedChangeListener(null);
         if (ids.contains((int) addressMyOrderListBean.getId())) {
             checkBox.setChecked(true);
         } else {

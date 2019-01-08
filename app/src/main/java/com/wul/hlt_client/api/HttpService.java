@@ -9,6 +9,7 @@ import com.wul.hlt_client.entity.CityRegionBO;
 import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.MoneyBO;
 import com.wul.hlt_client.entity.OrderDayBo;
+import com.wul.hlt_client.entity.OrderDetailsBO;
 import com.wul.hlt_client.entity.OrderMonthBO;
 import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.entity.ShopCarBO;
@@ -20,13 +21,16 @@ import com.wul.hlt_client.entity.XianShiBO;
 import com.wul.hlt_client.entity.request.BaseRequest;
 import com.wul.hlt_client.entity.request.ChildFlowBO;
 import com.wul.hlt_client.entity.request.CommitOrderBO;
+import com.wul.hlt_client.entity.request.GetOrderBO;
 import com.wul.hlt_client.entity.request.LoginBo;
 import com.wul.hlt_client.entity.request.PageBO;
 import com.wul.hlt_client.entity.request.RegionBO;
 import com.wul.hlt_client.entity.request.RegisterBO;
 import com.wul.hlt_client.entity.request.ScreenBO;
+import com.wul.hlt_client.entity.request.SelectMoneyBO;
 import com.wul.hlt_client.entity.request.ShopCarSetBO;
 import com.wul.hlt_client.entity.request.ShoppingListBO;
+import com.wul.hlt_client.entity.request.TuiKuanBO;
 import com.wul.hlt_client.entity.request.XianshiBO;
 import com.wul.hlt_client.entity.request.GetShopRequest;
 
@@ -205,5 +209,35 @@ public interface HttpService {
      */
     @POST("/hct_webservice/app/address/my/getMyOrderList")
     Observable<BaseResult<OrderMonthBO>> getMyOrderListByMonth(@Body ScreenBO screenBO);
+
+    /**
+     * 合算多个订单总计金额
+     */
+    @POST("/hct_webservice/app/address/my/getMoneyBySelectionOrder")
+    Observable<BaseResult<String>> getMoneyBySelectionOrder(@Body SelectMoneyBO moneyBO);
+
+    /**
+     * 合并支付
+     */
+    @POST("/hct_webservice/app/address/my/combinedPayment")
+    Observable<BaseResult<String>> combinePay(@Body SelectMoneyBO moneyBO);
+
+    /**
+     * 获取订单详情
+     */
+    @POST("/hct_webservice/app/address/my/getAddressOrder")
+    Observable<BaseResult<OrderDetailsBO>> getOrderDetails(@Body GetOrderBO orderBO);
+
+    /**
+     * 取消订单
+     */
+    @POST("/hct_webservice/app/address/my/updateAddressOrderStatus")
+    Observable<BaseResult<String>> cancleOrder(@Body GetOrderBO orderBO);
+
+    /**
+     * 申请退款
+     */
+    @POST("/hct_webservice/app/address/my/updateAddressOrderRefundStatus")
+    Observable<BaseResult<String>> orderTuiKuan(@Body TuiKuanBO tuiKuanBO);
 
 }

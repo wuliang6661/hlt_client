@@ -1,30 +1,41 @@
 package com.wul.hlt_client.ui.myorder.ordertype;
 
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alipay.sdk.app.PayTask;
 import com.wul.hlt_client.R;
 import com.wul.hlt_client.entity.OrderDayBo;
 import com.wul.hlt_client.entity.OrderMonthBO;
+import com.wul.hlt_client.entity.PayResult;
 import com.wul.hlt_client.entity.request.ScreenBO;
 import com.wul.hlt_client.mvp.MVPBaseFragment;
 import com.wul.hlt_client.ui.myorder.ExpandListAdapter;
 import com.wul.hlt_client.ui.myorder.RecycleAdapter;
 import com.wul.hlt_client.ui.myorder.ScreenPopWindow;
+import com.wul.hlt_client.ui.orderdetails.OrderDetailsActivity;
+import com.wul.hlt_client.util.AppManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,11 +66,12 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
     Unbinder unbinder;
     @BindView(R.id.expand_list)
     ExpandableListView expandList;
+    @BindView(R.id.image1)
+    ImageView image1;
 
+    private static final int SDK_PAY_FLAG = 1;
 
     private String[] zhengdans = new String[]{"正单", "补单", "全部"};
-    private String[] wanchengs = new String[]{"已接单", "已完成", "已终止"};
-    private String[] wanchengs1 = new String[]{"待接单", "已接单", "已完成", "已终止"};
     private String[] times = new String[]{"按日显示", "按周显示", "按月显示"};
 
     private String orderTypes = "0";  //默认正单 0是正单， 1是补单   0,1是全部
@@ -86,9 +98,7 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
         recycle.setLayoutManager(manager);
 
         orderIds = new ArrayList<>();
-        orderTypeZhengdan.setOnClickListener(this);
-        orderTypeWancheng.setOnClickListener(this);
-        orderTypeTime.setOnClickListener(this);
+        setListener();
         syncHttp();
     }
 
@@ -98,6 +108,15 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
         super.onDestroyView();
         unbinder.unbind();
     }
+
+
+    private void setListener() {
+        orderTypeZhengdan.setOnClickListener(this);
+        orderTypeWancheng.setOnClickListener(this);
+        orderTypeTime.setOnClickListener(this);
+        shopCarButton.setOnClickListener(this);
+    }
+
 
     @Override
     public void onClick(View v) {
@@ -110,6 +129,9 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
                 break;
             case R.id.order_type_time:
                 screenTime();
+                break;
+            case R.id.shop_car_button:   //去付款
+                mPresenter.combinePay(orderIds);
                 break;
         }
     }
@@ -126,6 +148,10 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
                 orderTypes = "0,1";
             } else {
                 orderTypes = position + "";
+            }
+            if (position == 0 && "0".equals(statusIds)) {   //如果选择正单则需要把补单的待接单状态更改
+                statusIds = "1";
+                orderTypeWancheng.setText("已接单");
             }
             syncHttp();
         });
@@ -175,6 +201,7 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
 
     @Override
     public void onRequestError(String msg) {
+        stopProgress();
         showToast(msg);
     }
 
@@ -183,6 +210,9 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
 
     }
 
+    /**
+     * 获取我的订单列表
+     */
     private void syncHttp() {
         ScreenBO screenBO = new ScreenBO();
         screenBO.setDisplayType(displayType);
@@ -195,10 +225,29 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
         }
     }
 
+
+    /**
+     * 获取选中的价格
+     */
+    private void syncSelectPrice() {
+        if (orderIds.size() == 0) {
+            allPriceButtom.setText("¥ 0.00");
+            image1.setImageResource(R.drawable.check_box_nomer);
+            shopCarButton.setEnabled(false);
+        } else {
+            showProgress();
+            mPresenter.getSelectOrderMoney(orderIds);
+        }
+    }
+
+
     @Override
     public void getOrderListDay(OrderDayBo orderDayBo) {
         recycle.setVisibility(View.VISIBLE);
         expandList.setVisibility(View.GONE);
+        if (orderDayBo.getAddressMyOrderList() == null) {
+            orderDayBo.setAddressMyOrderList(new ArrayList<>());
+        }
         RecycleAdapter adapter = new RecycleAdapter(getActivity(), "1".equals(orderTypes), orderDayBo.getAddressMyOrderList());
         adapter.setIds(orderIds);
         adapter.setOnSelector(new RecycleAdapter.onSelector() {
@@ -206,6 +255,7 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
             public void select(int id) {
                 orderIds.add(id);
                 adapter.setIds(orderIds);
+                syncSelectPrice();
             }
 
             @Override
@@ -216,7 +266,13 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
                     }
                 }
                 adapter.setIds(orderIds);
+                syncSelectPrice();
             }
+        });
+        adapter.setOnItemClickListener(R.id.item_layout, (view, position) -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("id", (int) orderDayBo.getAddressMyOrderList().get(position).getId());
+            gotoActivity(OrderDetailsActivity.class, bundle, false);
         });
         recycle.setAdapter(adapter);
     }
@@ -225,6 +281,9 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
     public void getOrderListMonth(OrderMonthBO orderMonthBO) {
         recycle.setVisibility(View.GONE);
         expandList.setVisibility(View.VISIBLE);
+        if (orderMonthBO.getAddressMyOrderList() == null) {
+            orderMonthBO.setAddressMyOrderList(new ArrayList<>());
+        }
         ExpandListAdapter adapter = new ExpandListAdapter(getActivity(), "1".equals(orderTypes), orderMonthBO.getAddressMyOrderList());
         adapter.setIds(orderIds);
         adapter.setOnSelector(new ExpandListAdapter.onSelector() {
@@ -232,6 +291,7 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
             public void select(int id) {
                 orderIds.add(id);
                 adapter.setIds(orderIds);
+                syncSelectPrice();
             }
 
             @Override
@@ -242,6 +302,7 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
                     }
                 }
                 adapter.setIds(orderIds);
+                syncSelectPrice();
             }
         });
         expandList.setAdapter(adapter);
@@ -249,5 +310,76 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
             expandList.expandGroup(i);
         }
         expandList.setOnGroupClickListener((expandableListView, view, i, l) -> true);
+        expandList.setOnChildClickListener((parent, v, groupPosition, childPosition, id) -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("id", (int) orderMonthBO.getAddressMyOrderList().get(groupPosition)
+                    .getOrderList().get(childPosition).getId());
+            gotoActivity(OrderDetailsActivity.class, bundle, false);
+            return true;
+        });
     }
+
+    @Override
+    public void getSelectMoney(String money) {
+        stopProgress();
+        allPriceButtom.setText("¥ " + money);
+        image1.setImageResource(R.drawable.checked);
+        shopCarButton.setEnabled(true);
+    }
+
+    @Override
+    public void goPay(String orderInfo) {
+        aliPay(orderInfo);
+    }
+
+
+    private void aliPay(String orderInfo) {
+        final Runnable payRunnable = () -> {
+            PayTask alipay = new PayTask(getActivity());
+            Map<String, String> result = alipay.payV2(orderInfo, true);
+            Log.i("msp", result.toString());
+            Message msg = new Message();
+            msg.what = SDK_PAY_FLAG;
+            msg.obj = result;
+            mHandler.sendMessage(msg);
+        };
+        // 必须异步调用
+        Thread payThread = new Thread(payRunnable);
+        payThread.start();
+    }
+
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @SuppressWarnings("unused")
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case SDK_PAY_FLAG: {
+                    @SuppressWarnings("unchecked")
+                    PayResult payResult = new PayResult((Map<String, String>) msg.obj);
+                    /**
+                     * 对于支付结果，请商户依赖服务端的异步通知结果。同步通知结果，仅作为支付结束的通知。
+                     */
+                    String resultInfo = payResult.getResult();// 同步返回需要验证的信息
+                    String resultStatus = payResult.getResultStatus();
+                    // 判断resultStatus 为9000则代表支付成功
+                    if (TextUtils.equals(resultStatus, "9000")) {    //支付成功
+                        // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
+                        showToast("支付成功！");
+                        AppManager.getAppManager().goHome();
+                    } else {              //支付失败
+                        // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
+                        showToast("支付失败！");
+                        AppManager.getAppManager().goHome();
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+
+        ;
+    };
+
 }

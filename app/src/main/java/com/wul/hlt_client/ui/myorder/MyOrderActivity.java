@@ -1,10 +1,14 @@
 package com.wul.hlt_client.ui.myorder;
 
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -59,6 +63,24 @@ public class MyOrderActivity extends MVPBaseActivity<MyOrderContract.View, MyOrd
         fragments.add(fragment1);
         viewPager.setAdapter(new FragmentPaerAdapter(getSupportFragmentManager(), fragments));
         setListener();
+        requestPermission();
+    }
+
+
+    private void requestPermission() {
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)
+                != PackageManager.PERMISSION_GRANTED
+                || ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{
+                            Manifest.permission.READ_PHONE_STATE,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    }, 1);
+
+        }
     }
 
 

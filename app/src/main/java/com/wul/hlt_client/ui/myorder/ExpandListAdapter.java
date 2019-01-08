@@ -134,6 +134,7 @@ public class ExpandListAdapter extends BaseExpandableListAdapter {
             case 3:     //已终止
                 hodler.orderStatus.setText("已终止");
                 hodler.orderStatus.setTextColor(Color.parseColor("#CCCCCC"));
+                hodler.checkbox.setVisibility(View.GONE);
                 break;
         }
         hodler.orderPrice.setText("¥ " + orderBo.getAmount());
@@ -166,6 +167,7 @@ public class ExpandListAdapter extends BaseExpandableListAdapter {
         } else {
             hodler.budan.setVisibility(View.GONE);
         }
+        hodler.checkbox.setOnCheckedChangeListener(null);
         if (ids.contains((int) orderBo.getId())) {
             hodler.checkbox.setChecked(true);
         } else {
@@ -227,6 +229,6 @@ public class ExpandListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public boolean isChildSelectable(int i, int i1) {
-        return false;
+        return true;
     }
 }

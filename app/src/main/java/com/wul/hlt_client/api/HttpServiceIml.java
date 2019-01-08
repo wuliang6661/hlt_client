@@ -9,6 +9,7 @@ import com.wul.hlt_client.entity.CityRegionBO;
 import com.wul.hlt_client.entity.ClassifyBO;
 import com.wul.hlt_client.entity.MoneyBO;
 import com.wul.hlt_client.entity.OrderDayBo;
+import com.wul.hlt_client.entity.OrderDetailsBO;
 import com.wul.hlt_client.entity.OrderMonthBO;
 import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.entity.ShopCarBO;
@@ -20,14 +21,17 @@ import com.wul.hlt_client.entity.XianShiBO;
 import com.wul.hlt_client.entity.request.BaseRequest;
 import com.wul.hlt_client.entity.request.ChildFlowBO;
 import com.wul.hlt_client.entity.request.CommitOrderBO;
+import com.wul.hlt_client.entity.request.GetOrderBO;
 import com.wul.hlt_client.entity.request.GetShopRequest;
 import com.wul.hlt_client.entity.request.LoginBo;
 import com.wul.hlt_client.entity.request.PageBO;
 import com.wul.hlt_client.entity.request.RegionBO;
 import com.wul.hlt_client.entity.request.RegisterBO;
 import com.wul.hlt_client.entity.request.ScreenBO;
+import com.wul.hlt_client.entity.request.SelectMoneyBO;
 import com.wul.hlt_client.entity.request.ShopCarSetBO;
 import com.wul.hlt_client.entity.request.ShoppingListBO;
+import com.wul.hlt_client.entity.request.TuiKuanBO;
 import com.wul.hlt_client.entity.request.XianshiBO;
 import com.wul.hlt_client.util.rx.RxResultHelper;
 
@@ -293,5 +297,55 @@ public class HttpServiceIml {
         return getService().getMyOrderListByMonth(screenBO).compose(RxResultHelper.httpRusult());
     }
 
+    /**
+     * 获取多个订单总计金额
+     */
+    public static Observable<String> getMoneyBySelector(String ids) {
+        SelectMoneyBO moneyBO = new SelectMoneyBO();
+        moneyBO.token = MyApplication.token;
+        moneyBO.ids = ids;
+        return getService().getMoneyBySelectionOrder(moneyBO).compose(RxResultHelper.httpRusult());
+    }
+
+    /**
+     * 合并支付
+     */
+    public static Observable<String> combinePay(String ids) {
+        SelectMoneyBO moneyBO = new SelectMoneyBO();
+        moneyBO.token = MyApplication.token;
+        moneyBO.ids = ids;
+        return getService().combinePay(moneyBO).compose(RxResultHelper.httpRusult());
+    }
+
+    /**
+     * 获取订单详情
+     */
+    public static Observable<OrderDetailsBO> getOrderDetails(int id) {
+        GetOrderBO orderBO = new GetOrderBO();
+        orderBO.id = id;
+        orderBO.token = MyApplication.token;
+        return getService().getOrderDetails(orderBO).compose(RxResultHelper.httpRusult());
+    }
+
+    /**
+     * 取消订单
+     */
+    public static Observable<String> cancleOrder(int id) {
+        GetOrderBO orderBO = new GetOrderBO();
+        orderBO.id = id;
+        orderBO.token = MyApplication.token;
+        return getService().cancleOrder(orderBO).compose(RxResultHelper.httpRusult());
+    }
+
+    /**
+     * 申请退款
+     */
+    public static Observable<String> orderTuiKuan(int id, String money) {
+        TuiKuanBO tuiKuanBO = new TuiKuanBO();
+        tuiKuanBO.token = MyApplication.token;
+        tuiKuanBO.setId(id);
+        tuiKuanBO.setRefundAmount(money);
+        return getService().orderTuiKuan(tuiKuanBO).compose(RxResultHelper.httpRusult());
+    }
 
 }
