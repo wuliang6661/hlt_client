@@ -370,7 +370,6 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
                     } else {              //支付失败
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                         showToast("支付失败！");
-                        AppManager.getAppManager().goHome();
                     }
                     break;
                 }

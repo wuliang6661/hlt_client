@@ -70,7 +70,6 @@
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:background="@drawable/shop_car_button_yes"
-                android:enabled="false"
                 android:gravity="center"
                 android:text="去付款"
                 android:textColor="@color/white"
@@ -271,6 +270,7 @@
 
 
                 <TextView
+                    android:id="@+id/kefu_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"

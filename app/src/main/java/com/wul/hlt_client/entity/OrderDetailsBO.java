@@ -34,6 +34,24 @@ public class OrderDetailsBO {
     private double payStatus;
     private long createDate;
     private List<ProductDetailListBean> productDetailList;
+    private String greengrocerPhone;
+    private String customerServicePhone;
+
+    public String getCustomerServicePhone() {
+        return customerServicePhone;
+    }
+
+    public void setCustomerServicePhone(String customerServicePhone) {
+        this.customerServicePhone = customerServicePhone;
+    }
+
+    public String getGreengrocerPhone() {
+        return greengrocerPhone;
+    }
+
+    public void setGreengrocerPhone(String greengrocerPhone) {
+        this.greengrocerPhone = greengrocerPhone;
+    }
 
     public double getOrderType() {
         return orderType;

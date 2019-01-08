@@ -77,6 +77,8 @@ public class OrderDetailsActivity extends MVPBaseActivity<OrderDetailsContract.V
     RecyclerView goodList;
     @BindView(R.id.order_setting)
     TextView orderSetting;
+    @BindView(R.id.kefu_name)
+    TextView kefuName;
 
     private int id;
 
@@ -133,7 +135,13 @@ public class OrderDetailsActivity extends MVPBaseActivity<OrderDetailsContract.V
         }
         allPriceButtom.setText("¥ " + orderDetailsBO.getAmount());
         setAdapter(orderDetailsBO);
-//        kefuPhone.setText(orderDetailsBO.get);    //客服电话
+        if (orderDetailsBO.getOrderType() == 0) {   //正单
+            kefuName.setText("客服电话");
+            kefuPhone.setText(orderDetailsBO.getCustomerServicePhone());
+        } else {
+            kefuName.setText("商户电话");
+            kefuPhone.setText(orderDetailsBO.getGreengrocerPhone());
+        }
         switch ((int) orderDetailsBO.getStatusId()) {
             case 0:    //待接单
                 orderType.setText("待接单");
@@ -150,6 +158,7 @@ public class OrderDetailsActivity extends MVPBaseActivity<OrderDetailsContract.V
             case 3:     //已终止
                 orderType.setText("已终止");
                 orderType.setTextColor(Color.parseColor("#CCCCCC"));
+                allPriceLayout.setVisibility(View.GONE);
                 break;
         }
         switch ((int) orderDetailsBO.getPayStatus()) {
@@ -189,7 +198,7 @@ public class OrderDetailsActivity extends MVPBaseActivity<OrderDetailsContract.V
                     public void convert(LGViewHolder holder, OrderDetailsBO.ProductDetailListBean o, int position) {
                         holder.setText(R.id.good_name, o.getProductName());
                         holder.setText(R.id.good_price, "¥ " + o.getPrice2() + "元/" + o.getPrice2MeasureUnit());
-                        holder.setText(R.id.goods_num, "数量：" + o.getQuantity() + o.getPrice2MeasureUnit());
+                        holder.setText(R.id.goods_num, "数量：" + o.getNumber2() + o.getPrice2MeasureUnit());
                         holder.setText(R.id.goods_all_price, "¥ " + o.getAmountOfMoney());
                         holder.setImageUrl(OrderDetailsActivity.this, R.id.good_img, o.getImg());
                     }
@@ -221,6 +230,18 @@ public class OrderDetailsActivity extends MVPBaseActivity<OrderDetailsContract.V
             }
         });
         dialog.show();
+    }
+
+
+    /**
+     * 取消订单
+     */
+    private void cancleOrder() {
+        new com.wul.hlt_client.widget.AlertDialog(this).builder().setGone().setTitle("取消订单")
+                .setMsg("请确认是否取消该订单？")
+                .setCancelable(false)
+                .setNegativeButton("取消", null)
+                .setPositiveButton("确定", v -> mPresenter.cancleOrder(id)).show();
     }
 
 
@@ -275,8 +296,6 @@ public class OrderDetailsActivity extends MVPBaseActivity<OrderDetailsContract.V
                     break;
             }
         }
-
-        ;
     };
 
 }
