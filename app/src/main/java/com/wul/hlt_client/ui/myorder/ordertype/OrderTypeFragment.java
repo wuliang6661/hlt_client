@@ -99,7 +99,6 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
 
         orderIds = new ArrayList<>();
         setListener();
-        syncHttp();
     }
 
 
@@ -197,6 +196,12 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
             syncHttp();
         });
         popWindow.showAsDropDown(orderTypeTime);
+    }
+
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        syncHttp();
     }
 
     @Override

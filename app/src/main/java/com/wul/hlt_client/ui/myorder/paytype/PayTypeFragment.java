@@ -199,6 +199,12 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
 
     }
 
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        syncHttp();
+    }
+
     /**
      * 获取我的订单列表
      */
