@@ -22,6 +22,8 @@ public class SelectContract {
 
         void getSeachList(XianShiBO xianShiBO);
 
+        void testSuress();
+
     }
 
     interface Presenter extends BasePresenter<View> {

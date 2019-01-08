@@ -21,6 +21,7 @@ import com.wul.hlt_client.entity.XianShiBO;
 import com.wul.hlt_client.entity.event.ShopCarRefresh;
 import com.wul.hlt_client.mvp.MVPBaseActivity;
 import com.wul.hlt_client.ui.ShopAdapter;
+import com.wul.hlt_client.ui.ordercommit.OrderCommitActivity;
 import com.wul.hlt_client.widget.MarqueTextView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -76,6 +77,7 @@ public class SelectActivity extends MVPBaseActivity<SelectContract.View, SelectP
         initShopCar();
         txtSelect.setOnClickListener(this);
         mPresenter.getCityGongGao();
+        shopCarButton.setOnClickListener(view -> mPresenter.testSkipe());
     }
 
     @Override
@@ -98,6 +100,11 @@ public class SelectActivity extends MVPBaseActivity<SelectContract.View, SelectP
             ShopAdapter adapter = new ShopAdapter(this, xianShiBO.getList(), MyApplication.shopCarBO);
             recycle.setAdapter(adapter);
         }
+    }
+
+    @Override
+    public void testSuress() {
+        gotoActivity(OrderCommitActivity.class, false);
     }
 
     @Override

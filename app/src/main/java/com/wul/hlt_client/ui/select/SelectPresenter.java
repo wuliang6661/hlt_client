@@ -54,4 +54,23 @@ public class SelectPresenter extends BasePresenterImpl<SelectContract.View>
         });
     }
 
+
+    public void testSkipe() {
+        HttpServiceIml.testSpike().subscribe(new HttpResultSubscriber<String>(mView.getContext()) {
+            @Override
+            public void onSuccess(String s) {
+                if (mView != null) {
+                    mView.testSuress();
+                }
+            }
+
+            @Override
+            public void onFiled(String message) {
+                if (mView != null) {
+                    mView.onRequestError(message);
+                }
+            }
+        });
+    }
+
 }
