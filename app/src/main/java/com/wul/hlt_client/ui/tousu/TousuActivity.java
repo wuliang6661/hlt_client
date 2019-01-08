@@ -72,5 +72,6 @@ public class TousuActivity extends MVPBaseActivity<TousuContract.View, TousuPres
     @Override
     public void sounrss() {
         showToast("投诉成功！");
+        finish();
     }
 }
