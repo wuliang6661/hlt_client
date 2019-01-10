@@ -42,22 +42,12 @@ public class DowmTimer extends TimerTask {
             message.what = 0x11;
             handler.sendMessage(message);
             if (getTime(startTime - date).equals("00:00:00")) {
-                thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        synchronized (DowmTimer.this) {
-                            mediaPlayer = MediaPlayer.create(context, R.raw.miaosha_start);
-                            for (int i = 0; i <5; i++) {
-                                try {
-                                    Thread.sleep(2000);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-                    }
-                });
-                thread.start();
+                if (mediaPlayer != null) {
+                    mediaPlayer.release();
+                }
+                mediaPlayer = MediaPlayer.create(context, R.raw.miaosha_start);
+                mediaPlayer.setOnCompletionListener(new MediaListener());
+                mediaPlayer.start();
             }
         }
         if (date >= startTime && date <= endTime) {    //活动还没结束
@@ -66,23 +56,12 @@ public class DowmTimer extends TimerTask {
             message.what = 0x22;
             handler.sendMessage(message);
             if (getTime(endTime - date).equals("00:00:00")) {
-                thread = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        synchronized (DowmTimer.this) {
-                            mediaPlayer = MediaPlayer.create(context, R.raw.miaosha_end);
-                            for (int i = 0; i < 5; i++) {
-                                mediaPlayer.start();
-                                try {
-                                    Thread.sleep(2000);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-                    }
-                });
-                thread.start();
+                if (mediaPlayer != null) {
+                    mediaPlayer.release();
+                }
+                mediaPlayer = MediaPlayer.create(context, R.raw.miaosha_end);
+                mediaPlayer.setOnCompletionListener(new MediaListener());
+                mediaPlayer.start();
             }
         }
         if (date > endTime) {

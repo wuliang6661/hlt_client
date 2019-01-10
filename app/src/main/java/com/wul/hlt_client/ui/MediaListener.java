@@ -9,19 +9,9 @@ public class MediaListener implements MediaPlayer.OnCompletionListener {
 
     @Override
     public void onCompletion(MediaPlayer mp) {
-        if (count > 3) {
-            count = 4;
-            mp.stop();
-            mp.setLooping(false);
-            return;
+        if (count <= 2) {
+            mp.start();
+            count++;
         }
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        mp.start();
-        mp.setLooping(true);
-        count++;
     }
 }
