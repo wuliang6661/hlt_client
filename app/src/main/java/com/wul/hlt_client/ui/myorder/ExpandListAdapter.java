@@ -164,6 +164,7 @@ public class ExpandListAdapter extends BaseExpandableListAdapter {
         }
         if (isBudan) {
             hodler.budan.setVisibility(View.VISIBLE);
+            hodler.checkbox.setVisibility(View.GONE);
         } else {
             hodler.budan.setVisibility(View.GONE);
         }

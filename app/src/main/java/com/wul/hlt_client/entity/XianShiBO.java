@@ -18,7 +18,7 @@ public class XianShiBO {
 
     private long startTime;
     private long endTime;
-    private int time;
+    private long time;
     private List<ShopBO> list;
 
     public long getStartTime() {
@@ -37,11 +37,11 @@ public class XianShiBO {
         this.endTime = endTime;
     }
 
-    public int getTime() {
+    public long getTime() {
         return time;
     }
 
-    public void setTime(int time) {
+    public void setTime(long time) {
         this.time = time;
     }
 

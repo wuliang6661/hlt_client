@@ -165,7 +165,7 @@ public class SalesGoodFragment extends MVPBaseFragment<SalesGoodContract.View, S
                 handler.removeCallbacksAndMessages(null);
             }
             timer = new Timer();
-            timer.schedule(new DowmTimer(shopBOS.getStartTime(), shopBOS.getEndTime(), handler), 0, 1000);
+            timer.schedule(new DowmTimer(getActivity(), shopBOS.getStartTime(), shopBOS.getEndTime(), handler), 0, 1000);
             tixingButton.setVisibility(View.VISIBLE);
         }
         ShopAdapter adapter = new ShopAdapter(getActivity(), shopBOS.getList(), MyApplication.shopCarBO);

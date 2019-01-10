@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -69,8 +70,10 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
     ImageView image1;
 
     Unbinder unbinder;
+    @BindView(R.id.no_message)
+    LinearLayout noMessage;
 
-    private String[] zhengdans = new String[]{"正单", "补单", "全部"};
+    private String[] zhengdans = new String[]{"正单", "补单"};
     private String[] zhifus = new String[]{"未支付", "已支付", "全部"};
     private String[] times = new String[]{"按日显示", "按周显示", "按月显示"};
 
@@ -242,6 +245,10 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
         expandList.setVisibility(View.GONE);
         if (orderDayBo.getAddressMyOrderList() == null) {
             orderDayBo.setAddressMyOrderList(new ArrayList<>());
+            recycle.setVisibility(View.GONE);
+            expandList.setVisibility(View.GONE);
+            noMessage.setVisibility(View.VISIBLE);
+            return;
         }
         RecycleAdapter adapter = new RecycleAdapter(getActivity(), "1".equals(orderTypes), orderDayBo.getAddressMyOrderList());
         adapter.setIds(orderIds);
@@ -278,6 +285,10 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
         expandList.setVisibility(View.VISIBLE);
         if (orderMonthBO.getAddressMyOrderList() == null) {
             orderMonthBO.setAddressMyOrderList(new ArrayList<>());
+            recycle.setVisibility(View.GONE);
+            expandList.setVisibility(View.GONE);
+            noMessage.setVisibility(View.VISIBLE);
+            return;
         }
         ExpandListAdapter adapter = new ExpandListAdapter(getActivity(), "1".equals(orderTypes), orderMonthBO.getAddressMyOrderList());
         adapter.setIds(orderIds);

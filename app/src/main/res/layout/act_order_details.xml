@@ -48,7 +48,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/image1"
-                android:text="总记："
+                android:text="总计："
                 android:textColor="#666666"
                 android:textSize="16sp" />
 

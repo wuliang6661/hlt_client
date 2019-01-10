@@ -92,6 +92,7 @@ public class RecycleAdapter extends LGRecycleViewAdapter<OrderDayBo.AddressMyOrd
         }
         if (isBuDan) {
             holder.getView(R.id.order_budan).setVisibility(View.VISIBLE);
+            checkBox.setVisibility(View.GONE);
         } else {
             holder.getView(R.id.order_budan).setVisibility(View.GONE);
         }

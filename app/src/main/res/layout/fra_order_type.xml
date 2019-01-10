@@ -101,7 +101,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@+id/image1"
-                android:text="未支付订单合记："
+                android:text="未支付订单合计："
                 android:textColor="#666666"
                 android:textSize="16sp" />
 
@@ -148,6 +148,33 @@
             android:layout_marginTop="1dp"
             android:groupIndicator="@null"
             android:visibility="gone" />
+
+
+        <LinearLayout
+            android:id="@+id/no_message"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/all_price_layout"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+
+            <ImageView
+                android:layout_width="54dp"
+                android:layout_height="65dp"
+                android:src="@drawable/no_order" />
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="暂无订单"
+                android:textColor="#666666"
+                android:textSize="13sp" />
+
+        </LinearLayout>
 
 
     </RelativeLayout>
