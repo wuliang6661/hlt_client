@@ -5,25 +5,23 @@ import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Message;
 
+import com.blankj.utilcode.util.LogUtils;
 import com.wul.hlt_client.R;
 
 import java.util.TimerTask;
 
 /**
  * Created by wuliang on 2018/12/22.
+ * <p>
+ * 计时器
  */
 
 public class DowmTimer extends TimerTask {
 
     private long startTime, endTime;
     private Handler handler;
-
-    Context context;
-
-    MediaPlayer mediaPlayer;
-
-    static Thread thread;
-
+    private Context context;
+    private MediaPlayer mediaPlayer;
 
     public DowmTimer(Context context, long startTime, long endTime, Handler handler) {
         this.startTime = startTime;
@@ -31,7 +29,6 @@ public class DowmTimer extends TimerTask {
         this.handler = handler;
         this.context = context;
     }
-
 
     @Override
     public void run() {
@@ -42,6 +39,7 @@ public class DowmTimer extends TimerTask {
             message.what = 0x11;
             handler.sendMessage(message);
             if (getTime(startTime - date).equals("00:00:00")) {
+                LogUtils.e("开始一次");
                 if (mediaPlayer != null) {
                     mediaPlayer.release();
                 }
@@ -56,6 +54,7 @@ public class DowmTimer extends TimerTask {
             message.what = 0x22;
             handler.sendMessage(message);
             if (getTime(endTime - date).equals("00:00:00")) {
+                LogUtils.e("结束一次");
                 if (mediaPlayer != null) {
                     mediaPlayer.release();
                 }
@@ -72,7 +71,6 @@ public class DowmTimer extends TimerTask {
         }
     }
 
-
     private String getTime(long downTime) {
         long allScond = downTime / 1000;
         long hour = allScond / 3600;   //剩余小时
@@ -81,25 +79,13 @@ public class DowmTimer extends TimerTask {
         return format(hour) + ":" + format(minute) + ":" + format(scond);
     }
 
-
     private String format(long time) {
         if (time <= 0) {
             return "00";
         }
-        if (time > 0 && time < 10) {
+        if (time < 10) {
             return "0" + time;
         }
         return time + "";
     }
-
-
-    Thread thread1 = new Thread() {
-        @Override
-        public void run() {
-            mediaPlayer = MediaPlayer.create(context, R.raw.miaosha_start);
-            mediaPlayer.start();
-        }
-    };
-
-
 }

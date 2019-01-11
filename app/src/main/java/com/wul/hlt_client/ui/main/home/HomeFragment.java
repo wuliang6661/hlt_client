@@ -4,6 +4,7 @@ package com.wul.hlt_client.ui.main.home;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Paint;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -30,6 +31,7 @@ import com.wul.hlt_client.entity.XianShiBO;
 import com.wul.hlt_client.entity.event.SwithFragment;
 import com.wul.hlt_client.mvp.MVPBaseFragment;
 import com.wul.hlt_client.ui.DowmTimer;
+import com.wul.hlt_client.ui.MediaListener;
 import com.wul.hlt_client.ui.classify.ClassifyFragment;
 import com.wul.hlt_client.ui.opsgood.OpsGoodActivity;
 import com.wul.hlt_client.ui.select.SelectActivity;
@@ -107,7 +109,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         mPresenter.getComomPaseList();
         mPresenter.getXianshiList();
 //        MediaPlayer player =  MediaPlayer.create(getActivity(), R.raw.miaosha_start);
-//        player.setOnCompletionListener(new MediaListener());
+//        player.setOnCompletionListener(new MediaListener(player));
 //        player.start();
     }
 

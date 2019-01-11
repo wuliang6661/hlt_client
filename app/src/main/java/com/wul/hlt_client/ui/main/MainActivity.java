@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,6 +26,7 @@ import com.wul.hlt_client.config.AlarmBroadcastReceiver;
 import com.wul.hlt_client.entity.ShopCarBO;
 import com.wul.hlt_client.entity.event.FinishEvent;
 import com.wul.hlt_client.entity.event.SwithFragment;
+import com.wul.hlt_client.ui.MediaListener;
 import com.wul.hlt_client.ui.NoneFragment1;
 import com.wul.hlt_client.ui.NoneFragment2;
 import com.wul.hlt_client.ui.NoneFragment3;
@@ -82,6 +84,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         getShopCarList();
         requestPermission();
         registerService();
+//        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.miaosha_start);
+//        mediaPlayer.setOnCompletionListener(new MediaListener(mediaPlayer));
+//        mediaPlayer.start();
     }
 
     @Override
@@ -270,6 +275,4 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
                 INTERVAL, sender);
     }
-
-
 }
