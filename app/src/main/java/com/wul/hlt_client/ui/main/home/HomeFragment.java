@@ -33,6 +33,7 @@ import com.wul.hlt_client.ui.DowmTimer;
 import com.wul.hlt_client.ui.classify.ClassifyFragment;
 import com.wul.hlt_client.ui.opsgood.OpsGoodActivity;
 import com.wul.hlt_client.ui.select.SelectActivity;
+import com.wul.hlt_client.util.NotificationUtils;
 import com.wul.hlt_client.widget.lgrecycleadapter.LGRecycleViewAdapter;
 import com.wul.hlt_client.widget.lgrecycleadapter.LGViewHolder;
 
@@ -334,6 +335,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
                 break;
             case R.id.edit_select:    //进入搜索页面
                 gotoActivity(SelectActivity.class, false);
+//                NotificationUtils.showNotification(getActivity());
                 break;
         }
     }

@@ -262,6 +262,7 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
         }
         recycle.setVisibility(View.VISIBLE);
         expandList.setVisibility(View.GONE);
+        noMessage.setVisibility(View.GONE);
         RecycleAdapter adapter = new RecycleAdapter(getActivity(), "1".equals(orderTypes), orderDayBo.getAddressMyOrderList());
         adapter.setIds(orderIds);
         adapter.setOnSelector(new RecycleAdapter.onSelector() {
@@ -293,8 +294,6 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
 
     @Override
     public void getOrderListMonth(OrderMonthBO orderMonthBO) {
-        recycle.setVisibility(View.GONE);
-        expandList.setVisibility(View.VISIBLE);
         if (orderMonthBO.getAddressMyOrderList() == null) {
             orderMonthBO.setAddressMyOrderList(new ArrayList<>());
             recycle.setVisibility(View.GONE);
@@ -302,6 +301,9 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
             noMessage.setVisibility(View.VISIBLE);
             return;
         }
+        recycle.setVisibility(View.GONE);
+        expandList.setVisibility(View.VISIBLE);
+        noMessage.setVisibility(View.GONE);
         ExpandListAdapter adapter = new ExpandListAdapter(getActivity(), "1".equals(orderTypes), orderMonthBO.getAddressMyOrderList());
         adapter.setIds(orderIds);
         adapter.setOnSelector(new ExpandListAdapter.onSelector() {

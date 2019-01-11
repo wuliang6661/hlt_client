@@ -2,6 +2,10 @@ package com.wul.hlt_client.ui.main;
 
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,6 +21,7 @@ import com.wul.hlt_client.api.HttpResultSubscriber;
 import com.wul.hlt_client.api.HttpServiceIml;
 import com.wul.hlt_client.base.BaseActivity;
 import com.wul.hlt_client.base.MyApplication;
+import com.wul.hlt_client.config.AlarmBroadcastReceiver;
 import com.wul.hlt_client.entity.ShopCarBO;
 import com.wul.hlt_client.entity.event.FinishEvent;
 import com.wul.hlt_client.entity.event.SwithFragment;
@@ -30,6 +35,8 @@ import com.xyz.tabitem.BottmTabItem;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.Calendar;
 
 import butterknife.BindView;
 import me.yokeyword.fragmentation.SupportFragment;
@@ -74,6 +81,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         main4.setOnClickListener(this);
         getShopCarList();
         requestPermission();
+        registerService();
     }
 
     @Override
@@ -254,4 +262,25 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
         return super.onKeyUp(keyCode, event);
     }
+
+
+    private static final int INTERVAL = 1000 * 60 * 60 * 24;// 24h
+
+    private void registerService() {
+        Intent intent = new Intent(this, AlarmBroadcastReceiver.class);
+        intent.setAction(AlarmBroadcastReceiver.ACTION_SEND);
+        PendingIntent sender = PendingIntent.getBroadcast(this,
+                0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        // Schedule the alarm!
+        AlarmManager am = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 12);
+        calendar.set(Calendar.MINUTE, 34);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
+                INTERVAL, sender);
+    }
+
+
 }

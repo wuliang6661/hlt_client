@@ -241,8 +241,6 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
 
     @Override
     public void getOrderListDay(OrderDayBo orderDayBo) {
-        recycle.setVisibility(View.VISIBLE);
-        expandList.setVisibility(View.GONE);
         if (orderDayBo.getAddressMyOrderList() == null) {
             orderDayBo.setAddressMyOrderList(new ArrayList<>());
             recycle.setVisibility(View.GONE);
@@ -250,6 +248,9 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
             noMessage.setVisibility(View.VISIBLE);
             return;
         }
+        noMessage.setVisibility(View.GONE);
+        recycle.setVisibility(View.VISIBLE);
+        expandList.setVisibility(View.GONE);
         RecycleAdapter adapter = new RecycleAdapter(getActivity(), "1".equals(orderTypes), orderDayBo.getAddressMyOrderList());
         adapter.setIds(orderIds);
         adapter.setOnSelector(new RecycleAdapter.onSelector() {
@@ -281,8 +282,6 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
 
     @Override
     public void getOrderListMonth(OrderMonthBO orderMonthBO) {
-        recycle.setVisibility(View.GONE);
-        expandList.setVisibility(View.VISIBLE);
         if (orderMonthBO.getAddressMyOrderList() == null) {
             orderMonthBO.setAddressMyOrderList(new ArrayList<>());
             recycle.setVisibility(View.GONE);
@@ -290,6 +289,9 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
             noMessage.setVisibility(View.VISIBLE);
             return;
         }
+        noMessage.setVisibility(View.GONE);
+        recycle.setVisibility(View.GONE);
+        expandList.setVisibility(View.VISIBLE);
         ExpandListAdapter adapter = new ExpandListAdapter(getActivity(), "1".equals(orderTypes), orderMonthBO.getAddressMyOrderList());
         adapter.setIds(orderIds);
         adapter.setOnSelector(new ExpandListAdapter.onSelector() {
