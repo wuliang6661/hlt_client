@@ -116,16 +116,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
-
-//    @Override
-//    public void onBackPressedSupport() {
-//        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
-//            pop();
-//        } else {
-//            ActivityCompat.finishAfterTransition(this);
-//        }
-//    }
-
     @Override
     public void onClick(View v) {
         EventBus.getDefault().post(new FinishEvent());
@@ -254,7 +244,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     firstTime = secondTime;
                     return true;
                 } else {
-//                    MyApplication.SESSIONID = null;
                     AppManager.getAppManager().finishAllActivity();
                     System.exit(0);
                 }
@@ -274,8 +263,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         // Schedule the alarm!
         AlarmManager am = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, 12);
-        calendar.set(Calendar.MINUTE, 34);
+        calendar.set(Calendar.HOUR_OF_DAY, 21);
+        calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(),
