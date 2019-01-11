@@ -180,6 +180,7 @@ public class ShopAdapter extends LGRecycleViewAdapter<ShopBO> {
                 MyApplication.shopCarBO = s;
                 EventBus.getDefault().post(new ShopCarRefresh());
                 if (s.getShoppingCartList() == null || s.getShoppingCartList().size() == 0) {
+                    notifyDataSetChanged();
                     return;
                 }
                 for (ShopBO shopBO : s.getShoppingCartList()) {

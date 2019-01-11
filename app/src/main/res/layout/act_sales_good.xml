@@ -78,10 +78,10 @@
             <ImageView
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:layout_marginBottom="8dp"
                 android:layout_marginLeft="12dp"
-                android:layout_marginRight="15dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="8dp"
                 android:src="@drawable/gonggao_red" />
 
 
@@ -142,13 +142,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/miao_bg"
-                android:paddingBottom="3dp"
                 android:paddingLeft="8dp"
-                android:paddingRight="8dp"
                 android:paddingTop="3dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="3dp"
                 android:text="提醒我"
                 android:textColor="#ffffff"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:visibility="gone" />
 
 
         </LinearLayout>

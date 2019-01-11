@@ -105,6 +105,9 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         mPresenter.getBanner();
         mPresenter.getComomPaseList();
         mPresenter.getXianshiList();
+//        MediaPlayer player =  MediaPlayer.create(getActivity(), R.raw.miaosha_start);
+//        player.setOnCompletionListener(new MediaListener());
+//        player.start();
     }
 
     @Override
@@ -258,7 +261,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         };
         xianshiRecycle.setAdapter(adapter);
         timer = new Timer();
-        timer.schedule(new DowmTimer(list.getStartTime(), list.getEndTime(), handler), 0, 1000);
+        timer.schedule(new DowmTimer(getActivity(), list.getStartTime(), list.getEndTime(), handler), 0, 1000);
     }
 
     @SuppressLint("HandlerLeak")
@@ -274,6 +277,13 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
                     break;
                 case 0x22:
                     downTimeText.setText("距离结束时间还有：");
+                    break;
+                case 0x33:
+                    mPresenter.getXianshiList();
+                    if (timer != null) {
+                        timer.cancel();
+                        timer = null;
+                    }
                     break;
             }
             downTime.setText(time);
@@ -307,6 +317,10 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         mPresenter.getBanner();
         mPresenter.getComomPaseList();
         mPresenter.getXianshiList();
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
     }
 
     @Override

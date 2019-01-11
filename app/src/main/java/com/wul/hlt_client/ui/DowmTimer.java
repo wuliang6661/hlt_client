@@ -1,7 +1,11 @@
 package com.wul.hlt_client.ui;
 
+import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Message;
+
+import com.wul.hlt_client.R;
 
 import java.util.TimerTask;
 
@@ -14,10 +18,18 @@ public class DowmTimer extends TimerTask {
     private long startTime, endTime;
     private Handler handler;
 
-    public DowmTimer(long startTime, long endTime, Handler handler) {
+    Context context;
+
+    MediaPlayer mediaPlayer;
+
+    static Thread thread;
+
+
+    public DowmTimer(Context context, long startTime, long endTime, Handler handler) {
         this.startTime = startTime;
         this.endTime = endTime;
         this.handler = handler;
+        this.context = context;
     }
 
 
@@ -29,11 +41,33 @@ public class DowmTimer extends TimerTask {
             message.obj = getTime(startTime - date);
             message.what = 0x11;
             handler.sendMessage(message);
+            if (getTime(startTime - date).equals("00:00:00")) {
+                if (mediaPlayer != null) {
+                    mediaPlayer.release();
+                }
+                mediaPlayer = MediaPlayer.create(context, R.raw.miaosha_start);
+                mediaPlayer.setOnCompletionListener(new MediaListener());
+                mediaPlayer.start();
+            }
         }
         if (date >= startTime && date <= endTime) {    //活动还没结束
             Message message = new Message();
             message.obj = getTime(endTime - date);
             message.what = 0x22;
+            handler.sendMessage(message);
+            if (getTime(endTime - date).equals("00:00:00")) {
+                if (mediaPlayer != null) {
+                    mediaPlayer.release();
+                }
+                mediaPlayer = MediaPlayer.create(context, R.raw.miaosha_end);
+                mediaPlayer.setOnCompletionListener(new MediaListener());
+                mediaPlayer.start();
+            }
+        }
+        if (date > endTime) {
+            Message message = new Message();
+            message.obj = getTime(endTime - date);
+            message.what = 0x33;
             handler.sendMessage(message);
         }
     }
@@ -57,6 +91,15 @@ public class DowmTimer extends TimerTask {
         }
         return time + "";
     }
+
+
+    Thread thread1 = new Thread() {
+        @Override
+        public void run() {
+            mediaPlayer = MediaPlayer.create(context, R.raw.miaosha_start);
+            mediaPlayer.start();
+        }
+    };
 
 
 }

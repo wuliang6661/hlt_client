@@ -224,7 +224,7 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
         ShopAdapter adapter = new ShopAdapter(getActivity(), shopBOS.getList(), MyApplication.shopCarBO);
         recycle.setAdapter(adapter);
         timer = new Timer();
-        timer.schedule(new DowmTimer(shopBOS.getStartTime(), shopBOS.getEndTime(), handler), 0, 1000);
+        timer.schedule(new DowmTimer(getActivity(), shopBOS.getStartTime(), shopBOS.getEndTime(), handler), 0, 1000);
     }
 
     @SuppressLint("HandlerLeak")
