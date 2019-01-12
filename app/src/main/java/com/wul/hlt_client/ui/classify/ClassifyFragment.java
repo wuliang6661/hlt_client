@@ -61,8 +61,6 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
     TextView downTimeText;
     @BindView(R.id.down_time)
     TextView downTime;
-    @BindView(R.id.tixing_button)
-    TextView tixingButton;
     @BindView(R.id.recycle)
     RecyclerView recycle;
     Unbinder unbinder;

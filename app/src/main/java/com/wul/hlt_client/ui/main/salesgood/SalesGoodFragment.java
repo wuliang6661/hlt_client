@@ -66,8 +66,6 @@ public class SalesGoodFragment extends MVPBaseFragment<SalesGoodContract.View, S
     TextView downTimeText;
     @BindView(R.id.down_time)
     TextView downTime;
-    @BindView(R.id.tixing_button)
-    TextView tixingButton;
     @BindView(R.id.back)
     ImageView back;
     @BindView(R.id.title_text)
@@ -158,7 +156,6 @@ public class SalesGoodFragment extends MVPBaseFragment<SalesGoodContract.View, S
     public void getXianshiList(XianShiBO shopBOS) {
         if (shopBOS.getStartTime() == 0) {
             downTimeText.setText("暂无促销活动：");
-            tixingButton.setVisibility(View.GONE);
         } else {
             if (timer != null) {
                 timer.cancel();
@@ -166,7 +163,6 @@ public class SalesGoodFragment extends MVPBaseFragment<SalesGoodContract.View, S
             }
             timer = new Timer();
             timer.schedule(new DowmTimer(getActivity(), shopBOS.getStartTime(), shopBOS.getEndTime(), handler), 0, 1000);
-            tixingButton.setVisibility(View.VISIBLE);
         }
         ShopAdapter adapter = new ShopAdapter(getActivity(), shopBOS.getList(), MyApplication.shopCarBO);
         recycle.setAdapter(adapter);

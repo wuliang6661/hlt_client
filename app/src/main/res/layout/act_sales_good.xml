@@ -136,22 +136,6 @@
                 android:textSize="13sp" />
 
 
-            <TextView
-                android:id="@+id/tixing_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/miao_bg"
-                android:paddingLeft="8dp"
-                android:paddingTop="3dp"
-                android:paddingRight="8dp"
-                android:paddingBottom="3dp"
-                android:text="提醒我"
-                android:textColor="#ffffff"
-                android:textSize="13sp"
-                android:visibility="gone" />
-
-
         </LinearLayout>
 
 
