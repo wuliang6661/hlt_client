@@ -108,9 +108,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         mPresenter.getBanner();
         mPresenter.getComomPaseList();
         mPresenter.getXianshiList();
-//        MediaPlayer player =  MediaPlayer.create(getActivity(), R.raw.miaosha_start);
-//        player.setOnCompletionListener(new MediaListener(player));
-//        player.start();
+
     }
 
     @Override
