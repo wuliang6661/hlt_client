@@ -87,8 +87,8 @@
 
             <ImageView
                 android:id="@+id/image1"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:src="@drawable/check_box_nomer" />

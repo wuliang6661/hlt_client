@@ -12,8 +12,8 @@
         android:id="@+id/buttom_tab"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
         android:background="@color/white"
         android:gravity="center"
         android:orientation="horizontal">
@@ -91,7 +91,8 @@
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/buttom_tab" />
+        android:layout_above="@+id/buttom_tab"
+        android:fitsSystemWindows="true" />
 
     <ImageView
         android:layout_width="match_parent"

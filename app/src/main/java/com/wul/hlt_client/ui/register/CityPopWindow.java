@@ -54,6 +54,9 @@ public class CityPopWindow extends PopupWindow {
         recyclerView.setAdapter(adapter);
         this.setContentView(window);
         this.setFocusable(true);
+        //设置宽高
+        this.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        this.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         setBackgroundDrawable(new ColorDrawable(0));
         window.setOnTouchListener((v, event) -> {
             int height = window.findViewById(R.id.pop_layout).getTop();

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.gyf.barlibrary.ImmersionBar;
 import com.wul.hlt_client.R;
 import com.wul.hlt_client.base.MyApplication;
 import com.wul.hlt_client.entity.ShopCarBO;
@@ -89,6 +90,9 @@ public class ShopCarFragment extends MVPBaseFragment<ShopCarContract.View, ShopC
         super.onSupportVisible();
         showProgress();
         mPresenter.getShopCarList();
+        if (isImmersionBarEnabled()) {
+            initImmersionBar();
+        }
     }
 
 
@@ -154,4 +158,21 @@ public class ShopCarFragment extends MVPBaseFragment<ShopCarContract.View, ShopC
         stopProgress();
         gotoActivity(OrderCommitActivity.class, false);
     }
+
+
+    public void initImmersionBar() {
+        ImmersionBar.with(this).statusBarColor(R.color.green_color)
+                .statusBarDarkFont(true).keyboardEnable(true).init();   //解决虚拟按键与状态栏沉浸冲突
+    }
+
+    private boolean isImmersionBarEnabled() {
+        return true;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ImmersionBar.with(this).destroy();
+    }
+
 }

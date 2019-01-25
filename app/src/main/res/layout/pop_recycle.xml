@@ -3,7 +3,14 @@
     android:id="@+id/pop_layout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/pop_bg">
+    android:background="@drawable/pop_img_bg"
+    android:orientation="horizontal">
+
+
+    <!--<View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:background="#f2f2f2" />-->
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycle"

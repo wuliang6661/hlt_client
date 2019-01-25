@@ -11,23 +11,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
         android:gravity="center"
         android:textColor="@color/black"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/txt_msg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
         android:gravity="center"
         android:lineSpacingMultiplier="1.2"
-        android:textColor="@color/black"
+        android:textColor="#333333"
         android:textSize="16sp" />
 
     <ImageView

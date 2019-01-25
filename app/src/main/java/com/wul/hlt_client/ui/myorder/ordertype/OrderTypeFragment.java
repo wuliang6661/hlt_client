@@ -21,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alipay.sdk.app.PayTask;
+import com.blankj.utilcode.util.LogUtils;
 import com.wul.hlt_client.R;
 import com.wul.hlt_client.entity.OrderDayBo;
 import com.wul.hlt_client.entity.OrderMonthBO;
@@ -157,6 +158,7 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
             }
             syncHttp();
         });
+        popWindow.setWidth(orderTypeZhengdan.getWidth());
         popWindow.showAsDropDown(orderTypeZhengdan);
     }
 
@@ -185,6 +187,8 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
             }
             syncHttp();
         });
+        LogUtils.e(orderTypeWancheng.getWidth());
+        popWindow.setWidth(orderTypeWancheng.getWidth());
         popWindow.showAsDropDown(orderTypeWancheng);
     }
 
@@ -198,6 +202,8 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
             displayType = position + 1;
             syncHttp();
         });
+        LogUtils.e(orderTypeTime.getWidth());
+        popWindow.setWidth(orderTypeTime.getWidth());
         popWindow.showAsDropDown(orderTypeTime);
     }
 

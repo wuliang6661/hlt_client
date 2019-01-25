@@ -158,6 +158,7 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
             }
             syncHttp();
         });
+        popWindow.setWidth(orderTypeZhengdan.getWidth());
         popWindow.showAsDropDown(orderTypeZhengdan);
     }
 
@@ -175,6 +176,7 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
             }
             syncHttp();
         });
+        popWindow.setWidth(orderTypeWancheng.getWidth());
         popWindow.showAsDropDown(orderTypeWancheng);
     }
 
@@ -188,6 +190,7 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
             displayType = position + 1;
             syncHttp();
         });
+        popWindow.setWidth(orderTypeTime.getWidth());
         popWindow.showAsDropDown(orderTypeTime);
     }
 
@@ -389,4 +392,5 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
 
         ;
     };
+
 }

@@ -34,7 +34,9 @@ import com.wul.hlt_client.entity.MoneyBO;
 import com.wul.hlt_client.entity.PayResult;
 import com.wul.hlt_client.entity.ShoppingCarBO;
 import com.wul.hlt_client.entity.request.CommitOrderBO;
+import com.wul.hlt_client.entity.request.TestTimeRequest;
 import com.wul.hlt_client.mvp.MVPBaseActivity;
+import com.wul.hlt_client.ui.myorder.MyOrderActivity;
 import com.wul.hlt_client.ui.ordershop.OrderShopActivity;
 import com.wul.hlt_client.util.AppManager;
 import com.wul.hlt_client.util.BarUtils;
@@ -278,12 +280,37 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
         if (StringUtils.isEmpty(orderInfo)) {
             if (strPayType == 1) {
                 showToast("下单成功！");
-                finish();
+                gotoActivity(MyOrderActivity.class, true);
             } else {
                 showToast("orderInfo为空！");
             }
         } else {
             aliPay(orderInfo);
+        }
+    }
+
+    @Override
+    public void testTimeSourss(String message) {
+        dispatchingTime.setText(selectTime);
+        if (isZhengDan()) {
+            if (orderType == 1) {
+                new AlertDialog(this).builder().setGone().setTitle("请注意")
+                        .setMsg("该订单为临时补单\n采购价格将会上调")
+                        .setCancelable(false)
+                        .setNegativeButton("确定", v12 -> {
+                            mPresenter.getShoppingList(orderType);
+                            mPresenter.getMoney(orderType, PayStatus);
+                        }).show();
+            } else {
+                mPresenter.getShoppingList(orderType);
+                mPresenter.getMoney(orderType, PayStatus);
+            }
+        } else {
+            mPresenter.getShoppingList(orderType);
+            mPresenter.getMoney(orderType, PayStatus);
+            new AlertDialog(this).builder().setGone().setMsg("当前时间不能临时补单\n请重新选择配送时间")
+                    .setNegativeButton("确定", null).show();
+            dispatchingTime.setText("");
         }
     }
 
@@ -357,27 +384,9 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
                     SimpleDateFormat sf = new SimpleDateFormat("yyyy年MM月dd日");
                     selectTime = sf.format(date) + " " + hourTime.getText().toString();
                     selectDate = date;
-                    dispatchingTime.setText(selectTime);
-                    if (isZhengDan()) {
-                        if (orderType == 1) {
-                            new AlertDialog(this).builder().setGone().setTitle("请注意")
-                                    .setMsg("该订单为临时补单\n采购价格将会上调")
-                                    .setCancelable(false)
-                                    .setNegativeButton("确定", v12 -> {
-                                        mPresenter.getShoppingList(orderType);
-                                        mPresenter.getMoney(orderType, PayStatus);
-                                    }).show();
-                        } else {
-                            mPresenter.getShoppingList(orderType);
-                            mPresenter.getMoney(orderType, PayStatus);
-                        }
-                    } else {
-                        mPresenter.getShoppingList(orderType);
-                        mPresenter.getMoney(orderType, PayStatus);
-                        new AlertDialog(this).builder().setGone().setMsg("当前时间不能临时补单\n请重新选择配送时间")
-                                .setNegativeButton("确定", null).show();
-                        dispatchingTime.setText("");
-                    }
+                    TestTimeRequest request = new TestTimeRequest();
+                    request.requireDeliverOn = selectTime.replaceAll(":00", "").replace(" ", "");
+                    mPresenter.testSkipeTime(request);
                     pvView.dismiss();
                     break;
                 default:
@@ -549,11 +558,11 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
                     if (TextUtils.equals(resultStatus, "9000")) {    //支付成功
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                         showToast("支付成功！");
-                        AppManager.getAppManager().goHome();
+                        gotoActivity(MyOrderActivity.class, true);
                     } else {              //支付失败
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                         showToast("支付失败！");
-                        AppManager.getAppManager().goHome();
+                        gotoActivity(MyOrderActivity.class, true);
                     }
                     break;
                 }

@@ -477,8 +477,8 @@
 
                     <CheckBox
                         android:id="@+id/checkbox"
-                        android:layout_width="18dp"
-                        android:layout_height="18dp"
+                        android:layout_width="23dp"
+                        android:layout_height="23dp"
                         android:layout_marginLeft="18dp"
                         android:background="@drawable/check_box"
                         android:button="@null"

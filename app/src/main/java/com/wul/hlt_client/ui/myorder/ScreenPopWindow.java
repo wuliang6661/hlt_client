@@ -3,11 +3,14 @@ package com.wul.hlt_client.ui.myorder;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.PopupWindow;
 
 import com.wul.hlt_client.R;
@@ -49,6 +52,9 @@ public class ScreenPopWindow extends PopupWindow {
         recyclerView.setAdapter(adapter);
         this.setContentView(window);
         this.setFocusable(true);
+        //设置宽高
+        this.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        this.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
         setBackgroundDrawable(new ColorDrawable(0));
         window.setOnTouchListener((v, event) -> {
             int height = window.findViewById(R.id.pop_layout).getTop();
@@ -60,6 +66,13 @@ public class ScreenPopWindow extends PopupWindow {
             }
             return true;
         });
+    }
+
+
+    public void setWidth(int width) {
+        ViewGroup.LayoutParams params = recyclerView.getLayoutParams();
+        params.width = width - 6;
+        recyclerView.setLayoutParams(params);
     }
 
 

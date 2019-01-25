@@ -30,6 +30,7 @@ import com.wul.hlt_client.entity.request.ScreenBO;
 import com.wul.hlt_client.entity.request.SelectMoneyBO;
 import com.wul.hlt_client.entity.request.ShopCarSetBO;
 import com.wul.hlt_client.entity.request.ShoppingListBO;
+import com.wul.hlt_client.entity.request.TestTimeRequest;
 import com.wul.hlt_client.entity.request.TuiKuanBO;
 import com.wul.hlt_client.entity.request.XianshiBO;
 import com.wul.hlt_client.entity.request.GetShopRequest;
@@ -240,4 +241,9 @@ public interface HttpService {
     @POST("/hct_webservice/app/address/my/updateAddressOrderRefundStatus")
     Observable<BaseResult<String>> orderTuiKuan(@Body TuiKuanBO tuiKuanBO);
 
+    /**
+     * 检测时间是否在范围内
+     */
+    @POST("/hct_webservice/app/address/settlement/testSpikeDeliverDate")
+    Observable<BaseResult<String>> testSpike(@Body TestTimeRequest request);
 }

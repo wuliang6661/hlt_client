@@ -1,9 +1,14 @@
 package com.wul.hlt_client.util.rx;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.wul.hlt_client.entity.BaseResult;
+import com.wul.hlt_client.ui.login.LoginActivity;
+import com.wul.hlt_client.util.AppManager;
 
 import rx.Observable;
 import rx.Subscriber;
@@ -29,6 +34,13 @@ public class RxResultHelper {
                                 Log.d(TAG, "call() called with: mDYResponse = [" + mDYResponse + "]");
                                 if (mDYResponse.surcess()) {
                                     return createData(mDYResponse.getData());
+                                } else if (mDYResponse.getCode() == 421) {   //重新登录
+                                    Activity activity = AppManager.getAppManager().curremtActivity();
+                                    Intent intent = new Intent(activity, LoginActivity.class);
+                                    ToastUtils.showShort("登录已过期，请重新登录！");
+                                    AppManager.getAppManager().finishAllActivity();
+                                    activity.startActivity(intent);
+                                    return Observable.error(new RuntimeException("登录已过期，请重新登录！"));
                                 } else {
                                     return Observable.error(new RuntimeException(mDYResponse.getMsg()));
                                 }

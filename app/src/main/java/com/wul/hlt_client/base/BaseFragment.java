@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.blankj.utilcode.util.ToastUtils;
+import com.gyf.barlibrary.ImmersionBar;
 import com.wul.hlt_client.R;
 
 import me.yokeyword.fragmentation.SupportFragment;
@@ -90,6 +91,5 @@ public abstract class BaseFragment extends SupportFragment {
     protected void showToast(String message) {
         ToastUtils.showShort(message);
     }
-
 
 }

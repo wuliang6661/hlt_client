@@ -6,6 +6,7 @@ import com.wul.hlt_client.entity.AddressBO;
 import com.wul.hlt_client.entity.MoneyBO;
 import com.wul.hlt_client.entity.ShoppingCarBO;
 import com.wul.hlt_client.entity.request.CommitOrderBO;
+import com.wul.hlt_client.entity.request.TestTimeRequest;
 import com.wul.hlt_client.mvp.BasePresenterImpl;
 
 /**
@@ -109,6 +110,28 @@ public class OrderCommitPresenter extends BasePresenterImpl<OrderCommitContract.
             public void onSuccess(MoneyBO s) {
                 if (mView != null) {
                     mView.getMoney(s);
+                }
+            }
+
+            @Override
+            public void onFiled(String message) {
+                if (mView != null) {
+                    mView.onRequestError(message);
+                }
+            }
+        });
+    }
+
+
+    /**
+     * 检测时间
+     */
+    public void testSkipeTime(TestTimeRequest request) {
+        HttpServiceIml.testSkipe(request).subscribe(new HttpResultSubscriber<String>() {
+            @Override
+            public void onSuccess(String s) {
+                if (mView != null) {
+                    mView.testTimeSourss(s);
                 }
             }
 

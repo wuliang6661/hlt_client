@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:background="@color/white">
+        android:background="@color/green_color">
 
         <TextView
             android:id="@+id/edit_select"

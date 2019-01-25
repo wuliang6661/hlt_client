@@ -84,11 +84,13 @@ public class OpsGoodActivity extends MVPBaseActivity<OpsGoodContract.View, OpsGo
             shopCarImg.setImageResource(R.drawable.shop_car_notice);
             shopCarPrice.setText("购物车是空的！");
             shopCarPrice.setTextColor(Color.parseColor("#999999"));
+            shopCarPrice.setTextSize(13);
             shopCarButton.setEnabled(false);
         } else {
             shopCarImg.setImageResource(R.drawable.shop_car_img_blue);
             shopCarPrice.setText("¥ " + MyApplication.shopCarBO.getAmount());
             shopCarPrice.setTextColor(Color.parseColor("#F5142F"));
+            shopCarPrice.setTextSize(20);
             shopCarButton.setEnabled(true);
         }
     }

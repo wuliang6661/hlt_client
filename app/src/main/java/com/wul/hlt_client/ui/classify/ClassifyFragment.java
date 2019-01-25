@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.gyf.barlibrary.ImmersionBar;
 import com.wul.hlt_client.R;
 import com.wul.hlt_client.base.MyApplication;
 import com.wul.hlt_client.entity.CityGongGao;
@@ -116,6 +117,9 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
     public void onSupportVisible() {
         super.onSupportVisible();
         mPresenter.getCityGongGao();
+        if (isImmersionBarEnabled()) {
+            initImmersionBar();
+        }
     }
 
     /**
@@ -257,7 +261,18 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
         if (timer != null) {
             timer.cancel();
         }
+        ImmersionBar.with(this).destroy();
         super.onDestroy();
     }
+
+    public void initImmersionBar() {
+        ImmersionBar.with(this).statusBarColor(R.color.green_color)
+                .statusBarDarkFont(true).keyboardEnable(true).init();   //解决虚拟按键与状态栏沉浸冲突
+    }
+
+    private boolean isImmersionBarEnabled() {
+        return true;
+    }
+
 
 }

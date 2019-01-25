@@ -250,11 +250,12 @@ public class OrderDetailsActivity extends MVPBaseActivity<OrderDetailsContract.V
      * 取消订单
      */
     private void cancleOrder() {
-        new com.wul.hlt_client.widget.AlertDialog(this).builder().setGone().setTitle("取消订单")
+        new com.wul.hlt_client.widget.AlertDialog(this)
+                .builder().setGone().setTitle("取消订单")
                 .setMsg("请确认是否取消该订单？")
                 .setCancelable(false)
-                .setNegativeButton("取消", null)
-                .setPositiveButton("确定", v -> mPresenter.cancleOrder(id)).show();
+                .setNegativeButton("取消", R.color.cancle, null)
+                .setPositiveButton("确定", R.color.green_color, v -> mPresenter.cancleOrder(id)).show();
     }
 
 

@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.gyf.barlibrary.ImmersionBar;
 import com.wul.hlt_client.R;
 import com.wul.hlt_client.base.MyApplication;
 import com.wul.hlt_client.entity.CityGongGao;
@@ -105,6 +106,9 @@ public class SalesGoodFragment extends MVPBaseFragment<SalesGoodContract.View, S
         super.onSupportVisible();
         mPresenter.getCityGongGao();
         mPresenter.getXianshiList();
+        if (isImmersionBarEnabled()) {
+            initImmersionBar();
+        }
     }
 
     /**
@@ -117,11 +121,13 @@ public class SalesGoodFragment extends MVPBaseFragment<SalesGoodContract.View, S
             shopCarImg.setImageResource(R.drawable.shop_car_notice);
             shopCarPrice.setText("购物车是空的！");
             shopCarPrice.setTextColor(Color.parseColor("#999999"));
+            shopCarPrice.setTextSize(13);
             shopCarButton.setEnabled(false);
         } else {
             shopCarImg.setImageResource(R.drawable.shop_car_img_blue);
             shopCarPrice.setText("¥ " + MyApplication.shopCarBO.getAmount());
             shopCarPrice.setTextColor(Color.parseColor("#F5142F"));
+            shopCarPrice.setTextSize(20);
             shopCarButton.setEnabled(true);
         }
     }
@@ -203,4 +209,21 @@ public class SalesGoodFragment extends MVPBaseFragment<SalesGoodContract.View, S
         handler.removeCallbacksAndMessages(null);
         EventBus.getDefault().unregister(this);
     }
+
+
+    public void initImmersionBar() {
+        ImmersionBar.with(this).statusBarColor(R.color.green_color)
+                .statusBarDarkFont(true).keyboardEnable(true).init();   //解决虚拟按键与状态栏沉浸冲突
+    }
+
+    private boolean isImmersionBarEnabled() {
+        return true;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ImmersionBar.with(this).destroy();
+    }
+
 }

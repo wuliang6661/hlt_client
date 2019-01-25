@@ -3,6 +3,7 @@ package com.wul.hlt_client.api;
 import com.wul.hlt_client.base.MyApplication;
 import com.wul.hlt_client.entity.AddressBO;
 import com.wul.hlt_client.entity.BannerBo;
+import com.wul.hlt_client.entity.BaseResult;
 import com.wul.hlt_client.entity.CityBO;
 import com.wul.hlt_client.entity.CityGongGao;
 import com.wul.hlt_client.entity.CityRegionBO;
@@ -31,6 +32,7 @@ import com.wul.hlt_client.entity.request.ScreenBO;
 import com.wul.hlt_client.entity.request.SelectMoneyBO;
 import com.wul.hlt_client.entity.request.ShopCarSetBO;
 import com.wul.hlt_client.entity.request.ShoppingListBO;
+import com.wul.hlt_client.entity.request.TestTimeRequest;
 import com.wul.hlt_client.entity.request.TuiKuanBO;
 import com.wul.hlt_client.entity.request.XianshiBO;
 import com.wul.hlt_client.util.rx.RxResultHelper;
@@ -346,6 +348,14 @@ public class HttpServiceIml {
         tuiKuanBO.setId(id);
         tuiKuanBO.setRefundAmount(money);
         return getService().orderTuiKuan(tuiKuanBO).compose(RxResultHelper.httpRusult());
+    }
+
+    /**
+     * 检测时间是否在范围里
+     */
+    public static Observable<String> testSkipe(TestTimeRequest request) {
+        request.token = MyApplication.token;
+        return getService().testSpike(request).compose(RxResultHelper.httpRusult());
     }
 
 }

@@ -46,9 +46,11 @@ public class ChildFlowAdapter extends LGRecycleViewAdapter<ClassifyBO> {
         TextPaint paint = flow.getPaint();
         if (position == selectPosition) {
             flow.setTextColor(Color.parseColor("#333333"));
+            flow.setBackgroundColor(Color.parseColor("#F2F2F2"));
             paint.setFakeBoldText(true);
         } else {
             flow.setTextColor(Color.parseColor("#666666"));
+            flow.setBackgroundColor(Color.parseColor("#ffffff"));
             paint.setFakeBoldText(false);
         }
     }

@@ -8,10 +8,11 @@
 
     <TextView
         android:id="@+id/flow_child_text"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="13dp"
-        android:layout_marginTop="13dp"
+        android:paddingTop="13dp"
+        android:gravity="center"
+        android:paddingBottom="13dp"
         android:text="蔬菜类"
         android:textColor="#666666"
         android:textSize="13sp" />
