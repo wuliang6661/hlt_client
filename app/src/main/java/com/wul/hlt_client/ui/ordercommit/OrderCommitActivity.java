@@ -300,10 +300,15 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
                         .setNegativeButton("确定", v12 -> {
                             mPresenter.getShoppingList(orderType);
                             mPresenter.getMoney(orderType, PayStatus);
+                            strPayType = 1;
+                            payType.setText("货到付款");
+                            checkbox.setChecked(false);
+                            payLayout.setEnabled(false);
                         }).show();
             } else {
                 mPresenter.getShoppingList(orderType);
                 mPresenter.getMoney(orderType, PayStatus);
+                payLayout.setEnabled(true);
             }
         } else {
             mPresenter.getShoppingList(orderType);
@@ -349,6 +354,9 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
                     if (orderType == 1 && strPayType == 2) {
                         new AlertDialog(this).builder().setGone().setMsg("临时补单只支持货到付款")
                                 .setNegativeButton("确定", null).show();
+                        strPayType = 1;
+                        payType.setText("货到付款");
+                        checkbox.setChecked(false);
                     } else {
                         CommitOrderBO orderBO = new CommitOrderBO();
                         orderBO.balancePayStatus = checkbox.isChecked() ? 0 : 1;
@@ -384,6 +392,7 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
                     SimpleDateFormat sf = new SimpleDateFormat("yyyy年MM月dd日");
                     selectTime = sf.format(date) + " " + hourTime.getText().toString();
                     selectDate = date;
+                    dispatchingTime.setText("");
                     TestTimeRequest request = new TestTimeRequest();
                     request.requireDeliverOn = selectTime.replaceAll(":00", "").replace(" ", "");
                     mPresenter.testSkipeTime(request);

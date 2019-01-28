@@ -7,12 +7,14 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="24dp" />
+        android:layout_height="24dp"
+        android:background="@color/green_color"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center_vertical"
+        android:layout_height="54dp"
+        android:gravity="center"
+        android:background="@color/green_color"
         android:orientation="horizontal">
 
         <ImageView
@@ -20,7 +22,7 @@
             android:layout_width="40dp"
             android:layout_height="match_parent"
             android:scaleType="centerInside"
-            android:src="@drawable/icon_back_grey" />
+            android:src="@drawable/back_white" />
 
 
         <RelativeLayout
@@ -32,11 +34,10 @@
             <EditText
                 android:id="@+id/edit_shop"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="5dp"
+                android:layout_height="30dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/select_edit_bg"
+                android:layout_centerInParent="true"
+                android:background="@drawable/edit_select_bg"
                 android:hint="请输入搜索内容"
                 android:paddingLeft="30dp"
                 android:textColor="#333333"
@@ -62,7 +63,7 @@
             android:gravity="center_vertical"
             android:paddingRight="15dp"
             android:text="搜索"
-            android:textColor="#333333"
+            android:textColor="#ffffff"
             android:textSize="13sp" />
 
     </LinearLayout>
