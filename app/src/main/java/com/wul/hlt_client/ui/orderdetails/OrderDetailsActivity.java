@@ -278,7 +278,7 @@ public class OrderDetailsActivity extends MVPBaseActivity<OrderDetailsContract.V
     @Override
     public void tuikuanSuress(String message) {
         showToast("您的退款申请已提交审核！");
-        finish();
+        mPresenter.getOrderDetals(id);
     }
 
 

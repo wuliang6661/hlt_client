@@ -3,6 +3,8 @@ package com.wul.hlt_client.api;
 import android.content.Context;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
+import com.wul.hlt_client.util.AppManager;
+import com.wul.hlt_client.widget.AlertDialog;
 
 import rx.Subscriber;
 
@@ -44,7 +46,15 @@ public abstract class HttpResultSubscriber<T> extends Subscriber<T> {
         if (svProgressHUD != null && svProgressHUD.isShowing()) {
             svProgressHUD.dismiss();
         }
-        onFiled(e.getMessage());
+        if (e instanceof DialogException) {
+            DialogException exception = (DialogException) e;
+            String[] msgs = exception.message.split(" ");
+
+            new AlertDialog(AppManager.getAppManager().curremtActivity()).builder().setGone().setMsg(exception.message)
+                    .setNegativeButton("确定", null).show();
+        } else {
+            onFiled(e.getMessage());
+        }
     }
 
 

@@ -6,6 +6,7 @@ import android.util.Log;
 
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.wul.hlt_client.api.DialogException;
 import com.wul.hlt_client.entity.BaseResult;
 import com.wul.hlt_client.ui.login.LoginActivity;
 import com.wul.hlt_client.util.AppManager;
@@ -41,6 +42,8 @@ public class RxResultHelper {
                                     AppManager.getAppManager().finishAllActivity();
                                     activity.startActivity(intent);
                                     return Observable.error(new RuntimeException("登录已过期，请重新登录！"));
+                                } else if (mDYResponse.getCode() == 399) {   //弹窗提示
+                                    return Observable.error(new DialogException(mDYResponse.getMsg()));
                                 } else {
                                     return Observable.error(new RuntimeException(mDYResponse.getMsg()));
                                 }
