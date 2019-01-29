@@ -18,21 +18,44 @@ import java.util.List;
 public class RecycleAdapter extends LGRecycleViewAdapter<OrderDayBo.AddressMyOrderListBean> {
 
     private Context context;
-    private boolean isBuDan = false;
 
     private List<Integer> ids;
+    List<OrderDayBo.AddressMyOrderListBean> dataList;
 
-    public RecycleAdapter(Context context, boolean isBuDan, List<OrderDayBo.AddressMyOrderListBean> dataList) {
+    public RecycleAdapter(Context context, List<OrderDayBo.AddressMyOrderListBean> dataList) {
         super(dataList);
         this.context = context;
-        this.isBuDan = isBuDan;
+        this.dataList = dataList;
         ids = new ArrayList<>();
+        for (OrderDayBo.AddressMyOrderListBean bean : dataList) {
+            if (bean.getPayStatus() == 0 && bean.getStatusId() != 3 && "0".equals(bean.getOrderType())) {
+                ids.add((int) bean.getId());
+            }
+        }
     }
+
+
+    public List<Integer> getIds() {
+        return ids;
+    }
+
 
     public void setIds(List<Integer> ids) {
         this.ids = ids;
         new Handler().post(() -> notifyDataSetChanged());
     }
+
+
+    public void selectAll() {
+        ids.clear();
+        for (OrderDayBo.AddressMyOrderListBean bean : dataList) {
+            if (bean.getPayStatus() == 0 && bean.getStatusId() != 3 && "0".equals(bean.getOrderType())) {
+                ids.add((int) bean.getId());
+            }
+        }
+        new Handler().post(() -> notifyDataSetChanged());
+    }
+
 
     @Override
     public int getLayoutId(int viewType) {
@@ -78,19 +101,27 @@ public class RecycleAdapter extends LGRecycleViewAdapter<OrderDayBo.AddressMyOrd
                 break;
         }
         holder.setText(R.id.order_price, "¥ " + addressMyOrderListBean.getAmount());
+        holder.getView(R.id.shop_img1).setVisibility(View.INVISIBLE);
+        holder.getView(R.id.shop_img2).setVisibility(View.INVISIBLE);
+        holder.getView(R.id.shop_img3).setVisibility(View.INVISIBLE);
+        holder.getView(R.id.shop_img4).setVisibility(View.INVISIBLE);
         if (addressMyOrderListBean.getProductDetailList().size() >= 1) {
+            holder.getView(R.id.shop_img1).setVisibility(View.VISIBLE);
             holder.setImageUrl(context, R.id.shop_img1, addressMyOrderListBean.getProductDetailList().get(0).getImg());
         }
         if (addressMyOrderListBean.getProductDetailList().size() >= 2) {
+            holder.getView(R.id.shop_img2).setVisibility(View.VISIBLE);
             holder.setImageUrl(context, R.id.shop_img2, addressMyOrderListBean.getProductDetailList().get(1).getImg());
         }
         if (addressMyOrderListBean.getProductDetailList().size() >= 3) {
+            holder.getView(R.id.shop_img3).setVisibility(View.VISIBLE);
             holder.setImageUrl(context, R.id.shop_img3, addressMyOrderListBean.getProductDetailList().get(2).getImg());
         }
         if (addressMyOrderListBean.getProductDetailList().size() >= 4) {
+            holder.getView(R.id.shop_img4).setVisibility(View.VISIBLE);
             holder.setImageUrl(context, R.id.shop_img4, addressMyOrderListBean.getProductDetailList().get(3).getImg());
         }
-        if (isBuDan) {
+        if ("1".equals(addressMyOrderListBean.getOrderType())) {
             holder.getView(R.id.order_budan).setVisibility(View.VISIBLE);
             checkBox.setVisibility(View.GONE);
         } else {

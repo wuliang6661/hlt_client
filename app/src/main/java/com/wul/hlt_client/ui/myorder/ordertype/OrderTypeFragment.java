@@ -14,8 +14,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -68,21 +69,23 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
     Unbinder unbinder;
     @BindView(R.id.expand_list)
     ExpandableListView expandList;
-    @BindView(R.id.image1)
-    ImageView image1;
+    @BindView(R.id.checkbox)
+    CheckBox checkbox;
 
     private static final int SDK_PAY_FLAG = 1;
     @BindView(R.id.no_message)
     LinearLayout noMessage;
 
-    private String[] zhengdans = new String[]{"正单", "补单"};
+    private String[] zhengdans = new String[]{"正单", "补单", "全部"};
     private String[] times = new String[]{"按日显示", "按周显示", "按月显示"};
 
-    private String orderTypes = "0";  //默认正单 0是正单， 1是补单   0,1是全部
+    private String orderTypes = "0,1";  //默认正单 0是正单， 1是补单   0,1是全部
     private int displayType = 1;   //默认按日显示  1是日  2是周  3是月
-    private String statusIds = "1";    // 默认已接单   1是已接单 ，2是已完成  3是已终止  0是待接单（只有补单状态才有）
+    private String statusIds = "0,1,2,3";    // 默认已接单   1是已接单 ，2是已完成  3是已终止  0是待接单（只有补单状态才有）
 
     private List<Integer> orderIds;
+    RecycleAdapter adapter;
+    ExpandListAdapter adapter2;
 
 
     @Nullable
@@ -118,7 +121,31 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
         orderTypeWancheng.setOnClickListener(this);
         orderTypeTime.setOnClickListener(this);
         shopCarButton.setOnClickListener(this);
+        checkbox.setOnCheckedChangeListener(listener);
     }
+
+    CompoundButton.OnCheckedChangeListener listener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (isChecked) {
+                if (displayType == 1) {
+                    adapter.selectAll();
+                    orderIds = adapter.getIds();
+                } else {
+                    adapter2.selectAll();
+                    orderIds = adapter2.getIds();
+                }
+            } else {
+                orderIds.clear();
+                if (displayType == 1) {
+                    adapter.setIds(orderIds);
+                } else {
+                    adapter2.setIds(orderIds);
+                }
+            }
+            syncSelectPrice();
+        }
+    };
 
 
     @Override
@@ -172,18 +199,31 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
             types.add("已接单");
             types.add("已完成");
             types.add("已终止");
+            types.add("全部");
         } else {
             types.add("已接单");
             types.add("已完成");
             types.add("已终止");
+            types.add("全部");
         }
         ScreenPopWindow popWindow = new ScreenPopWindow(getActivity(), types);
         popWindow.setOnSelecte((select, position) -> {
             orderTypeWancheng.setText(select);
             if ("0".equals(orderTypes)) {
                 statusIds = position + 1 + "";
+                if (position == 3) {
+                    statusIds = "1,2,3";
+                }
+            } else if ("0,1".equals(orderTypes)) {
+                statusIds = position + "";
+                if (position == 4) {
+                    statusIds = "0,1,2,3";
+                }
             } else {
                 statusIds = position + "";
+                if (position == 4) {
+                    statusIds = "0,1,2,3";
+                }
             }
             syncHttp();
         });
@@ -246,7 +286,7 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
     private void syncSelectPrice() {
         if (orderIds.size() == 0) {
             allPriceButtom.setText("¥ 0.00");
-            image1.setImageResource(R.drawable.check_box_nomer);
+            checkbox.setChecked(false);
             shopCarButton.setEnabled(false);
         } else {
             showProgress();
@@ -269,8 +309,12 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
         recycle.setVisibility(View.VISIBLE);
         expandList.setVisibility(View.GONE);
         noMessage.setVisibility(View.GONE);
-        RecycleAdapter adapter = new RecycleAdapter(getActivity(), "1".equals(orderTypes), orderDayBo.getAddressMyOrderList());
-        adapter.setIds(orderIds);
+        if (adapter == null) {
+            adapter = new RecycleAdapter(getActivity(), orderDayBo.getAddressMyOrderList());
+            orderIds = adapter.getIds();
+        } else {
+            adapter.setData(orderDayBo.getAddressMyOrderList());
+        }
         adapter.setOnSelector(new RecycleAdapter.onSelector() {
             @Override
             public void select(int id) {
@@ -296,6 +340,7 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
             gotoActivity(OrderDetailsActivity.class, bundle, false);
         });
         recycle.setAdapter(adapter);
+        syncSelectPrice();
     }
 
     @Override
@@ -310,9 +355,9 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
         recycle.setVisibility(View.GONE);
         expandList.setVisibility(View.VISIBLE);
         noMessage.setVisibility(View.GONE);
-        ExpandListAdapter adapter = new ExpandListAdapter(getActivity(), "1".equals(orderTypes), orderMonthBO.getAddressMyOrderList());
-        adapter.setIds(orderIds);
-        adapter.setOnSelector(new ExpandListAdapter.onSelector() {
+        adapter2 = new ExpandListAdapter(getActivity(), orderMonthBO.getAddressMyOrderList());
+        adapter2.setIds(orderIds);
+        adapter2.setOnSelector(new ExpandListAdapter.onSelector() {
             @Override
             public void select(int id) {
                 orderIds.add(id);
@@ -331,7 +376,7 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
                 syncSelectPrice();
             }
         });
-        expandList.setAdapter(adapter);
+        expandList.setAdapter(adapter2);
         for (int i = 0; i < orderMonthBO.getAddressMyOrderList().size(); i++) {
             expandList.expandGroup(i);
         }
@@ -349,7 +394,9 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
     public void getSelectMoney(String money) {
         stopProgress();
         allPriceButtom.setText("¥ " + money);
-        image1.setImageResource(R.drawable.checked);
+        checkbox.setOnCheckedChangeListener(null);
+        checkbox.setChecked(true);
+        checkbox.setOnCheckedChangeListener(listener);
         shopCarButton.setEnabled(true);
     }
 

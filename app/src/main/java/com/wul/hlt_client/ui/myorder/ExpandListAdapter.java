@@ -20,19 +20,42 @@ import java.util.List;
 public class ExpandListAdapter extends BaseExpandableListAdapter {
 
     private List<OrderMonthBO.AddressMyOrderListBean> lists;
-    private boolean isBudan;
     private Context context;
     List<Integer> ids;
 
-    public ExpandListAdapter(Context context, boolean isBuDan, List<OrderMonthBO.AddressMyOrderListBean> lists) {
+    public ExpandListAdapter(Context context, List<OrderMonthBO.AddressMyOrderListBean> lists) {
         this.lists = lists;
         this.context = context;
-        this.isBudan = isBuDan;
         ids = new ArrayList<>();
+        for (OrderMonthBO.AddressMyOrderListBean bean : lists) {
+            for (OrderMonthBO.AddressMyOrderListBean.OrderListBean data : bean.getOrderList()) {
+                if (data.getPayStatus() == 0 && data.getStatusId() != 3 && "0".equals(data.getOrderType())) {
+                    ids.add((int) data.getId());
+                }
+            }
+        }
     }
+
+    public List<Integer> getIds() {
+        return ids;
+    }
+
 
     public void setIds(List<Integer> ids) {
         this.ids = ids;
+        notifyDataSetChanged();
+    }
+
+
+    public void selectAll() {
+        ids.clear();
+        for (OrderMonthBO.AddressMyOrderListBean bean : lists) {
+            for (OrderMonthBO.AddressMyOrderListBean.OrderListBean data : bean.getOrderList()) {
+                if (data.getPayStatus() == 0 && data.getStatusId() != 3 && "0".equals(data.getOrderType())) {
+                    ids.add((int) data.getId());
+                }
+            }
+        }
         notifyDataSetChanged();
     }
 
@@ -162,7 +185,7 @@ public class ExpandListAdapter extends BaseExpandableListAdapter {
                     .error(R.drawable.zhanwei1)
                     .into(hodler.shopImg4);
         }
-        if (isBudan) {
+        if ("1".equals(orderBo.getOrderType())) {
             hodler.budan.setVisibility(View.VISIBLE);
             hodler.checkbox.setVisibility(View.GONE);
         } else {

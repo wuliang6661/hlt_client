@@ -32,7 +32,7 @@
             android:paddingTop="5dp"
             android:paddingRight="21dp"
             android:paddingBottom="5dp"
-            android:text="正单"
+            android:text="全部"
             android:textColor="@color/white"
             android:textSize="13sp" />
 
@@ -46,7 +46,7 @@
             android:paddingTop="5dp"
             android:paddingRight="21dp"
             android:paddingBottom="5dp"
-            android:text="已接单"
+            android:text="全部"
             android:textColor="@color/white"
             android:textSize="13sp" />
 
@@ -85,13 +85,15 @@
                 android:layout_height="1px"
                 android:background="#979797" />
 
-            <ImageView
-                android:id="@+id/image1"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+            <CheckBox
+                android:id="@+id/checkbox"
+                android:layout_width="23dp"
+                android:layout_height="23dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/check_box_nomer" />
+                android:background="@drawable/check_box"
+                android:button="@null"
+                android:checked="true" />
 
 
             <TextView
@@ -100,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/image1"
+                android:layout_toRightOf="@+id/checkbox"
                 android:text="未支付订单合计："
                 android:textColor="#666666"
                 android:textSize="16sp" />

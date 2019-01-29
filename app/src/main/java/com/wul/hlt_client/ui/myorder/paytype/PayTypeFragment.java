@@ -14,8 +14,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -66,24 +67,27 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
     RecyclerView recycle;
     @BindView(R.id.expand_list)
     ExpandableListView expandList;
-    @BindView(R.id.image1)
-    ImageView image1;
+    @BindView(R.id.checkbox)
+    CheckBox checkbox;
 
     Unbinder unbinder;
     @BindView(R.id.no_message)
     LinearLayout noMessage;
 
-    private String[] zhengdans = new String[]{"正单", "补单"};
+    private String[] zhengdans = new String[]{"正单", "补单", "全部"};
     private String[] zhifus = new String[]{"未支付", "已支付", "全部"};
     private String[] times = new String[]{"按日显示", "按周显示", "按月显示"};
 
     private static final int SDK_PAY_FLAG = 1;
 
-    private String orderTypes = "0";  //默认正单 0是正单， 1是补单   0,1是全部
+    private String orderTypes = "0,1";  //默认正单 0是正单， 1是补单   0,1是全部
     private int displayType = 1;   //默认按日显示  1是日  2是周  3是月
-    private String payStatus = "0";    // 0是未支付   1是已支付  0,1是全部
+    private String payStatus = "0,1";    // 0是未支付   1是已支付  0,1是全部
 
     private List<Integer> orderIds;
+
+    RecycleAdapter adapter;
+    ExpandListAdapter adapter2;
 
     @Nullable
     @Override
@@ -98,7 +102,7 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        orderTypeWancheng.setText("未支付");
+        orderTypeWancheng.setText("全部");
 
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -122,7 +126,32 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
         orderTypeWancheng.setOnClickListener(this);
         orderTypeTime.setOnClickListener(this);
         shopCarButton.setOnClickListener(this);
+        checkbox.setOnCheckedChangeListener(listener);
     }
+
+
+    CompoundButton.OnCheckedChangeListener listener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            if (isChecked) {
+                if (displayType == 1) {
+                    adapter.selectAll();
+                    orderIds = adapter.getIds();
+                } else {
+                    adapter2.selectAll();
+                    orderIds = adapter2.getIds();
+                }
+            } else {
+                orderIds.clear();
+                if (displayType == 1) {
+                    adapter.setIds(orderIds);
+                } else {
+                    adapter2.setIds(orderIds);
+                }
+            }
+            syncSelectPrice();
+        }
+    };
 
 
     @Override
@@ -233,10 +262,10 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
     private void syncSelectPrice() {
         if (orderIds.size() == 0) {
             allPriceButtom.setText("¥ 0.00");
-            image1.setImageResource(R.drawable.check_box_nomer);
+            checkbox.setChecked(false);
             shopCarButton.setEnabled(false);
         } else {
-            showProgress();
+//            showProgress();
             mPresenter.getSelectOrderMoney(orderIds);
         }
     }
@@ -254,8 +283,12 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
         noMessage.setVisibility(View.GONE);
         recycle.setVisibility(View.VISIBLE);
         expandList.setVisibility(View.GONE);
-        RecycleAdapter adapter = new RecycleAdapter(getActivity(), "1".equals(orderTypes), orderDayBo.getAddressMyOrderList());
-        adapter.setIds(orderIds);
+        if (adapter == null) {
+            adapter = new RecycleAdapter(getActivity(), orderDayBo.getAddressMyOrderList());
+            orderIds = adapter.getIds();
+        } else {
+            adapter.setData(orderDayBo.getAddressMyOrderList());
+        }
         adapter.setOnSelector(new RecycleAdapter.onSelector() {
             @Override
             public void select(int id) {
@@ -281,6 +314,7 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
             gotoActivity(OrderDetailsActivity.class, bundle, false);
         });
         recycle.setAdapter(adapter);
+        syncSelectPrice();
     }
 
     @Override
@@ -295,9 +329,9 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
         noMessage.setVisibility(View.GONE);
         recycle.setVisibility(View.GONE);
         expandList.setVisibility(View.VISIBLE);
-        ExpandListAdapter adapter = new ExpandListAdapter(getActivity(), "1".equals(orderTypes), orderMonthBO.getAddressMyOrderList());
-        adapter.setIds(orderIds);
-        adapter.setOnSelector(new ExpandListAdapter.onSelector() {
+        adapter2 = new ExpandListAdapter(getActivity(), orderMonthBO.getAddressMyOrderList());
+        adapter2.setIds(orderIds);
+        adapter2.setOnSelector(new ExpandListAdapter.onSelector() {
             @Override
             public void select(int id) {
                 orderIds.add(id);
@@ -316,7 +350,7 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
                 syncSelectPrice();
             }
         });
-        expandList.setAdapter(adapter);
+        expandList.setAdapter(adapter2);
         for (int i = 0; i < orderMonthBO.getAddressMyOrderList().size(); i++) {
             expandList.expandGroup(i);
         }
@@ -334,7 +368,9 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
     public void getSelectMoney(String money) {
         stopProgress();
         allPriceButtom.setText("¥ " + money);
-        image1.setImageResource(R.drawable.checked);
+        checkbox.setOnCheckedChangeListener(null);
+        checkbox.setChecked(true);
+        checkbox.setOnCheckedChangeListener(listener);
         shopCarButton.setEnabled(true);
     }
 

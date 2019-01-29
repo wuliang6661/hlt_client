@@ -49,6 +49,15 @@ public class OrderDayBo {
         private double id;
         private double payStatus;
         private List<ProductDetailListBean> productDetailList;
+        private String orderType;
+
+        public String getOrderType() {
+            return orderType;
+        }
+
+        public void setOrderType(String orderType) {
+            this.orderType = orderType;
+        }
 
         public double getAmount() {
             return amount;
