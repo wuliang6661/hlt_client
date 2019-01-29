@@ -69,6 +69,7 @@ public class RecycleAdapter extends LGRecycleViewAdapter<OrderDayBo.AddressMyOrd
         TextView payStatus = (TextView) holder.getView(R.id.pay_type);
         TextView orderType = (TextView) holder.getView(R.id.order_type);
         CheckBox checkBox = (CheckBox) holder.getView(R.id.checkbox);
+        holder.getView(R.id.item_layout).setTag(addressMyOrderListBean);
         switch ((int) addressMyOrderListBean.getPayStatus()) {
             case 0:    //未支付
                 payStatus.setTextColor(Color.parseColor("#F5142F"));

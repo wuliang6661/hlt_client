@@ -36,6 +36,12 @@ public class ExpandListAdapter extends BaseExpandableListAdapter {
         }
     }
 
+
+    public void setDatas(List<OrderMonthBO.AddressMyOrderListBean> lists) {
+        this.lists = lists;
+    }
+
+
     public List<Integer> getIds() {
         return ids;
     }
@@ -161,25 +167,33 @@ public class ExpandListAdapter extends BaseExpandableListAdapter {
                 break;
         }
         hodler.orderPrice.setText("¥ " + orderBo.getAmount());
+        hodler.shopImg1.setVisibility(View.INVISIBLE);
+        hodler.shopImg2.setVisibility(View.INVISIBLE);
+        hodler.shopImg3.setVisibility(View.INVISIBLE);
+        hodler.shopImg4.setVisibility(View.INVISIBLE);
         if (orderBo.getProductDetailList().size() >= 1) {
+            hodler.shopImg1.setVisibility(View.VISIBLE);
             GlideApp.with(context).load(orderBo.getProductDetailList().get(0).getImg())
                     .placeholder(R.drawable.zhanwei1)
                     .error(R.drawable.zhanwei1)
                     .into(hodler.shopImg1);
         }
         if (orderBo.getProductDetailList().size() >= 2) {
+            hodler.shopImg2.setVisibility(View.VISIBLE);
             GlideApp.with(context).load(orderBo.getProductDetailList().get(1).getImg())
                     .placeholder(R.drawable.zhanwei1)
                     .error(R.drawable.zhanwei1)
                     .into(hodler.shopImg2);
         }
         if (orderBo.getProductDetailList().size() >= 3) {
+            hodler.shopImg3.setVisibility(View.VISIBLE);
             GlideApp.with(context).load(orderBo.getProductDetailList().get(2).getImg())
                     .placeholder(R.drawable.zhanwei1)
                     .error(R.drawable.zhanwei1)
                     .into(hodler.shopImg3);
         }
         if (orderBo.getProductDetailList().size() >= 4) {
+            hodler.shopImg4.setVisibility(View.VISIBLE);
             GlideApp.with(context).load(orderBo.getProductDetailList().get(3).getImg())
                     .placeholder(R.drawable.zhanwei1)
                     .error(R.drawable.zhanwei1)

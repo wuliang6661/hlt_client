@@ -73,10 +73,15 @@ public class DowmTimer extends TimerTask {
 
     private String getTime(long downTime) {
         long allScond = downTime / 1000;
-        long hour = allScond / 3600;   //剩余小时
-        long minute = (allScond - (hour * 3600)) / 60;
-        long scond = allScond - (hour * 3600) - (minute * 60);
-        return format(hour) + ":" + format(minute) + ":" + format(scond);
+        long day = allScond / 3600 / 24;
+        long hour = (allScond - (day * 24 * 3600)) / 3600;   //剩余小时
+        long minute = (allScond - (day * 24 * 3600) - (hour * 3600)) / 60;
+        long scond = allScond - (day * 24 * 3600) - (hour * 3600) - (minute * 60);
+        if (day <= 0) {
+            return format(hour) + ":" + format(minute) + ":" + format(scond);
+        } else {
+            return format(day) + "天 " + format(hour) + ":" + format(minute) + ":" + format(scond);
+        }
     }
 
     private String format(long time) {

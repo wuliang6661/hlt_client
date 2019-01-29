@@ -278,42 +278,48 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
             recycle.setVisibility(View.GONE);
             expandList.setVisibility(View.GONE);
             noMessage.setVisibility(View.VISIBLE);
+            checkbox.setEnabled(false);
+            checkbox.setOnCheckedChangeListener(null);
+            checkbox.setChecked(false);
             return;
         }
+        checkbox.setEnabled(true);
+        checkbox.setOnCheckedChangeListener(listener);
         noMessage.setVisibility(View.GONE);
         recycle.setVisibility(View.VISIBLE);
         expandList.setVisibility(View.GONE);
         if (adapter == null) {
             adapter = new RecycleAdapter(getActivity(), orderDayBo.getAddressMyOrderList());
             orderIds = adapter.getIds();
+            adapter.setOnSelector(new RecycleAdapter.onSelector() {
+                @Override
+                public void select(int id) {
+                    orderIds.add(id);
+                    adapter.setIds(orderIds);
+                    syncSelectPrice();
+                }
+
+                @Override
+                public void cancle(int id) {
+                    for (int i = 0; i < orderIds.size(); i++) {
+                        if (orderIds.get(i) == id) {
+                            orderIds.remove(i);
+                        }
+                    }
+                    adapter.setIds(orderIds);
+                    syncSelectPrice();
+                }
+            });
+            adapter.setOnItemClickListener(R.id.item_layout, (view, position) -> {
+                Bundle bundle = new Bundle();
+                OrderDayBo.AddressMyOrderListBean bean = (OrderDayBo.AddressMyOrderListBean) view.getTag();
+                bundle.putInt("id", (int) bean.getId());
+                gotoActivity(OrderDetailsActivity.class, bundle, false);
+            });
+            recycle.setAdapter(adapter);
         } else {
             adapter.setData(orderDayBo.getAddressMyOrderList());
         }
-        adapter.setOnSelector(new RecycleAdapter.onSelector() {
-            @Override
-            public void select(int id) {
-                orderIds.add(id);
-                adapter.setIds(orderIds);
-                syncSelectPrice();
-            }
-
-            @Override
-            public void cancle(int id) {
-                for (int i = 0; i < orderIds.size(); i++) {
-                    if (orderIds.get(i) == id) {
-                        orderIds.remove(i);
-                    }
-                }
-                adapter.setIds(orderIds);
-                syncSelectPrice();
-            }
-        });
-        adapter.setOnItemClickListener(R.id.item_layout, (view, position) -> {
-            Bundle bundle = new Bundle();
-            bundle.putInt("id", (int) orderDayBo.getAddressMyOrderList().get(position).getId());
-            gotoActivity(OrderDetailsActivity.class, bundle, false);
-        });
-        recycle.setAdapter(adapter);
         syncSelectPrice();
     }
 
@@ -324,44 +330,53 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
             recycle.setVisibility(View.GONE);
             expandList.setVisibility(View.GONE);
             noMessage.setVisibility(View.VISIBLE);
+            checkbox.setEnabled(false);
+            checkbox.setOnCheckedChangeListener(null);
+            checkbox.setChecked(false);
             return;
         }
+        checkbox.setOnCheckedChangeListener(listener);
+        checkbox.setEnabled(true);
         noMessage.setVisibility(View.GONE);
         recycle.setVisibility(View.GONE);
         expandList.setVisibility(View.VISIBLE);
-        adapter2 = new ExpandListAdapter(getActivity(), orderMonthBO.getAddressMyOrderList());
-        adapter2.setIds(orderIds);
-        adapter2.setOnSelector(new ExpandListAdapter.onSelector() {
-            @Override
-            public void select(int id) {
-                orderIds.add(id);
-                adapter.setIds(orderIds);
-                syncSelectPrice();
-            }
-
-            @Override
-            public void cancle(int id) {
-                for (int i = 0; i < orderIds.size(); i++) {
-                    if (orderIds.get(i) == id) {
-                        orderIds.remove(i);
-                    }
+        if (adapter2 == null) {
+            adapter2 = new ExpandListAdapter(getActivity(), orderMonthBO.getAddressMyOrderList());
+            adapter2.setOnSelector(new ExpandListAdapter.onSelector() {
+                @Override
+                public void select(int id) {
+                    orderIds.add(id);
+                    adapter.setIds(orderIds);
+                    syncSelectPrice();
                 }
-                adapter.setIds(orderIds);
-                syncSelectPrice();
-            }
-        });
-        expandList.setAdapter(adapter2);
+
+                @Override
+                public void cancle(int id) {
+                    for (int i = 0; i < orderIds.size(); i++) {
+                        if (orderIds.get(i) == id) {
+                            orderIds.remove(i);
+                        }
+                    }
+                    adapter.setIds(orderIds);
+                    syncSelectPrice();
+                }
+            });
+            expandList.setAdapter(adapter2);
+            expandList.setOnGroupClickListener((expandableListView, view, i, l) -> true);
+            expandList.setOnChildClickListener((parent, v, groupPosition, childPosition, id) -> {
+                Bundle bundle = new Bundle();
+                bundle.putInt("id", (int) orderMonthBO.getAddressMyOrderList().get(groupPosition)
+                        .getOrderList().get(childPosition).getId());
+                gotoActivity(OrderDetailsActivity.class, bundle, false);
+                return true;
+            });
+        } else {
+            adapter2.setDatas(orderMonthBO.getAddressMyOrderList());
+        }
         for (int i = 0; i < orderMonthBO.getAddressMyOrderList().size(); i++) {
             expandList.expandGroup(i);
         }
-        expandList.setOnGroupClickListener((expandableListView, view, i, l) -> true);
-        expandList.setOnChildClickListener((parent, v, groupPosition, childPosition, id) -> {
-            Bundle bundle = new Bundle();
-            bundle.putInt("id", (int) orderMonthBO.getAddressMyOrderList().get(groupPosition)
-                    .getOrderList().get(childPosition).getId());
-            gotoActivity(OrderDetailsActivity.class, bundle, false);
-            return true;
-        });
+        adapter2.setIds(orderIds);
     }
 
     @Override
