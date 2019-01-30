@@ -339,6 +339,18 @@ public class HttpServiceIml {
         return getService().cancleOrder(orderBO).compose(RxResultHelper.httpRusult());
     }
 
+
+    /**
+     * 检测是否可退款
+     */
+    public static Observable<String> testTuiKuan(int id) {
+        TuiKuanBO tuiKuanBO = new TuiKuanBO();
+        tuiKuanBO.token = MyApplication.token;
+        tuiKuanBO.setId(id);
+        return getService().testRefund(tuiKuanBO).compose(RxResultHelper.httpRusult());
+    }
+
+
     /**
      * 申请退款
      */

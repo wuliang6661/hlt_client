@@ -236,6 +236,13 @@ public interface HttpService {
     Observable<BaseResult<String>> cancleOrder(@Body GetOrderBO orderBO);
 
     /**
+     * 点击申请退款之前判断
+     */
+    @POST("/hct_webservice/app/address/my/clickOrderRefundTest")
+    Observable<BaseResult<String>> testRefund(@Body TuiKuanBO tuiKuanBO);
+
+
+    /**
      * 申请退款
      */
     @POST("/hct_webservice/app/address/my/updateAddressOrderRefundStatus")

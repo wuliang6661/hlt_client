@@ -19,6 +19,8 @@ public class OrderDetailsContract {
         void cancleSuress(String message);
 
         void tuikuanSuress(String message);
+
+        void testTuiKuanSouress();
     }
 
     interface Presenter extends BasePresenter<View> {

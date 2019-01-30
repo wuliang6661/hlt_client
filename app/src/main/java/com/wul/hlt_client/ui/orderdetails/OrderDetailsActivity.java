@@ -22,7 +22,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alipay.sdk.app.PayTask;
-import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.blankj.utilcode.util.TimeUtils;
 import com.wul.hlt_client.R;
@@ -195,7 +194,7 @@ public class OrderDetailsActivity extends MVPBaseActivity<OrderDetailsContract.V
                 if (orderDetailsBO.getIsDisplay() == 1) {
                     cancleOrder();
                 } else {
-                    showTuiKuanDialog();
+                    mPresenter.testTuiKuan(id);
                 }
                 break;
         }
@@ -279,6 +278,11 @@ public class OrderDetailsActivity extends MVPBaseActivity<OrderDetailsContract.V
     public void tuikuanSuress(String message) {
         showToast("您的退款申请已提交审核！");
         mPresenter.getOrderDetals(id);
+    }
+
+    @Override
+    public void testTuiKuanSouress() {
+        showTuiKuanDialog();
     }
 
 

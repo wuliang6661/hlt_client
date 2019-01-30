@@ -79,6 +79,28 @@ public class OrderDetailsPresenter extends BasePresenterImpl<OrderDetailsContrac
 
 
     /**
+     * 是否可申请退款
+     */
+    public void testTuiKuan(int id) {
+        HttpServiceIml.testTuiKuan(id).subscribe(new HttpResultSubscriber<String>() {
+            @Override
+            public void onSuccess(String s) {
+                if(mView != null){
+                    mView.testTuiKuanSouress();
+                }
+            }
+
+            @Override
+            public void onFiled(String message) {
+                if (mView != null) {
+                    mView.onRequestError(message);
+                }
+            }
+        });
+    }
+
+
+    /**
      * 申请退款
      */
     public void tuikuan(int id, String money) {
