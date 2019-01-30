@@ -38,7 +38,6 @@ import com.wul.hlt_client.entity.request.TestTimeRequest;
 import com.wul.hlt_client.mvp.MVPBaseActivity;
 import com.wul.hlt_client.ui.myorder.MyOrderActivity;
 import com.wul.hlt_client.ui.ordershop.OrderShopActivity;
-import com.wul.hlt_client.util.AppManager;
 import com.wul.hlt_client.util.BarUtils;
 import com.wul.hlt_client.widget.AlertDialog;
 import com.wul.hlt_client.widget.PayDialog;

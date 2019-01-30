@@ -6,6 +6,7 @@ import android.util.Log;
 
 
 import com.blankj.utilcode.util.ToastUtils;
+import com.wul.hlt_client.api.DialogCallException;
 import com.wul.hlt_client.api.DialogException;
 import com.wul.hlt_client.entity.BaseResult;
 import com.wul.hlt_client.ui.login.LoginActivity;
@@ -25,33 +26,27 @@ public class RxResultHelper {
     private static final String TAG = "RxResultHelper";
 
     public static <T> Observable.Transformer<BaseResult<T>, T> httpRusult() {
-        return new Observable.Transformer<BaseResult<T>, T>() {
-            @Override
-            public Observable<T> call(Observable<BaseResult<T>> apiResponseObservable) {
-                return apiResponseObservable.flatMap(
-                        new Func1<BaseResult<T>, Observable<T>>() {
-                            @Override
-                            public Observable<T> call(BaseResult<T> mDYResponse) {
-                                Log.d(TAG, "call() called with: mDYResponse = [" + mDYResponse + "]");
-                                if (mDYResponse.surcess()) {
-                                    return createData(mDYResponse.getData());
-                                } else if (mDYResponse.getCode() == 421) {   //重新登录
-                                    Activity activity = AppManager.getAppManager().curremtActivity();
-                                    Intent intent = new Intent(activity, LoginActivity.class);
-                                    ToastUtils.showShort("登录已过期，请重新登录！");
-                                    AppManager.getAppManager().finishAllActivity();
-                                    activity.startActivity(intent);
-                                    return Observable.error(new RuntimeException("登录已过期，请重新登录！"));
-                                } else if (mDYResponse.getCode() == 399) {   //弹窗提示
-                                    return Observable.error(new DialogException(mDYResponse.getMsg()));
-                                } else {
-                                    return Observable.error(new RuntimeException(mDYResponse.getMsg()));
-                                }
-                            }
-                        }
-                ).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
-            }
-        };
+        return apiResponseObservable -> apiResponseObservable.flatMap(
+                (Func1<BaseResult<T>, Observable<T>>) mDYResponse -> {
+                    Log.d(TAG, "call() called with: mDYResponse = [" + mDYResponse + "]");
+                    if (mDYResponse.surcess()) {
+                        return createData(mDYResponse.getData());
+                    } else if (mDYResponse.getCode() == 421) {   //重新登录
+                        Activity activity = AppManager.getAppManager().curremtActivity();
+                        Intent intent = new Intent(activity, LoginActivity.class);
+                        ToastUtils.showShort("登录已过期，请重新登录！");
+                        AppManager.getAppManager().finishAllActivity();
+                        activity.startActivity(intent);
+                        return Observable.error(new RuntimeException("登录已过期，请重新登录！"));
+                    } else if (mDYResponse.getCode() == 399) {   //弹窗提示
+                        return Observable.error(new DialogException(mDYResponse.getMsg()));
+                    } else if (mDYResponse.getCode() == 398) {  //可拨打电话的弹窗
+                        return Observable.error(new DialogCallException(mDYResponse.getMsg()));
+                    } else {
+                        return Observable.error(new RuntimeException(mDYResponse.getMsg()));
+                    }
+                }
+        ).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread());
     }
 
 
