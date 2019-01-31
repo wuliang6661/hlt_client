@@ -285,7 +285,7 @@ public class OrderDetailsActivity extends MVPBaseActivity<OrderDetailsContract.V
         showTuiKuanDialog();
     }
 
-
+ 
     private void aliPay(String orderInfo) {
         final Runnable payRunnable = () -> {
             PayTask alipay = new PayTask(OrderDetailsActivity.this);
