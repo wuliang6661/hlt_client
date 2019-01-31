@@ -136,9 +136,9 @@
                     android:id="@+id/image1"
                     android:layout_width="33dp"
                     android:layout_height="30dp"
-                    android:layout_marginBottom="33dp"
                     android:layout_marginLeft="33dp"
                     android:layout_marginTop="23dp"
+                    android:layout_marginBottom="33dp"
                     android:src="@drawable/location_img" />
 
 
@@ -200,8 +200,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:layout_marginTop="15dp"
+                android:layout_marginRight="10dp"
                 android:background="@drawable/order_msg_bg"
                 android:orientation="vertical">
 
@@ -209,7 +209,7 @@
                 <LinearLayout
                     android:id="@+id/dispatching_time_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
+                    android:layout_height="50dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -221,7 +221,7 @@
                         android:layout_weight="1"
                         android:text="配送时间："
                         android:textColor="#333333"
-                        android:textSize="13sp" />
+                        android:textSize="15sp" />
 
 
                     <TextView
@@ -232,12 +232,12 @@
                         android:hint="请选择配送时间"
                         android:textColor="#61c95f"
                         android:textColorHint="#61c95f"
-                        android:textSize="13sp" />
+                        android:textSize="15sp" />
 
                     <ImageView
                         android:layout_width="7dp"
                         android:layout_height="12dp"
-                        android:layout_marginLeft="4dp"
+                        android:layout_marginLeft="8dp"
                         android:layout_marginRight="13dp"
                         android:src="@drawable/next" />
 
@@ -254,7 +254,7 @@
                 <LinearLayout
                     android:id="@+id/pay_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
+                    android:layout_height="50dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -266,7 +266,7 @@
                         android:layout_weight="1"
                         android:text="支付方式："
                         android:textColor="#333333"
-                        android:textSize="13sp" />
+                        android:textSize="15sp" />
 
 
                     <TextView
@@ -276,12 +276,12 @@
                         android:gravity="center_vertical"
                         android:text="请选择支付方式"
                         android:textColor="#61c95f"
-                        android:textSize="13sp" />
+                        android:textSize="15sp" />
 
                     <ImageView
                         android:layout_width="7dp"
                         android:layout_height="12dp"
-                        android:layout_marginLeft="4dp"
+                        android:layout_marginLeft="8dp"
                         android:layout_marginRight="13dp"
                         android:src="@drawable/next" />
 
@@ -294,8 +294,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
                 android:layout_marginTop="15dp"
+                android:layout_marginRight="10dp"
                 android:background="@drawable/order_msg_bg"
                 android:orientation="vertical">
 

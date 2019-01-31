@@ -445,6 +445,8 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
         builder.setType(new boolean[]{true, true, true, false, false, false});
         builder.isCenterLabel(false).setDividerColor(Color.WHITE);
         builder.setContentTextSize(15);
+        builder.setLineSpacingMultiplier(3);
+        //builder.setOutSideCancelable(false);
         pvView = builder.build();
         FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) pvView.getDialogContainerLayout().getLayoutParams();
         layoutParams.bottomMargin = BarUtils.getNavigationBarHeight(this);

@@ -118,7 +118,7 @@
             android:layout_weight="1"
             android:text="我的订单"
             android:textColor="#666666"
-            android:textSize="13sp" />
+            android:textSize="15sp" />
 
 
         <ImageView
@@ -163,7 +163,7 @@
             android:layout_weight="1"
             android:text="门店信息"
             android:textColor="#666666"
-            android:textSize="13sp" />
+            android:textSize="15sp" />
 
 
         <ImageView
@@ -207,7 +207,7 @@
             android:layout_weight="1"
             android:text="投诉建议"
             android:textColor="#666666"
-            android:textSize="13sp" />
+            android:textSize="15sp" />
 
 
         <ImageView
@@ -251,7 +251,7 @@
             android:layout_weight="1"
             android:text="好菜通资质"
             android:textColor="#666666"
-            android:textSize="13sp" />
+            android:textSize="15sp" />
 
 
         <ImageView
@@ -294,7 +294,7 @@
             android:layout_weight="1"
             android:text="我的余额"
             android:textColor="#666666"
-            android:textSize="13sp" />
+            android:textSize="15sp" />
 
 
         <TextView
@@ -341,7 +341,7 @@
             android:layout_weight="1"
             android:text="联系客服"
             android:textColor="#666666"
-            android:textSize="13sp" />
+            android:textSize="15sp" />
 
 
         <TextView
