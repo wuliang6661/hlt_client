@@ -7,7 +7,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +14,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
 import com.wul.hlt_client.R;
@@ -25,12 +25,13 @@ import com.wul.hlt_client.base.MyApplication;
 import com.wul.hlt_client.config.AlarmBroadcastReceiver;
 import com.wul.hlt_client.entity.ShopCarBO;
 import com.wul.hlt_client.entity.event.FinishEvent;
+import com.wul.hlt_client.entity.event.ShopCarRefresh;
 import com.wul.hlt_client.entity.event.SwithFragment;
-import com.wul.hlt_client.ui.MediaListener;
 import com.wul.hlt_client.ui.NoneFragment1;
 import com.wul.hlt_client.ui.NoneFragment2;
 import com.wul.hlt_client.ui.NoneFragment3;
 import com.wul.hlt_client.ui.NoneFragment4;
+import com.wul.hlt_client.ui.main.shopcar.ShopCarAdapter;
 import com.wul.hlt_client.util.AppManager;
 import com.xyz.tabitem.BottmTabItem;
 
@@ -58,6 +59,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     BottmTabItem main3;
     @BindView(R.id.main4)
     BottmTabItem main4;
+    @BindView(R.id.shop_num)
+    TextView shopNum;
 
     private int selectPosition = 0;
 
@@ -155,6 +158,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         selectPosition = swithFragment.goFragment;
         setButtom(swithFragment.goFragment);
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(ShopCarRefresh refresh) {
+        if(MyApplication.shopCarBO.getShoppingCartList() == null||
+                MyApplication.shopCarBO.getShoppingCartList().size() == 0){
+            shopNum.setText("0");
+            shopNum.setVisibility(View.GONE);
+        }else{
+            shopNum.setText(MyApplication.shopCarBO.getShoppingCartList().size() + "");
+            shopNum.setVisibility(View.VISIBLE);
+        }
+    }
+
 
 
     /**

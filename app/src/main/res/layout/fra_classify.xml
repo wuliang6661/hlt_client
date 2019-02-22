@@ -8,17 +8,17 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="54dp"
         android:background="@color/green_color">
 
         <TextView
             android:id="@+id/edit_select"
             android:layout_width="match_parent"
-            android:layout_height="29dp"
+            android:layout_height="30dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/edit_select_hui_bg"
+            android:background="@drawable/edit_select_bg"
             android:gravity="center_vertical"
             android:paddingLeft="30dp"
             android:text="搜索商品名称"

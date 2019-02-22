@@ -14,14 +14,14 @@ public class ShoppingCarBO {
      * shoppingCartList : [{"image":"product/B002_Xi_Lan_Hua.jpg","measureUnitName2":"袋","quantity":1,"isPromotion":0,"productId":6,"money":16,"httpUrl":"http://47.98.53.141:8099/hct_webservice/static/images/product/B002_Xi_Lan_Hua.jpg","productName":"西兰花（优质）","productType":1,"price2":17,"promotionPrice2":16},{"image":"product/YuMiZha_CQ.jpg","measureUnitName2":"袋","quantity":1,"isPromotion":1,"productId":920,"money":4.2,"httpUrl":"http://47.98.53.141:8099/hct_webservice/static/images/product/YuMiZha_CQ.jpg","productName":"玉米渣","productType":0,"price2":5,"promotionPrice2":4.2},{"image":"product/JingShuiDouYa.jpg","measureUnitName2":"袋","quantity":1,"isPromotion":1,"productId":927,"money":7.5,"httpUrl":"http://47.98.53.141:8099/hct_webservice/static/images/product/JingShuiDouYa.jpg","productName":"井水豆芽","productType":0,"price2":9,"promotionPrice2":7.5},{"image":"product/HuaiShanYao_CQ.jpg","measureUnitName2":"袋","quantity":1,"isPromotion":1,"productId":913,"money":21,"httpUrl":"http://47.98.53.141:8099/hct_webservice/static/images/product/HuaiShanYao_CQ.jpg","productName":"淮山药","productType":0,"price2":24,"promotionPrice2":21},{"image":"product/YuanHongLuoBo.jpg","measureUnitName2":"袋","quantity":1,"isPromotion":1,"productId":915,"money":4,"httpUrl":"http://47.98.53.141:8099/hct_webservice/static/images/product/YuanHongLuoBo.jpg","productName":"圆红萝卜","productType":0,"price2":5.5,"promotionPrice2":4}]
      */
 
-    private double amount;
+    private String amount;
     private List<ShoppingCartListBean> shoppingCartList;
 
-    public double getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 
@@ -53,12 +53,12 @@ public class ShoppingCarBO {
         private int quantity;
         private int isPromotion;
         private int productId;
-        private double money;
+        private String money;
         private String httpUrl;
         private String productName;
         private int productType;
-        private double price2;
-        private double promotionPrice2;
+        private String price2;
+        private String promotionPrice2;
 
         public String getImage() {
             return image;
@@ -100,11 +100,11 @@ public class ShoppingCarBO {
             this.productId = productId;
         }
 
-        public double getMoney() {
+        public String getMoney() {
             return money;
         }
 
-        public void setMoney(double money) {
+        public void setMoney(String money) {
             this.money = money;
         }
 
@@ -132,19 +132,19 @@ public class ShoppingCarBO {
             this.productType = productType;
         }
 
-        public double getPrice2() {
+        public String getPrice2() {
             return price2;
         }
 
-        public void setPrice2(double price2) {
+        public void setPrice2(String price2) {
             this.price2 = price2;
         }
 
-        public double getPromotionPrice2() {
+        public String getPromotionPrice2() {
             return promotionPrice2;
         }
 
-        public void setPromotionPrice2(double promotionPrice2) {
+        public void setPromotionPrice2(String promotionPrice2) {
             this.promotionPrice2 = promotionPrice2;
         }
     }

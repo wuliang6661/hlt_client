@@ -29,18 +29,18 @@ public class UnOrderBo {
          * createDate : 1520875627000
          */
 
-        private double amount;
+        private String amount;
         private String deliverRestName;
         private int id;
         private long endTime;
         private String deliverAddress;
         private long createDate;
 
-        public double getAmount() {
+        public String getAmount() {
             return amount;
         }
 
-        public void setAmount(double amount) {
+        public void setAmount(String amount) {
             this.amount = amount;
         }
 

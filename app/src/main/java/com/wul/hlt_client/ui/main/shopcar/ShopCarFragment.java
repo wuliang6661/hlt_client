@@ -74,7 +74,7 @@ public class ShopCarFragment extends MVPBaseFragment<ShopCarContract.View, ShopC
         shopCarRecycle.setLayoutManager(manager);
 
         shopCarButton.setOnClickListener(view1 -> {
-            showProgress();
+//            showProgress();
             mPresenter.testSkipe();
         });
         clearCar.setOnClickListener(v -> {
@@ -82,13 +82,14 @@ public class ShopCarFragment extends MVPBaseFragment<ShopCarContract.View, ShopC
             mPresenter.clearShoppingCar();
         });
         goShopping.setOnClickListener(v -> start(ClassifyFragment.getInstanse(0)));
+        mPresenter.getShopCarList();
     }
 
 
     @Override
     public void onSupportVisible() {
         super.onSupportVisible();
-        showProgress();
+//        showProgress();
         mPresenter.getShopCarList();
         if (isImmersionBarEnabled()) {
             initImmersionBar();
@@ -137,6 +138,7 @@ public class ShopCarFragment extends MVPBaseFragment<ShopCarContract.View, ShopC
     public void getShopCar(ShopCarBO carBO) {
         stopProgress();
         MyApplication.shopCarBO = carBO;
+        EventBus.getDefault().post(new ShopCarRefresh());
         if (carBO.getAmount() == 0) {
             clearCar.setVisibility(View.GONE);
             buttomLayout.setVisibility(View.GONE);

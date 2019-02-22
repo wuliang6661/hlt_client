@@ -180,7 +180,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         }, list);
         //设置轮播图自动滚动轮播，参数是轮播图滚动的间隔时间
         //轮播图默认是不自动滚动的，如果不调用这个方法，轮播图将不会自动滚动。
-        // mBanner.startTurning(3600);
+         mBanner.startTurning(3000);
         //设置轮播图的滚动速度
         mBanner.setScrollDuration(500);
         //设置轮播图的点击事件
@@ -265,7 +265,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         if (list.getList() == null || list.getList().size() == 0) {
             xianshiRecycle.setVisibility(View.GONE);
             none1.setVisibility(View.VISIBLE);
-            downTimeText.setText("暂无促销活动：");
+            downTimeText.setText("");
             return;
         } else {
             xianshiRecycle.setVisibility(View.VISIBLE);

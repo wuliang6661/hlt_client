@@ -61,7 +61,7 @@ public class OpsGoodActivity extends MVPBaseActivity<OpsGoodContract.View, OpsGo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         goBack();
-        setTitleText("常用清单列表");
+        setTitleText("常用清单");
         EventBus.getDefault().register(this);
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
