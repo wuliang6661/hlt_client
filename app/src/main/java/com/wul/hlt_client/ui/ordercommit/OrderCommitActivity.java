@@ -306,6 +306,8 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
                         }).show();
             } else {
                 mPresenter.getShoppingList(orderType);
+                payType.setText("支付宝");
+                strPayType = 2;
                 mPresenter.getMoney(orderType, PayStatus);
                 payLayout.setEnabled(true);
             }

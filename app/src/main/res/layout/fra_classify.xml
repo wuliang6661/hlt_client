@@ -73,7 +73,7 @@
                 android:marqueeRepeatLimit="marquee_forever"
                 android:singleLine="true"
                 android:textColor="#666666"
-                android:textSize="10sp" />
+                android:textSize="13sp" />
 
         </LinearLayout>
 
@@ -93,7 +93,7 @@
 
         <LinearLayout
             android:id="@+id/changyong_layout"
-            android:layout_width="63dp"
+            android:layout_width="72dp"
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="horizontal">
@@ -111,7 +111,7 @@
                 android:layout_marginLeft="6dp"
                 android:text="常用"
                 android:textColor="#666666"
-                android:textSize="13sp" />
+                android:textSize="14sp" />
 
 
         </LinearLayout>
@@ -133,7 +133,7 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/cong_recycle"
-            android:layout_width="63dp"
+            android:layout_width="72dp"
             android:layout_height="match_parent" />
 
 

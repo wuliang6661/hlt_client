@@ -1,12 +1,16 @@
 package com.wul.hlt_client.api;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 
 import com.bigkoo.svprogresshud.SVProgressHUD;
 import com.wul.hlt_client.util.AppManager;
+import com.wul.hlt_client.util.PhoneUtils;
 import com.wul.hlt_client.widget.AlertDialog;
 
 import rx.Subscriber;
@@ -67,24 +71,14 @@ public abstract class HttpResultSubscriber<T> extends Subscriber<T> {
             }
             new AlertDialog(AppManager.getAppManager().curremtActivity()).builder().setGone().setMsg(builder.toString())
                     .setNegativeButton("取消", null)
-                    .setPositiveButton("拨打", v -> callPhone(msgs[msgs.length - 1])).show();
+                    .setPositiveButton("拨打", v -> PhoneUtils.callPhone(msgs[msgs.length - 1])).show();
         } else {
             onFiled(e.getMessage());
         }
     }
 
 
-    /**
-     * 拨打电话（跳转到拨号界面，用户手动点击拨打）
-     *
-     * @param phoneNum 电话号码
-     */
-    public void callPhone(String phoneNum) {
-        Intent intent = new Intent(Intent.ACTION_DIAL);
-        Uri data = Uri.parse("tel:" + phoneNum);
-        intent.setData(data);
-        AppManager.getAppManager().curremtActivity().startActivity(intent);
-    }
+
 
 
     @Override

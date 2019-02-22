@@ -62,7 +62,8 @@
                     android:layout_height="wrap_content"
                     android:text="年"
                     android:textColor="#383535"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:visibility="gone" />
 
 
                 <com.contrarywind.view.WheelView
@@ -76,7 +77,8 @@
                     android:layout_height="wrap_content"
                     android:text="月"
                     android:textColor="#383535"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:visibility="gone" />
 
                 <com.contrarywind.view.WheelView
                     android:id="@+id/day"
@@ -89,7 +91,8 @@
                     android:layout_height="wrap_content"
                     android:text="日"
                     android:textColor="#383535"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:visibility="gone" />
 
                 <com.contrarywind.view.WheelView
                     android:id="@+id/hour"
@@ -136,14 +139,14 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:background="#61C95F" />
+                    android:background="@color/zhu_color" />
 
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="50dp"
-                    android:background="#61C95F" />
+                    android:background="@color/zhu_color" />
 
             </LinearLayout>
 
@@ -156,7 +159,7 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="10dp"
-            android:background="#61C95F"
+            android:background="@color/zhu_color"
             android:gravity="center"
             android:text="确定"
             android:textColor="@color/white"

@@ -9,7 +9,7 @@
         android:id="@+id/bar"
         android:layout_width="match_parent"
         android:layout_height="24dp"
-        android:background="#61C95F" />
+        android:background="@color/zhu_color" />
 
 
     <RelativeLayout
@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@+id/bar"
-        android:background="#61C95F"
+        android:background="@color/zhu_color"
         android:orientation="vertical">
 
 
@@ -47,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
-        android:background="#61C95F"
+        android:background="@color/zhu_color"
         android:gravity="center"
         android:text="提交"
         android:textColor="@color/white"

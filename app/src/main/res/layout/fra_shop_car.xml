@@ -37,7 +37,7 @@
             android:id="@+id/shop_car_button"
             android:layout_width="102dp"
             android:layout_height="match_parent"
-            android:background="#61c95f"
+            android:background="@color/zhu_color"
             android:gravity="center"
             android:text="去结算"
             android:textColor="@color/white"
@@ -58,7 +58,7 @@
             android:layout_centerInParent="true"
             android:text="购物车"
             android:textColor="#ffffff"
-            android:textSize="16sp" />
+            android:textSize="18sp" />
 
 
         <LinearLayout
@@ -120,7 +120,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:text="好菜通配送"
-                android:textColor="#61c95f"
+                android:textColor="@color/zhu_color"
                 android:textSize="15sp" />
 
 

@@ -78,7 +78,7 @@
             android:id="@+id/shop_car_button"
             android:layout_width="102dp"
             android:layout_height="match_parent"
-            android:background="#61c95f"
+            android:background="@color/zhu_color"
             android:gravity="center"
             android:text="确认"
             android:textColor="@color/white"
@@ -186,7 +186,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="3dp"
-                        android:text="联系地址："
+                        android:text="收货地址："
                         android:textColor="@color/white"
                         android:textSize="13sp" />
 
@@ -230,8 +230,8 @@
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:hint="请选择配送时间"
-                        android:textColor="#61c95f"
-                        android:textColorHint="#61c95f"
+                        android:textColor="@color/zhu_color"
+                        android:textColorHint="@color/zhu_color"
                         android:textSize="15sp" />
 
                     <ImageView
@@ -275,7 +275,7 @@
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
                         android:text="请选择支付方式"
-                        android:textColor="#61c95f"
+                        android:textColor="@color/zhu_color"
                         android:textSize="15sp" />
 
                     <ImageView

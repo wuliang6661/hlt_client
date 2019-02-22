@@ -37,7 +37,7 @@ public class OrderShopActivity extends MVPBaseActivity<OrderShopContract.View, O
         super.onCreate(savedInstanceState);
 
         goBack();
-        setTitleText("商品信息");
+        setTitleText("采购清单");
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setOrientation(LinearLayoutManager.VERTICAL);

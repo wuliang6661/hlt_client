@@ -145,7 +145,7 @@ public class ShopAdapter extends LGRecycleViewAdapter<ShopBO> {
             holder.getView(R.id.good_price2).setVisibility(View.GONE);
             holder.getView(R.id.good_type_miao).setVisibility(View.GONE);
             yuanText.setText("¥" + shopBO.getPrice1() + "元/" + shopBO.getMeasureUnitName1());
-            yuanText.setTextColor(Color.parseColor("#61C95F"));
+            yuanText.setTextColor(Color.parseColor("#FF722B"));
             yuanText.getPaint().setFlags(0);
         }
     }

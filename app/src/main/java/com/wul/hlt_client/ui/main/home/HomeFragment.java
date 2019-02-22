@@ -3,6 +3,7 @@ package com.wul.hlt_client.ui.main.home;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
@@ -180,7 +181,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         }, list);
         //设置轮播图自动滚动轮播，参数是轮播图滚动的间隔时间
         //轮播图默认是不自动滚动的，如果不调用这个方法，轮播图将不会自动滚动。
-         mBanner.startTurning(3000);
+        mBanner.startTurning(3000);
         //设置轮播图的滚动速度
         mBanner.setScrollDuration(500);
         //设置轮播图的点击事件
@@ -249,7 +250,17 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
                 holder.setImageUrl(getActivity(), R.id.item_img, classifyBO.getImage());
                 holder.setText(R.id.item_text, classifyBO.getProductName());
                 holder.getView(R.id.shop_price).setVisibility(View.GONE);
-                holder.setText(R.id.shop_old_price, "¥ " + classifyBO.getPrice1() + "元/" + classifyBO.getMeasureUnitName1());
+                TextView textView = (TextView) holder.getView(R.id.shop_old_price);
+                if (classifyBO.getIsPromotion() == 1 && classifyBO.getProductType() == 0) {  //促销商品
+                    textView.setTextColor(Color.parseColor("#FF722B"));
+                    holder.setText(R.id.shop_old_price, "¥ " + classifyBO.getPromotionPrice1() + "元/" + classifyBO.getMeasureUnitName1());
+                } else if (classifyBO.getProductType() == 1) {    //秒杀商品
+                    textView.setTextColor(Color.parseColor("#FF722B"));
+                    holder.setText(R.id.shop_old_price, "¥ " + classifyBO.getPromotionPrice1() + "元/" + classifyBO.getMeasureUnitName1());
+                } else {  //正常商品
+                    textView.setTextColor(Color.parseColor("#666666"));
+                    holder.setText(R.id.shop_old_price, "¥ " + classifyBO.getPrice1() + "元/" + classifyBO.getMeasureUnitName1());
+                }
             }
         };
         adapter.setOnItemClickListener(R.id.item_layout, (view, position) -> gotoActivity(OpsGoodActivity.class, false));
@@ -388,7 +399,6 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     private boolean isImmersionBarEnabled() {
         return true;
     }
-
 
 
 }

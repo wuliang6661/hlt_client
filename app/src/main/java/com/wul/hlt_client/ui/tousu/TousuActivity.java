@@ -63,7 +63,7 @@ public class TousuActivity extends MVPBaseActivity<TousuContract.View, TousuPres
             return;
         }
         if (content.length() < 10) {
-            showToast("投诉建议长度需大于10位!");
+            showToast("请您写10至500字!");
             return;
         }
         mPresenter.tousu(content);

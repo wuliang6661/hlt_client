@@ -21,17 +21,17 @@ public class OrderDetailsBO {
      * createDate : 1546675696000
      */
 
-    private double orderType;
-    private double amount;
+    private int orderType;
+    private String amount;
     private String requireDeliverOn;
     private String orderDisplayId;
     private String deliverAddress;
     private String consigneeName;
-    private double statusId;
+    private int statusId;
     private String deliverRestName;
     private String consigneePhone;
-    private double id;
-    private double payStatus;
+    private String id;
+    private int payStatus;
     private long createDate;
     private List<ProductDetailListBean> productDetailList;
     private String greengrocerPhone;
@@ -62,19 +62,19 @@ public class OrderDetailsBO {
         this.greengrocerPhone = greengrocerPhone;
     }
 
-    public double getOrderType() {
+    public int getOrderType() {
         return orderType;
     }
 
-    public void setOrderType(double orderType) {
+    public void setOrderType(int orderType) {
         this.orderType = orderType;
     }
 
-    public double getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 
@@ -110,11 +110,11 @@ public class OrderDetailsBO {
         this.consigneeName = consigneeName;
     }
 
-    public double getStatusId() {
+    public int getStatusId() {
         return statusId;
     }
 
-    public void setStatusId(double statusId) {
+    public void setStatusId(int statusId) {
         this.statusId = statusId;
     }
 
@@ -134,19 +134,19 @@ public class OrderDetailsBO {
         this.consigneePhone = consigneePhone;
     }
 
-    public double getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(double id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public double getPayStatus() {
+    public int getPayStatus() {
         return payStatus;
     }
 
-    public void setPayStatus(double payStatus) {
+    public void setPayStatus(int payStatus) {
         this.payStatus = payStatus;
     }
 
@@ -190,22 +190,22 @@ public class OrderDetailsBO {
 
         private String price0MeasureUnit;
         private String img;
-        private double measureUnit1And2Relation;
-        private double quantity;
-        private double cost;
-        private double productId;
+        private String measureUnit1And2Relation;
+        private String quantity;
+        private String cost;
+        private String productId;
         private String productDetail;
         private String price2MeasureUnit;
         private String datedProductId;
-        private double consumption;
+        private String consumption;
         private String source;
-        private double number2;
+        private String number2;
         private String productName;
-        private double amountOfMoney;
-        private double price0;
+        private String amountOfMoney;
+        private String price0;
         private String price1MeasureUnit;
-        private double price1;
-        private double price2;
+        private String price1;
+        private String price2;
 
         public String getPrice0MeasureUnit() {
             return price0MeasureUnit;
@@ -223,35 +223,35 @@ public class OrderDetailsBO {
             this.img = img;
         }
 
-        public double getMeasureUnit1And2Relation() {
+        public String getMeasureUnit1And2Relation() {
             return measureUnit1And2Relation;
         }
 
-        public void setMeasureUnit1And2Relation(double measureUnit1And2Relation) {
+        public void setMeasureUnit1And2Relation(String measureUnit1And2Relation) {
             this.measureUnit1And2Relation = measureUnit1And2Relation;
         }
 
-        public double getQuantity() {
+        public String getQuantity() {
             return quantity;
         }
 
-        public void setQuantity(double quantity) {
+        public void setQuantity(String quantity) {
             this.quantity = quantity;
         }
 
-        public double getCost() {
+        public String getCost() {
             return cost;
         }
 
-        public void setCost(double cost) {
+        public void setCost(String cost) {
             this.cost = cost;
         }
 
-        public double getProductId() {
+        public String getProductId() {
             return productId;
         }
 
-        public void setProductId(double productId) {
+        public void setProductId(String productId) {
             this.productId = productId;
         }
 
@@ -279,11 +279,11 @@ public class OrderDetailsBO {
             this.datedProductId = datedProductId;
         }
 
-        public double getConsumption() {
+        public String getConsumption() {
             return consumption;
         }
 
-        public void setConsumption(double consumption) {
+        public void setConsumption(String consumption) {
             this.consumption = consumption;
         }
 
@@ -295,11 +295,11 @@ public class OrderDetailsBO {
             this.source = source;
         }
 
-        public double getNumber2() {
+        public String getNumber2() {
             return number2;
         }
 
-        public void setNumber2(double number2) {
+        public void setNumber2(String number2) {
             this.number2 = number2;
         }
 
@@ -311,19 +311,19 @@ public class OrderDetailsBO {
             this.productName = productName;
         }
 
-        public double getAmountOfMoney() {
+        public String getAmountOfMoney() {
             return amountOfMoney;
         }
 
-        public void setAmountOfMoney(double amountOfMoney) {
+        public void setAmountOfMoney(String amountOfMoney) {
             this.amountOfMoney = amountOfMoney;
         }
 
-        public double getPrice0() {
+        public String getPrice0() {
             return price0;
         }
 
-        public void setPrice0(double price0) {
+        public void setPrice0(String price0) {
             this.price0 = price0;
         }
 
@@ -335,19 +335,19 @@ public class OrderDetailsBO {
             this.price1MeasureUnit = price1MeasureUnit;
         }
 
-        public double getPrice1() {
+        public String getPrice1() {
             return price1;
         }
 
-        public void setPrice1(double price1) {
+        public void setPrice1(String price1) {
             this.price1 = price1;
         }
 
-        public double getPrice2() {
+        public String getPrice2() {
             return price2;
         }
 
-        public void setPrice2(double price2) {
+        public void setPrice2(String price2) {
             this.price2 = price2;
         }
     }

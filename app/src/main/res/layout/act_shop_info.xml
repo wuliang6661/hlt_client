@@ -9,13 +9,13 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="24dp"
-        android:background="#61C95F" />
+        android:background="@color/zhu_color" />
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#61C95F"
+        android:background="@color/zhu_color"
         android:orientation="vertical">
 
 

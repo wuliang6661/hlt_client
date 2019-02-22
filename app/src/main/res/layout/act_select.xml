@@ -8,13 +8,13 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="24dp"
-        android:background="@color/green_color"/>
+        android:background="@color/green_color" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="54dp"
-        android:gravity="center"
         android:background="@color/green_color"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <ImageView
@@ -35,8 +35,8 @@
                 android:id="@+id/edit_shop"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_marginRight="10dp"
                 android:layout_centerInParent="true"
+                android:layout_marginRight="10dp"
                 android:background="@drawable/edit_select_bg"
                 android:hint="请输入搜索内容"
                 android:paddingLeft="30dp"
@@ -61,10 +61,11 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
+            android:paddingLeft="10dp"
             android:paddingRight="15dp"
             android:text="搜索"
             android:textColor="#ffffff"
-            android:textSize="13sp" />
+            android:textSize="18sp" />
 
     </LinearLayout>
 
@@ -109,7 +110,7 @@
                 android:marqueeRepeatLimit="marquee_forever"
                 android:singleLine="true"
                 android:textColor="#666666"
-                android:textSize="10sp" />
+                android:textSize="13sp" />
         </LinearLayout>
 
     </LinearLayout>

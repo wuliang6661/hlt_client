@@ -19,7 +19,7 @@
         android:paddingRight="21dp"
         android:text="蔬菜"
         android:textColor="#666666"
-        android:textSize="13sp" />
+        android:textSize="14sp" />
 
 
 </LinearLayout>

@@ -24,7 +24,7 @@ public class OrderDetails {
      */
 
     private String consigneeName;
-    private double amount;
+    private String amount;
     private int statusId;
     private String orderDisplayId;
     private String deliverRestName;
@@ -52,11 +52,11 @@ public class OrderDetails {
         this.consigneeName = consigneeName;
     }
 
-    public double getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 
@@ -156,9 +156,9 @@ public class OrderDetails {
 
         private String price0MeasureUnit;
         private String img;
-        private double measureUnit1And2Relation;
+        private String measureUnit1And2Relation;
         private int quantity;
-        private double cost;
+        private String cost;
         private int productId;
         private String productDetail;
         private String price2MeasureUnit;
@@ -167,11 +167,11 @@ public class OrderDetails {
         private String source;
         private int number2;
         private String productName;
-        private double amountOfMoney;
-        private double price0;
+        private String amountOfMoney;
+        private String price0;
         private String price1MeasureUnit;
-        private double price1;
-        private double price2;
+        private String price1;
+        private String price2;
 
         public String getPrice0MeasureUnit() {
             return price0MeasureUnit;
@@ -189,11 +189,11 @@ public class OrderDetails {
             this.img = img;
         }
 
-        public double getMeasureUnit1And2Relation() {
+        public String getMeasureUnit1And2Relation() {
             return measureUnit1And2Relation;
         }
 
-        public void setMeasureUnit1And2Relation(double measureUnit1And2Relation) {
+        public void setMeasureUnit1And2Relation(String measureUnit1And2Relation) {
             this.measureUnit1And2Relation = measureUnit1And2Relation;
         }
 
@@ -205,11 +205,11 @@ public class OrderDetails {
             this.quantity = quantity;
         }
 
-        public double getCost() {
+        public String getCost() {
             return cost;
         }
 
-        public void setCost(double cost) {
+        public void setCost(String cost) {
             this.cost = cost;
         }
 
@@ -277,19 +277,19 @@ public class OrderDetails {
             this.productName = productName;
         }
 
-        public double getAmountOfMoney() {
+        public String getAmountOfMoney() {
             return amountOfMoney;
         }
 
-        public void setAmountOfMoney(double amountOfMoney) {
+        public void setAmountOfMoney(String amountOfMoney) {
             this.amountOfMoney = amountOfMoney;
         }
 
-        public double getPrice0() {
+        public String getPrice0() {
             return price0;
         }
 
-        public void setPrice0(double price0) {
+        public void setPrice0(String price0) {
             this.price0 = price0;
         }
 
@@ -301,19 +301,19 @@ public class OrderDetails {
             this.price1MeasureUnit = price1MeasureUnit;
         }
 
-        public double getPrice1() {
+        public String getPrice1() {
             return price1;
         }
 
-        public void setPrice1(double price1) {
+        public void setPrice1(String price1) {
             this.price1 = price1;
         }
 
-        public double getPrice2() {
+        public String getPrice2() {
             return price2;
         }
 
-        public void setPrice2(double price2) {
+        public void setPrice2(String price2) {
             this.price2 = price2;
         }
     }

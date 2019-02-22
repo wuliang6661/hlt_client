@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -28,7 +29,7 @@ import com.wul.hlt_client.R;
 import com.wul.hlt_client.entity.OrderDetailsBO;
 import com.wul.hlt_client.entity.PayResult;
 import com.wul.hlt_client.mvp.MVPBaseActivity;
-import com.wul.hlt_client.util.AppManager;
+import com.wul.hlt_client.util.PhoneUtils;
 import com.wul.hlt_client.widget.lgrecycleadapter.LGRecycleViewAdapter;
 import com.wul.hlt_client.widget.lgrecycleadapter.LGViewHolder;
 
@@ -81,6 +82,8 @@ public class OrderDetailsActivity extends MVPBaseActivity<OrderDetailsContract.V
     TextView orderSetting;
     @BindView(R.id.kefu_name)
     TextView kefuName;
+    @BindView(R.id.cancle_button)
+    TextView cancleButton;
 
     private int id;
 
@@ -108,6 +111,7 @@ public class OrderDetailsActivity extends MVPBaseActivity<OrderDetailsContract.V
 
         shopCarButton.setOnClickListener(this);
         orderSetting.setOnClickListener(this);
+        cancleButton.setOnClickListener(this);
     }
 
     @Override
@@ -144,6 +148,7 @@ public class OrderDetailsActivity extends MVPBaseActivity<OrderDetailsContract.V
             kefuName.setText("商户电话");
             kefuPhone.setText(orderDetailsBO.getGreengrocerPhone());
         }
+        kefuPhone.setOnClickListener(this);
         if (orderDetailsBO.getIsDisplay() == 0) {
             orderSetting.setVisibility(View.GONE);
         } else if (orderDetailsBO.getIsDisplay() == 1) {
@@ -153,18 +158,18 @@ public class OrderDetailsActivity extends MVPBaseActivity<OrderDetailsContract.V
             orderSetting.setVisibility(View.VISIBLE);
             orderSetting.setText("申请退款");
         }
-        switch ((int) orderDetailsBO.getStatusId()) {
+        switch (orderDetailsBO.getStatusId()) {
             case 0:    //待接单
                 orderType.setText("待接单");
                 orderType.setTextColor(Color.parseColor("#FF722B"));
                 break;
             case 1:    //已接单
                 orderType.setText("已接单");
-                orderType.setTextColor(Color.parseColor("#61C95F"));
+                orderType.setTextColor(ContextCompat.getColor(this, R.color.zhu_color));
                 break;
             case 2:   //已完成
                 orderType.setText("已完成");
-                orderType.setTextColor(Color.parseColor("#61C95F"));
+                orderType.setTextColor(ContextCompat.getColor(this, R.color.zhu_color));
                 break;
             case 3:     //已终止
                 orderType.setText("已终止");
@@ -172,13 +177,13 @@ public class OrderDetailsActivity extends MVPBaseActivity<OrderDetailsContract.V
                 allPriceLayout.setVisibility(View.GONE);
                 break;
         }
-        switch ((int) orderDetailsBO.getPayStatus()) {
+        switch (orderDetailsBO.getPayStatus()) {
             case 0:    //未支付
                 payType.setTextColor(Color.parseColor("#F5142F"));
                 payType.setText("未支付");
                 break;
             case 1:   //已支付
-                payType.setTextColor(Color.parseColor("#61C95F"));
+                payType.setTextColor(ContextCompat.getColor(this, R.color.zhu_color));
                 payType.setText("已支付");
                 break;
         }
@@ -196,6 +201,18 @@ public class OrderDetailsActivity extends MVPBaseActivity<OrderDetailsContract.V
                 } else {
                     mPresenter.testTuiKuan(id);
                 }
+                break;
+            case R.id.cancle_button:
+                cancleOrder();
+                break;
+            case R.id.kefu_phone:
+                new com.wul.hlt_client.widget.AlertDialog(OrderDetailsActivity.this).builder().setGone().setTitle("拨打")
+                        .setMsg(kefuPhone.getText().toString().trim())
+                        .setCancelable(false)
+                        .setNegativeButton("取消", null)
+                        .setPositiveButton("确定", v1 -> {
+                            PhoneUtils.callPhone(kefuPhone.getText().toString().trim());
+                        }).show();
                 break;
         }
     }
@@ -285,7 +302,7 @@ public class OrderDetailsActivity extends MVPBaseActivity<OrderDetailsContract.V
         showTuiKuanDialog();
     }
 
- 
+
     private void aliPay(String orderInfo) {
         final Runnable payRunnable = () -> {
             PayTask alipay = new PayTask(OrderDetailsActivity.this);
@@ -319,11 +336,11 @@ public class OrderDetailsActivity extends MVPBaseActivity<OrderDetailsContract.V
                     if (TextUtils.equals(resultStatus, "9000")) {    //支付成功
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                         showToast("支付成功！");
-                        AppManager.getAppManager().goHome();
+                        finish();
                     } else {              //支付失败
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                         showToast("支付失败！");
-                        AppManager.getAppManager().goHome();
+                        finish();
                     }
                     break;
                 }

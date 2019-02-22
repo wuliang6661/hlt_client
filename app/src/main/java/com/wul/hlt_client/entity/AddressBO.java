@@ -19,7 +19,7 @@ public class AddressBO {
     private String address;
     private String contact;
     private String addressName;
-    private double addressBalance;
+    private String addressBalance;
     private String contactPhone;
     private int addressId;
 
@@ -47,11 +47,11 @@ public class AddressBO {
         this.addressName = addressName;
     }
 
-    public double getAddressBalance() {
+    public String getAddressBalance() {
         return addressBalance;
     }
 
-    public void setAddressBalance(double addressBalance) {
+    public void setAddressBalance(String addressBalance) {
         this.addressBalance = addressBalance;
     }
 

@@ -40,14 +40,16 @@
     <color name="car_button">#64BD3A</color>
 
     <color name="black">#000000</color>
-    <color name="line_default_color">#61C95F</color>
+    <color name="line_default_color">@color/zhu_color</color>
 
     <color name="list_view_item_org">#f8f8f8</color>
     <color name="list_view_item_white">#ffffff</color>
     <color name="background_tab_pressed">#e5e5e5</color>
-    <color name="action_sheet_blue">#037BFF</color>
+    <color name="action_sheet_blue">@color/zhu_color</color>
 
-    <color name="green_color">#61C95F</color>
+    <color name="green_color">@color/zhu_color</color>
     <color name="cancle">#666666</color>
+
+    <color name="zhu_color">#4DC24C</color>
 
 </resources>

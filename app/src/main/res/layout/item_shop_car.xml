@@ -8,8 +8,8 @@
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/good_img"
-        android:layout_width="53dp"
-        android:layout_height="53dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="8dp"
         android:scaleType="fitXY"
@@ -22,13 +22,13 @@
         android:layout_height="18dp"
         android:layout_above="@+id/good_img"
         android:layout_alignLeft="@+id/good_img"
-        android:layout_marginBottom="2dp"
         android:layout_marginRight="5dp"
+        android:layout_marginBottom="2dp"
         android:background="@drawable/cu_bg"
         android:gravity="center"
         android:text="促"
         android:textColor="@color/white"
-        android:textSize="13sp"
+        android:textSize="14sp"
         android:visibility="gone" />
 
 
@@ -37,13 +37,13 @@
         android:layout_width="18dp"
         android:layout_height="18dp"
         android:layout_above="@+id/good_img"
-        android:layout_marginBottom="2dp"
         android:layout_alignLeft="@+id/good_img"
+        android:layout_marginBottom="2dp"
         android:background="@drawable/miao_bg"
         android:gravity="center"
         android:text="秒"
         android:textColor="@color/white"
-        android:textSize="13sp"
+        android:textSize="14sp"
         android:visibility="gone" />
 
 
@@ -62,7 +62,18 @@
             android:layout_height="wrap_content"
             android:text="商品名称"
             android:textColor="#333333"
-            android:textSize="13sp" />
+            android:textSize="14sp" />
+
+
+        <TextView
+            android:id="@+id/good_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="0"
+            android:textColor="#666666"
+            android:textSize="12sp" />
+
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -71,22 +82,12 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/good_unit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textColor="#666666"
-                android:textSize="13sp" />
-
-
-            <TextView
                 android:id="@+id/good_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="13dp"
                 android:text="¥0.0"
-                android:textColor="#FF722B"
-                android:textSize="13sp" />
+                android:textColor="#666666"
+                android:textSize="12sp" />
 
 
         </LinearLayout>
@@ -98,23 +99,24 @@
             android:layout_marginTop="3dp"
             android:orientation="horizontal">
 
+
+            <TextView
+                android:id="@+id/good_price2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="13dp"
+                android:text="¥0.0"
+                android:textColor="#FF722B"
+                android:textSize="12sp" />
+
+
             <TextView
                 android:id="@+id/good_unit2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="¥0.0元"
                 android:textColor="#666666"
-                android:textSize="13sp" />
-
-
-            <TextView
-                android:id="@+id/good_price2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="13dp"
-                android:text="¥0.0"
-                android:textColor="#FF722B"
-                android:textSize="13sp" />
+                android:textSize="12sp" />
 
 
         </LinearLayout>
@@ -150,8 +152,8 @@
 
             <LinearLayout
                 android:id="@+id/shop_remove"
-                android:layout_width="23dp"
-                android:layout_height="23dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
                 android:background="@drawable/shop_car_remove"
                 android:gravity="center"
                 android:orientation="horizontal"
@@ -174,14 +176,14 @@
                 android:layout_marginRight="8dp"
                 android:text="5"
                 android:textColor="#333333"
-                android:textSize="13sp"
+                android:textSize="14sp"
                 android:visibility="gone" />
 
 
             <ImageView
                 android:id="@+id/shop_add"
-                android:layout_width="23dp"
-                android:layout_height="23dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
                 android:src="@drawable/shop_add_bg" />
 
 
@@ -201,7 +203,8 @@
                 android:layout_height="wrap_content"
                 android:text="金额："
                 android:textColor="#999999"
-                android:textSize="13sp" />
+                android:textSize="13sp"
+                android:visibility="gone" />
 
 
             <TextView

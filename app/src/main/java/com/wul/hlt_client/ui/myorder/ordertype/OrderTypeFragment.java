@@ -454,7 +454,6 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
                     if (TextUtils.equals(resultStatus, "9000")) {    //支付成功
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                         showToast("支付成功！");
-                        AppManager.getAppManager().goHome();
                     } else {              //支付失败
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                         showToast("支付失败！");

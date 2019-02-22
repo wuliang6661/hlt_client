@@ -48,7 +48,7 @@ public class ShopCarAdapter extends LGRecycleViewAdapter<ShopBO> {
         TextView goodUnit = (TextView) holder.getView(R.id.good_unit);
         TextView goodUnit2 = (TextView) holder.getView(R.id.good_unit2);
 
-        goodUnit.setTextColor(Color.parseColor("#FF722B"));
+      //  goodUnit.setTextColor(Color.parseColor("#FF722B"));
         goodUnit2.setText("数量：" + shopBO.getQuantity() + shopBO.getMeasureUnitName2());
         holder.getView(R.id.kucun).setVisibility(View.INVISIBLE);
         holder.getView(R.id.good_price).setVisibility(View.GONE);

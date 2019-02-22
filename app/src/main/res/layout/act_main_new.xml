@@ -11,7 +11,7 @@
     <LinearLayout
         android:id="@+id/buttom_tab"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="53dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:background="@color/white"

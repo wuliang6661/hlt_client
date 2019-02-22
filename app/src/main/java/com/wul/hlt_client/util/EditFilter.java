@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
 
 public class EditFilter implements InputFilter {
 
-    Pattern pattern = Pattern.compile("[^a-zA-Z0-9\\u4E00-\\u9FA5_]");
+    Pattern pattern = Pattern.compile("[\\ud83c\\udc00-\\ud83c\\udfff]|[\\ud83d\\udc00-\\ud83d\\udfff]|[\\u2600-\\u27ff]");
 
     @Override
     public CharSequence filter(CharSequence charSequence, int i, int i1, Spanned spanned, int i2, int i3) {

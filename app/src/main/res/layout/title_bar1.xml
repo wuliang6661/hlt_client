@@ -21,7 +21,22 @@
         android:layout_centerInParent="true"
         android:text="注册"
         android:textColor="#ffffff"
-        android:textSize="16sp" />
+        android:textSize="18sp" />
+
+
+    <TextView
+        android:id="@+id/cancle_button"
+        android:layout_width="56dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/cancle_bt"
+        android:gravity="center"
+        android:text="取消"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:visibility="gone" />
 
 
 </RelativeLayout>

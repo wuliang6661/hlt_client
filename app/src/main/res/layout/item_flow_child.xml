@@ -10,12 +10,12 @@
         android:id="@+id/flow_child_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="13dp"
+        android:paddingTop="14dp"
         android:gravity="center"
         android:paddingBottom="13dp"
         android:text="蔬菜类"
         android:textColor="#666666"
-        android:textSize="13sp" />
+        android:textSize="14sp" />
 
 
 </LinearLayout>

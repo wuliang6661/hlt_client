@@ -124,6 +124,8 @@ public class RegisterActivity extends MVPBaseActivity<RegisterContract.View, Reg
                     popWindow.dismiss();
                     mPresenter.getRegionByCity(selectCity.getId());
                     city.setText(selectCity.getCityName());
+                    selectCityRegionBO = null;
+                    cityQu.setText("");
                 });
                 popWindow.showAsDropDown(city);
                 break;

@@ -2,6 +2,7 @@ package com.wul.hlt_client.ui.myorder;
 
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -92,14 +93,14 @@ public class MyOrderActivity extends MVPBaseActivity<MyOrderContract.View, MyOrd
             switch (checkedId) {
                 case R.id.radio_dingdan:
                     radioDingdan.setTextColor(Color.parseColor("#ffffff"));
-                    radioZhifu.setTextColor(Color.parseColor("#61C95F"));
+                    radioZhifu.setTextColor(ContextCompat.getColor(MyOrderActivity.this, R.color.zhu_color));
                     radioType = 0;
                     viewPager.setCurrentItem(0);
                     //请求接口
                     break;
                 case R.id.radio_zhifu:
                     radioZhifu.setTextColor(Color.parseColor("#ffffff"));
-                    radioDingdan.setTextColor(Color.parseColor("#61C95F"));
+                    radioDingdan.setTextColor(ContextCompat.getColor(MyOrderActivity.this, R.color.zhu_color));
                     viewPager.setCurrentItem(1);
                     break;
             }

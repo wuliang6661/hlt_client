@@ -142,7 +142,7 @@ public class ExpandListAdapter extends BaseExpandableListAdapter {
                 hodler.checkbox.setVisibility(View.VISIBLE);
                 break;
             case 1:   //已支付
-                hodler.payStatus.setTextColor(Color.parseColor("#61C95F"));
+                hodler.payStatus.setTextColor(Color.parseColor("#4DC24C"));
                 hodler.payStatus.setText("已支付");
                 hodler.checkbox.setVisibility(View.GONE);
                 break;
@@ -154,11 +154,11 @@ public class ExpandListAdapter extends BaseExpandableListAdapter {
                 break;
             case 1:    //已接单
                 hodler.orderStatus.setText("已接单");
-                hodler.orderStatus.setTextColor(Color.parseColor("#61C95F"));
+                hodler.orderStatus.setTextColor(Color.parseColor("#4DC24C"));
                 break;
             case 2:   //已完成
                 hodler.orderStatus.setText("已完成");
-                hodler.orderStatus.setTextColor(Color.parseColor("#61C95F"));
+                hodler.orderStatus.setTextColor(Color.parseColor("#4DC24C"));
                 break;
             case 3:     //已终止
                 hodler.orderStatus.setText("已终止");

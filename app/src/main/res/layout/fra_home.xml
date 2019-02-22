@@ -11,7 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="54dp"
-        android:background="#61c95f">
+        android:background="@color/zhu_color">
 
         <TextView
             android:id="@+id/edit_select"
@@ -180,7 +180,7 @@
                         <View
                             android:layout_width="4dp"
                             android:layout_height="18dp"
-                            android:background="#61C95F" />
+                            android:background="@color/zhu_color" />
 
 
                         <TextView

@@ -8,8 +8,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="130dp"
-        android:background="@drawable/mine_bg"
+        android:layout_height="140dp"
+        android:background="@color/zhu_color"
         android:orientation="vertical">
 
 
@@ -27,14 +27,21 @@
                 android:textSize="18sp" />
 
 
-            <ImageView
+            <LinearLayout
                 android:id="@+id/setting_img"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
-                android:src="@drawable/setting_img" />
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_alignParentRight="true">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/setting_img" />
+
+
+            </LinearLayout>
 
 
         </RelativeLayout>
@@ -67,7 +74,7 @@
                     android:layout_height="wrap_content"
                     android:text="门店编号："
                     android:textColor="@color/white"
-                    android:textSize="13sp" />
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/shop_type"
@@ -76,7 +83,7 @@
                     android:layout_marginTop="3dp"
                     android:text="门店状态："
                     android:textColor="@color/white"
-                    android:textSize="13sp" />
+                    android:textSize="15sp" />
 
 
                 <TextView
@@ -86,7 +93,7 @@
                     android:layout_marginTop="3dp"
                     android:text="登录用户："
                     android:textColor="@color/white"
-                    android:textSize="13sp" />
+                    android:textSize="15sp" />
 
             </LinearLayout>
         </LinearLayout>
@@ -304,8 +311,8 @@
             android:layout_marginLeft="4dp"
             android:layout_marginRight="13dp"
             android:text=""
-            android:textColor="#61C95F"
-            android:textSize="12sp" />
+            android:textColor="@color/zhu_color"
+            android:textSize="15sp" />
 
     </LinearLayout>
 
@@ -352,8 +359,8 @@
             android:layout_marginRight="13dp"
             android:maxLength="11"
             android:text=""
-            android:textColor="#61C95F"
-            android:textSize="12sp" />
+            android:textColor="@color/zhu_color"
+            android:textSize="15sp" />
 
     </LinearLayout>
 

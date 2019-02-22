@@ -1,8 +1,10 @@
 package com.wul.hlt_client.ui.myorder;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -29,7 +31,7 @@ public class RecycleAdapter extends LGRecycleViewAdapter<OrderDayBo.AddressMyOrd
         ids = new ArrayList<>();
         for (OrderDayBo.AddressMyOrderListBean bean : dataList) {
             if (bean.getPayStatus() == 0 && bean.getStatusId() != 3 && "0".equals(bean.getOrderType())) {
-                ids.add((int) bean.getId());
+                ids.add(bean.getId());
             }
         }
     }
@@ -77,7 +79,7 @@ public class RecycleAdapter extends LGRecycleViewAdapter<OrderDayBo.AddressMyOrd
                 checkBox.setVisibility(View.VISIBLE);
                 break;
             case 1:   //已支付
-                payStatus.setTextColor(Color.parseColor("#61C95F"));
+                payStatus.setTextColor(ContextCompat.getColor(context, R.color.zhu_color));
                 payStatus.setText("已支付");
                 checkBox.setVisibility(View.GONE);
                 break;
@@ -89,11 +91,11 @@ public class RecycleAdapter extends LGRecycleViewAdapter<OrderDayBo.AddressMyOrd
                 break;
             case 1:    //已接单
                 orderType.setText("已接单");
-                orderType.setTextColor(Color.parseColor("#61C95F"));
+                orderType.setTextColor(ContextCompat.getColor(context, R.color.zhu_color));
                 break;
             case 2:   //已完成
                 orderType.setText("已完成");
-                orderType.setTextColor(Color.parseColor("#61C95F"));
+                orderType.setTextColor(ContextCompat.getColor(context, R.color.zhu_color));
                 break;
             case 3:     //已终止
                 orderType.setText("已终止");

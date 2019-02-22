@@ -22,6 +22,7 @@ import com.wul.hlt_client.ui.ShopInfoActivty;
 import com.wul.hlt_client.ui.ZiZhiActivity;
 import com.wul.hlt_client.ui.myorder.MyOrderActivity;
 import com.wul.hlt_client.ui.tousu.TousuActivity;
+import com.wul.hlt_client.util.PhoneUtils;
 import com.wul.hlt_client.widget.AlertDialog;
 
 import butterknife.BindView;
@@ -38,7 +39,7 @@ public class MineFragment extends MVPBaseFragment<MineContract.View, MinePresent
 
 
     @BindView(R.id.setting_img)
-    ImageView settingImg;
+    LinearLayout settingImg;
     @BindView(R.id.shop_num)
     TextView shopNum;
     @BindView(R.id.shop_type)
@@ -133,7 +134,7 @@ public class MineFragment extends MVPBaseFragment<MineContract.View, MinePresent
                         .setCancelable(false)
                         .setNegativeButton("取消", null)
                         .setPositiveButton("确定", v1 -> {
-                            callPhone(phoneNum.getText().toString().trim());
+                            PhoneUtils.callPhone(phoneNum.getText().toString().trim());
                         }).show();
                 break;
         }
@@ -168,19 +169,6 @@ public class MineFragment extends MVPBaseFragment<MineContract.View, MinePresent
         } else {
             shopType.setText("门店状态：已确认");
         }
-    }
-
-
-    /**
-     * 拨打电话（跳转到拨号界面，用户手动点击拨打）
-     *
-     * @param phoneNum 电话号码
-     */
-    public void callPhone(String phoneNum) {
-        Intent intent = new Intent(Intent.ACTION_DIAL);
-        Uri data = Uri.parse("tel:" + phoneNum);
-        intent.setData(data);
-        startActivity(intent);
     }
 
 

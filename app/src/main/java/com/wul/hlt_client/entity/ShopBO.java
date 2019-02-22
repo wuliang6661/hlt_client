@@ -51,7 +51,7 @@ public class ShopBO {
 
     private int quantity;
     private int productId;
-    private double money;
+    private String money;
     private String httpUrl;
 
 
@@ -207,11 +207,11 @@ public class ShopBO {
         this.productId = productId;
     }
 
-    public double getMoney() {
+    public String getMoney() {
         return money;
     }
 
-    public void setMoney(double money) {
+    public void setMoney(String money) {
         this.money = money;
     }
 
