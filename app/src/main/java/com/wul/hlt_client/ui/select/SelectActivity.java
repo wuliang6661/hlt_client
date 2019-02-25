@@ -3,10 +3,13 @@ package com.wul.hlt_client.ui.select;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,8 +21,9 @@ import com.wul.hlt_client.R;
 import com.wul.hlt_client.base.MyApplication;
 import com.wul.hlt_client.entity.CityGongGao;
 import com.wul.hlt_client.entity.XianShiBO;
+import com.wul.hlt_client.entity.event.FinishEvent;
 import com.wul.hlt_client.entity.event.ShopCarRefresh;
-import com.wul.hlt_client.mvp.MVPBaseActivity;
+import com.wul.hlt_client.mvp.MVPBaseFragment;
 import com.wul.hlt_client.ui.ShopAdapter;
 import com.wul.hlt_client.ui.ordercommit.OrderCommitActivity;
 import com.wul.hlt_client.widget.MarqueTextView;
@@ -31,6 +35,8 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 
 /**
@@ -38,7 +44,7 @@ import butterknife.BindView;
  * 邮箱 784787081@qq.com
  */
 
-public class SelectActivity extends MVPBaseActivity<SelectContract.View, SelectPresenter>
+public class SelectActivity extends MVPBaseFragment<SelectContract.View, SelectPresenter>
         implements SelectContract.View, View.OnClickListener {
 
     @BindView(R.id.gonggao_text)
@@ -59,25 +65,32 @@ public class SelectActivity extends MVPBaseActivity<SelectContract.View, SelectP
     TextView txtSelect;
     @BindView(R.id.edit_shop)
     EditText editShop;
+    @BindView(R.id.back)
+    ImageView back;
+    Unbinder unbinder;
 
+
+    @Nullable
     @Override
-    protected int getLayout() {
-        return R.layout.act_select;
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.act_select, null);
+        unbinder = ButterKnife.bind(this, view);
+        return view;
     }
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         EventBus.getDefault().register(this);
-        goBack();
-        LinearLayoutManager manager = new LinearLayoutManager(this);
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recycle.setLayoutManager(manager);
         initShopCar();
         txtSelect.setOnClickListener(this);
         mPresenter.getCityGongGao();
-        shopCarButton.setOnClickListener(view -> mPresenter.testSkipe());
+        shopCarButton.setOnClickListener(view1 -> mPresenter.testSkipe());
+        back.setOnClickListener(v -> pop());
     }
 
     @Override
@@ -97,7 +110,7 @@ public class SelectActivity extends MVPBaseActivity<SelectContract.View, SelectP
         } else {
             recycle.setVisibility(View.VISIBLE);
             noneLayout.setVisibility(View.GONE);
-            ShopAdapter adapter = new ShopAdapter(this, xianShiBO.getList(), MyApplication.shopCarBO);
+            ShopAdapter adapter = new ShopAdapter(getActivity(), xianShiBO.getList(), MyApplication.shopCarBO);
             recycle.setAdapter(adapter);
         }
     }
@@ -120,6 +133,12 @@ public class SelectActivity extends MVPBaseActivity<SelectContract.View, SelectP
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(ShopCarRefresh refresh) {
         initShopCar();
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(FinishEvent event) {
+        pop();
     }
 
 
@@ -146,7 +165,7 @@ public class SelectActivity extends MVPBaseActivity<SelectContract.View, SelectP
 
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
@@ -161,5 +180,11 @@ public class SelectActivity extends MVPBaseActivity<SelectContract.View, SelectP
                 }
                 break;
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

@@ -147,7 +147,7 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
                 gotoActivity(OpsGoodActivity.class, false);
                 break;
             case R.id.edit_select:
-                gotoActivity(SelectActivity.class, false);
+                start(new SelectActivity());
                 break;
         }
     }

@@ -5,10 +5,6 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="24dp"
-        android:background="@color/green_color" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -125,7 +121,8 @@
             android:id="@+id/shop_car_layout"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_alignParentBottom="true">
+            android:layout_alignParentBottom="true"
+            android:visibility="gone">
 
 
             <View

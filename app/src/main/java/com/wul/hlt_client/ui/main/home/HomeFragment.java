@@ -375,7 +375,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
                 EventBus.getDefault().post(new SwithFragment(1));
                 break;
             case R.id.edit_select:    //进入搜索页面
-                gotoActivity(SelectActivity.class, false);
+                start(new SelectActivity());
 //                NotificationUtils.showNotification(getActivity());
                 break;
         }
