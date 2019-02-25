@@ -193,6 +193,13 @@ public class SalesGoodFragment extends MVPBaseFragment<SalesGoodContract.View, S
                 case 0x22:
                     downTimeText.setText("距离结束时间还有：");
                     break;
+                case 0x33:
+                    mPresenter.getXianshiList();
+                    if (timer != null) {
+                        timer.cancel();
+                        timer = null;
+                    }
+                    break;
             }
             downTime.setText(time);
         }

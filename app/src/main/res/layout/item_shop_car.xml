@@ -62,7 +62,8 @@
             android:layout_height="wrap_content"
             android:text="商品名称"
             android:textColor="#333333"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textStyle="bold" />
 
 
         <TextView
@@ -107,7 +108,8 @@
                 android:layout_marginRight="13dp"
                 android:text="¥0.0"
                 android:textColor="#FF722B"
-                android:textSize="12sp" />
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
 
             <TextView
@@ -116,7 +118,7 @@
                 android:layout_height="wrap_content"
                 android:text="¥0.0元"
                 android:textColor="#666666"
-                android:textSize="12sp" />
+                android:textSize="13sp" />
 
 
         </LinearLayout>

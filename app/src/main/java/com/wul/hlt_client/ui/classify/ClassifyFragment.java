@@ -247,6 +247,13 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
                         downTimeText.setText("距离结束时间还有：");
                     }
                     break;
+                case 0x33:
+//                    mPresenter.getXianshiList();
+                    if (timer != null) {
+                        timer.cancel();
+                        timer = null;
+                    }
+                    break;
             }
             if (downTime != null) {
                 downTime.setText(time);

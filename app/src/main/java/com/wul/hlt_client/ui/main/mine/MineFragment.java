@@ -1,15 +1,13 @@
 package com.wul.hlt_client.ui.main.mine;
 
 
-import android.content.Intent;
-import android.net.Uri;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -85,6 +83,7 @@ public class MineFragment extends MVPBaseFragment<MineContract.View, MinePresent
         tousuLayout.setOnClickListener(this);
         zizhiLayout.setOnClickListener(this);
         phoneLayout.setOnClickListener(this);
+        phoneNum.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
     }
 
 
