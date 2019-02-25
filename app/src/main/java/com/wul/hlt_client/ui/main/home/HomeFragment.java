@@ -126,13 +126,22 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     @SuppressLint("ClickableViewAccessibility")
     private void initView() {
         GridLayoutManager manager = new GridLayoutManager(getActivity(), 4);
+        manager.setSmoothScrollbarEnabled(true);
+        manager.setAutoMeasureEnabled(true);
         classifyRecycle.setLayoutManager(manager);
+        classifyRecycle.setHasFixedSize(true);
         classifyRecycle.setNestedScrollingEnabled(false);
         GridLayoutManager manager1 = new GridLayoutManager(getActivity(), 4);
+        manager1.setSmoothScrollbarEnabled(true);
+        manager1.setAutoMeasureEnabled(true);
         xianshiRecycle.setLayoutManager(manager1);
+        xianshiRecycle.setHasFixedSize(true);
         xianshiRecycle.setNestedScrollingEnabled(false);
         GridLayoutManager manager2 = new GridLayoutManager(getActivity(), 4);
+        manager2.setSmoothScrollbarEnabled(true);
+        manager2.setAutoMeasureEnabled(true);
         changyongRecycle.setLayoutManager(manager2);
+        changyongRecycle.setHasFixedSize(true);
         changyongRecycle.setNestedScrollingEnabled(false);
         changyong.setOnClickListener(this);
         xianshi.setOnClickListener(this);

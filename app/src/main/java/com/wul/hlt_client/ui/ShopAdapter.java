@@ -142,11 +142,11 @@ public class ShopAdapter extends LGRecycleViewAdapter<ShopBO> {
             }
         } else if (shopBO.getProductType() == 0 && shopBO.getIsPromotion() == 0) {        //正常商品
             holder.getView(R.id.good_price).setVisibility(View.GONE);
-            holder.getView(R.id.good_price2).setVisibility(View.GONE);
+            holder.getView(R.id.good_unit2).setVisibility(View.GONE);
             holder.getView(R.id.good_type_miao).setVisibility(View.GONE);
-            yuanText.setText("¥" + shopBO.getPrice1() + "元/" + shopBO.getMeasureUnitName1());
-            yuanText.setTextColor(Color.parseColor("#FF722B"));
-            yuanText.getPaint().setFlags(0);
+            holder.setText(R.id.good_price2, "¥" + shopBO.getPrice1() + "元/" + shopBO.getMeasureUnitName1());
+//            yuanText.setTextColor(Color.parseColor("#FF722B"));
+//            yuanText.getPaint().setFlags(0);
         }
     }
 
