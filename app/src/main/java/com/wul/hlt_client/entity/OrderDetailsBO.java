@@ -37,6 +37,15 @@ public class OrderDetailsBO {
     private String greengrocerPhone;
     private String customerServicePhone;
     private int isDisplay;
+    private int isCancel;
+
+    public int getIsCancel() {
+        return isCancel;
+    }
+
+    public void setIsCancel(int isCancel) {
+        this.isCancel = isCancel;
+    }
 
     public int getIsDisplay() {
         return isDisplay;
