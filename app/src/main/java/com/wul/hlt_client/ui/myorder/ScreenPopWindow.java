@@ -24,7 +24,7 @@ public class ScreenPopWindow extends PopupWindow {
     private RecyclerView recyclerView;
     private View window;
 
-    public ScreenPopWindow(Activity context, List<String> cityBOS) {
+    public ScreenPopWindow(Activity context, int width,List<String> cityBOS) {
         super(context);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         window = inflater.inflate(R.layout.pop_recycle, null);
@@ -50,6 +50,9 @@ public class ScreenPopWindow extends PopupWindow {
             dismiss();
         });
         recyclerView.setAdapter(adapter);
+        ViewGroup.LayoutParams params = recyclerView.getLayoutParams();
+        params.width = width - 6;
+        recyclerView.setLayoutParams(params);
         this.setContentView(window);
         this.setFocusable(true);
         //设置宽高
@@ -70,11 +73,11 @@ public class ScreenPopWindow extends PopupWindow {
 
 
     public void setWidth(int width) {
-        ViewGroup.LayoutParams params = recyclerView.getLayoutParams();
-        params.width = width - 6;
-        recyclerView.setLayoutParams(params);
-        this.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
-        this.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+//        ViewGroup.LayoutParams params = recyclerView.getLayoutParams();
+//        params.width = width - 6;
+//        recyclerView.setLayoutParams(params);
+//        this.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+//        this.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
 

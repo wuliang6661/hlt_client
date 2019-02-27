@@ -177,7 +177,7 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
      * 筛选正单 ，补单
      */
     private void screenZhengdan() {
-        ScreenPopWindow popWindow = new ScreenPopWindow(getActivity(), Arrays.asList(zhengdans));
+        ScreenPopWindow popWindow = new ScreenPopWindow(getActivity(), orderTypeZhengdan.getWidth(), Arrays.asList(zhengdans));
         popWindow.setOnSelecte((select, position) -> {
             orderTypeZhengdan.setText(select);
             if (position == 2) {
@@ -188,14 +188,14 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
             syncHttp();
         });
         popWindow.setWidth(orderTypeZhengdan.getWidth());
-        popWindow.showAsDropDown(orderTypeZhengdan);
+        popWindow.showAsDropDown(orderTypeZhengdan, 0, 0);
     }
 
     /**
      * 筛选完成状态
      */
     private void screenWancheng() {
-        ScreenPopWindow popWindow = new ScreenPopWindow(getActivity(), Arrays.asList(zhifus));
+        ScreenPopWindow popWindow = new ScreenPopWindow(getActivity(), orderTypeWancheng.getWidth(), Arrays.asList(zhifus));
         popWindow.setOnSelecte((select, position) -> {
             orderTypeWancheng.setText(select);
             if (position == 2) {
@@ -206,21 +206,21 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
             syncHttp();
         });
         popWindow.setWidth(orderTypeWancheng.getWidth());
-        popWindow.showAsDropDown(orderTypeWancheng);
+        popWindow.showAsDropDown(orderTypeWancheng, 0, 0);
     }
 
     /**
      * 筛选时间状态
      */
     private void screenTime() {
-        ScreenPopWindow popWindow = new ScreenPopWindow(getActivity(), Arrays.asList(times));
+        ScreenPopWindow popWindow = new ScreenPopWindow(getActivity(), orderTypeTime.getWidth(), Arrays.asList(times));
         popWindow.setOnSelecte((select, position) -> {
             orderTypeTime.setText(select);
             displayType = position + 1;
             syncHttp();
         });
         popWindow.setWidth(orderTypeTime.getWidth());
-        popWindow.showAsDropDown(orderTypeTime);
+        popWindow.showAsDropDown(orderTypeTime, 0, 0);
     }
 
     @Override

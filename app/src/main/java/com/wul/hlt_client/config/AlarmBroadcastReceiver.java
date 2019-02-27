@@ -23,9 +23,7 @@ public class AlarmBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
-        LogUtils.e(action);
         if (ACTION_SEND.equals(action)) {
-            LogUtils.e("发消息啦！");
             showNotification(context);
         }
     }
