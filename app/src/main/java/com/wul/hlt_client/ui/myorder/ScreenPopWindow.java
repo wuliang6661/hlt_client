@@ -73,6 +73,8 @@ public class ScreenPopWindow extends PopupWindow {
         ViewGroup.LayoutParams params = recyclerView.getLayoutParams();
         params.width = width - 6;
         recyclerView.setLayoutParams(params);
+        this.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        this.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
 

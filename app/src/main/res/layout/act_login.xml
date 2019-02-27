@@ -48,7 +48,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="15dp"
             android:background="@null"
-            android:hint="请输入商户编号"
+            android:hint="请输入门店编号"
             android:inputType="number"
             android:maxLength="6"
             android:textColor="#333333"
