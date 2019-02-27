@@ -13,40 +13,40 @@ public class MoneyBO {
      * distributionFee : 0.0
      */
 
-    private float balancePay;
-    private float amount;
-    private float distributionFee;
-    private float payableAmount;
+    private String balancePay;
+    private String amount;
+    private String distributionFee;
+    private String payableAmount;
 
-    public float getBalancePay() {
+    public String getBalancePay() {
         return balancePay;
     }
 
-    public void setBalancePay(float balancePay) {
+    public void setBalancePay(String balancePay) {
         this.balancePay = balancePay;
     }
 
-    public float getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(float amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 
-    public float getDistributionFee() {
+    public String getDistributionFee() {
         return distributionFee;
     }
 
-    public void setDistributionFee(float distributionFee) {
+    public void setDistributionFee(String distributionFee) {
         this.distributionFee = distributionFee;
     }
 
-    public float getPayableAmount() {
+    public String getPayableAmount() {
         return payableAmount;
     }
 
-    public void setPayableAmount(float payableAmount) {
+    public void setPayableAmount(String payableAmount) {
         this.payableAmount = payableAmount;
     }
 }

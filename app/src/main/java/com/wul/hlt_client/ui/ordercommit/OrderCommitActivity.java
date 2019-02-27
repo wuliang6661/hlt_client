@@ -359,12 +359,19 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
                         payType.setText("货到付款");
                         checkbox.setChecked(false);
                     } else {
-                        CommitOrderBO orderBO = new CommitOrderBO();
-                        orderBO.balancePayStatus = checkbox.isChecked() ? 0 : 1;
-                        orderBO.orderType = orderType;
-                        orderBO.payChannel = strPayType;
-                        orderBO.requireDeliverOn = selectTime.replaceAll(":00", "").replace(" ", "");
-                        mPresenter.commitOrder(orderBO);
+                        new AlertDialog(this).builder().setGone().setMsg("请确认是否下单？")
+                                .setPositiveButton("确定", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        CommitOrderBO orderBO = new CommitOrderBO();
+                                        orderBO.balancePayStatus = checkbox.isChecked() ? 0 : 1;
+                                        orderBO.orderType = orderType;
+                                        orderBO.payChannel = strPayType;
+                                        orderBO.requireDeliverOn = selectTime.replaceAll(":00", "").replace(" ", "");
+                                        mPresenter.commitOrder(orderBO);
+                                    }
+                                })
+                                .setNegativeButton("取消", null).show();
                     }
                 } else {
                     new AlertDialog(this).builder().setGone().setMsg("当前时间不能临时补单\n请重新选择配送时间")
@@ -518,7 +525,7 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
         if (isNow(selectDate)) {   //如果时间是今天
             try {
                 Date startTime = new SimpleDateFormat(format).parse("11:00:00");
-                Date endTime = new SimpleDateFormat(format).parse("15:00:00");
+                Date endTime = new SimpleDateFormat(format).parse("23:00:00");
                 Date nowTime = new SimpleDateFormat(format).parse(now);
                 if (isEffectiveDate(nowTime, startTime, endTime)) {
                     orderType = 1;

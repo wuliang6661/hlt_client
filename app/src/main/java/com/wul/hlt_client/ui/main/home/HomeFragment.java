@@ -309,8 +309,10 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         };
         adapter.setOnItemClickListener(R.id.item_layout, (view, position) -> EventBus.getDefault().post(new SwithFragment(1)));
         xianshiRecycle.setAdapter(adapter);
-        timer = new Timer();
-        timer.schedule(new DowmTimer(getActivity(), list.getStartTime(), list.getEndTime(), handler), 0, 1000);
+        if (list.getStartTime() != 0) {
+            timer = new Timer();
+            timer.schedule(new DowmTimer(getActivity(), list.getStartTime(), list.getEndTime(), handler), 0, 1000);
+        }
     }
 
     @SuppressLint("HandlerLeak")
@@ -328,8 +330,9 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
                     downTimeText.setText("距离结束时间还有：");
                     break;
                 case 0x33:
-                    mPresenter.getXianshiList();
                     if (timer != null) {
+                        removeCallbacksAndMessages(null);
+                        mPresenter.getXianshiList();
                         timer.cancel();
                         timer = null;
                     }

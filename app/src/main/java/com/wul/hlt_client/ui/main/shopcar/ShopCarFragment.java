@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.gyf.barlibrary.ImmersionBar;
 import com.wul.hlt_client.R;
 import com.wul.hlt_client.base.MyApplication;
@@ -106,7 +107,7 @@ public class ShopCarFragment extends MVPBaseFragment<ShopCarContract.View, ShopC
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(ShopCarRefresh refresh) {
-        if (Double.parseDouble(MyApplication.shopCarBO.getAmount()) == 0) {
+        if (!StringUtils.isEmpty(MyApplication.shopCarBO.getAmount()) && Double.parseDouble(MyApplication.shopCarBO.getAmount()) == 0) {
             clearCar.setVisibility(View.GONE);
             buttomLayout.setVisibility(View.GONE);
             mainLayout.setVisibility(View.GONE);
@@ -139,7 +140,7 @@ public class ShopCarFragment extends MVPBaseFragment<ShopCarContract.View, ShopC
         stopProgress();
         MyApplication.shopCarBO = carBO;
         EventBus.getDefault().post(new ShopCarRefresh());
-        if (Double.parseDouble(carBO.getAmount()) == 0) {
+        if (!StringUtils.isEmpty(carBO.getAmount()) && Double.parseDouble(carBO.getAmount()) == 0) {
             clearCar.setVisibility(View.GONE);
             buttomLayout.setVisibility(View.GONE);
             mainLayout.setVisibility(View.GONE);
@@ -149,7 +150,7 @@ public class ShopCarFragment extends MVPBaseFragment<ShopCarContract.View, ShopC
             buttomLayout.setVisibility(View.VISIBLE);
             mainLayout.setVisibility(View.VISIBLE);
             noneLayout.setVisibility(View.GONE);
-            shopCarPrice.setText("¥ " + carBO.getAmount());
+            shopCarPrice.setText("¥ " + (StringUtils.isEmpty(carBO.getAmount()) ? "0.00" : carBO.getAmount()));
             ShopCarAdapter adapter = new ShopCarAdapter(getActivity(), carBO);
             shopCarRecycle.setAdapter(adapter);
         }

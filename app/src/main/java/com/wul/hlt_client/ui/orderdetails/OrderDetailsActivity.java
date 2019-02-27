@@ -134,6 +134,11 @@ public class OrderDetailsActivity extends MVPBaseActivity<OrderDetailsContract.V
         takeAddress.setText("收货地址：" + orderDetailsBO.getDeliverAddress());
         takeTime.setText(orderDetailsBO.getRequireDeliverOn());
         orderTime.setText(TimeUtils.millis2String(orderDetailsBO.getCreateDate()));
+        if(orderDetailsBO.getIsCancel() == 1){
+            cancleButton.setVisibility(View.VISIBLE);
+        }else{
+            cancleButton.setVisibility(View.GONE);
+        }
         if (orderDetailsBO.getOrderType() == 0 && orderDetailsBO.getPayStatus() == 0) {
             allPriceLayout.setVisibility(View.VISIBLE);
         } else {
