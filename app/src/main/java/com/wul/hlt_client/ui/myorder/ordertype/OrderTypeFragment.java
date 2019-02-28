@@ -33,7 +33,6 @@ import com.wul.hlt_client.ui.myorder.ExpandListAdapter;
 import com.wul.hlt_client.ui.myorder.RecycleAdapter;
 import com.wul.hlt_client.ui.myorder.ScreenPopWindow;
 import com.wul.hlt_client.ui.orderdetails.OrderDetailsActivity;
-import com.wul.hlt_client.util.AppManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,6 +74,8 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
     private static final int SDK_PAY_FLAG = 1;
     @BindView(R.id.no_message)
     LinearLayout noMessage;
+    @BindView(R.id.content_layout)
+    LinearLayout contentLayout;
 
     private String[] zhengdans = new String[]{"正单", "补单", "全部"};
     private String[] times = new String[]{"按日显示", "按周显示", "按月显示"};
@@ -228,9 +229,9 @@ public class OrderTypeFragment extends MVPBaseFragment<OrderTypeContract.View, O
             syncHttp();
         });
         LogUtils.e(orderTypeWancheng.getWidth());
-        popWindow.setWidth(orderTypeWancheng.getWidth());
-        popWindow.showAsDropDown(orderTypeWancheng, 0, 0);
+        popWindow.showAsDropDown(orderTypeWancheng,0,0);
     }
+
 
     /**
      * 筛选时间状态

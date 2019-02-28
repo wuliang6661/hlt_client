@@ -525,7 +525,7 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
         if (isNow(selectDate)) {   //如果时间是今天
             try {
                 Date startTime = new SimpleDateFormat(format).parse("11:00:00");
-                Date endTime = new SimpleDateFormat(format).parse("23:00:00");
+                Date endTime = new SimpleDateFormat(format).parse("15:00:00");
                 Date nowTime = new SimpleDateFormat(format).parse(now);
                 if (isEffectiveDate(nowTime, startTime, endTime)) {
                     orderType = 1;

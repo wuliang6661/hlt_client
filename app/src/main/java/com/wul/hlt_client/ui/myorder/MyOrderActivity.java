@@ -2,7 +2,6 @@ package com.wul.hlt_client.ui.myorder;
 
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -126,4 +125,5 @@ public class MyOrderActivity extends MVPBaseActivity<MyOrderContract.View, MyOrd
             }
         });
     }
+
 }
