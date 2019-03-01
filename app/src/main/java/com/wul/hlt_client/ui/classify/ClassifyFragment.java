@@ -200,7 +200,8 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
         });
         adapter.setSelectPosition(flowSelectPosition);
         zhuClassifyRecycle.setAdapter(adapter);
-        zhuClassifyRecycle.scrollToPosition(flowSelectPosition);
+        zhuClassifyRecycle.post(() -> zhuClassifyRecycle.scrollToPosition(flowSelectPosition));
+//        zhuClassifyRecycle.smoothScrollToPosition(flowSelectPosition);
     }
 
     @Override

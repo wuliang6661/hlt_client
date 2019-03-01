@@ -224,7 +224,7 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
         person.setText("联系人：" + addressBO.getContact());
         personPhone.setText("联系方式：" + addressBO.getContactPhone());
         shopName.setText("收货店名：" + addressBO.getAddressName());
-        shopAddress.setText("联系地址：" + addressBO.getAddress());
+        shopAddress.setText("收货地址：" + addressBO.getAddress());
     }
 
     @Override
