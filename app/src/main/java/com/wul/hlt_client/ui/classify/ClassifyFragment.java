@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,6 +77,7 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
 
     Timer timer;
 
+    LinearLayoutManager manager;
 
     public static ClassifyFragment getInstanse(int flowSelectPosition) {
         Bundle bundle = new Bundle();
@@ -126,7 +128,7 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
      * 初始化布局
      */
     private void initView() {
-        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        manager = new LinearLayoutManager(getActivity());
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
         zhuClassifyRecycle.setLayoutManager(manager);
         LinearLayoutManager manager1 = new LinearLayoutManager(getActivity());
@@ -200,7 +202,12 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
         });
         adapter.setSelectPosition(flowSelectPosition);
         zhuClassifyRecycle.setAdapter(adapter);
-        zhuClassifyRecycle.post(() -> zhuClassifyRecycle.scrollToPosition(flowSelectPosition));
+        zhuClassifyRecycle.post(() -> {
+//            zhuClassifyRecycle.smoothScrollToPosition(flowSelectPosition);
+            LinearSmoothScroller s1 = new TopSmoothScroller(getActivity());
+            s1.setTargetPosition(flowSelectPosition);
+            manager.startSmoothScroll(s1);
+        });
 //        zhuClassifyRecycle.smoothScrollToPosition(flowSelectPosition);
     }
 
