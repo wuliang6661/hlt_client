@@ -13,6 +13,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextPaint;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -270,6 +271,8 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
                     textView.setTextColor(Color.parseColor("#666666"));
                     holder.setText(R.id.shop_old_price, "¥ " + classifyBO.getPrice1() + "元/" + classifyBO.getMeasureUnitName1());
                 }
+                TextPaint tp = textView.getPaint();
+                tp.setFakeBoldText(true);
             }
         };
         adapter.setOnItemClickListener(R.id.item_layout, (view, position) -> gotoActivity(OpsGoodActivity.class, false));

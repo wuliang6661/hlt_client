@@ -28,7 +28,8 @@
             android:layout_height="wrap_content"
             android:text="卷心菜"
             android:textColor="#333333"
-            android:textSize="13dp" />
+            android:textSize="13dp"
+            android:textStyle="bold" />
 
 
         <TextView

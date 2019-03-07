@@ -60,6 +60,7 @@ public class ShopCarAdapter extends LGRecycleViewAdapter<ShopBO> {
         } else if (shopBO.getProductType() == 0 && shopBO.getIsPromotion() == 0) {        //正常商品
             goodUnit.setText("¥" + shopBO.getPrice2() + "元/" + shopBO.getMeasureUnitName2());
         }
+        goodUnit.setTextColor(Color.parseColor("#FF722B"));
 
         shopAdd.setTag(shopBO);
         shopAdd.setOnClickListener(view -> {
