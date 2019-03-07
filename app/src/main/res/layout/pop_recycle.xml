@@ -3,7 +3,7 @@
     android:id="@+id/pop_layout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/pop_img_bg"
+    android:background="@drawable/pop_bg"
     android:orientation="horizontal">
 
 
