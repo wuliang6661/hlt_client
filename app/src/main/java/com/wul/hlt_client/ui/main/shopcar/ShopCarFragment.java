@@ -107,7 +107,7 @@ public class ShopCarFragment extends MVPBaseFragment<ShopCarContract.View, ShopC
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(ShopCarRefresh refresh) {
-        if (!StringUtils.isEmpty(MyApplication.shopCarBO.getAmount()) && Double.parseDouble(MyApplication.shopCarBO.getAmount()) == 0) {
+        if (MyApplication.shopCarBO.getShoppingCartList() == null || MyApplication.shopCarBO.getShoppingCartList().size() == 0) {
             clearCar.setVisibility(View.GONE);
             buttomLayout.setVisibility(View.GONE);
             mainLayout.setVisibility(View.GONE);
@@ -140,7 +140,7 @@ public class ShopCarFragment extends MVPBaseFragment<ShopCarContract.View, ShopC
         stopProgress();
         MyApplication.shopCarBO = carBO;
         EventBus.getDefault().post(new ShopCarRefresh());
-        if (!StringUtils.isEmpty(carBO.getAmount()) && Double.parseDouble(carBO.getAmount()) == 0) {
+        if (carBO.getShoppingCartList() == null || carBO.getShoppingCartList().size() == 0) {
             clearCar.setVisibility(View.GONE);
             buttomLayout.setVisibility(View.GONE);
             mainLayout.setVisibility(View.GONE);

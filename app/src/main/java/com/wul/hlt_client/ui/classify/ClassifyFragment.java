@@ -2,13 +2,13 @@ package com.wul.hlt_client.ui.classify;
 
 
 import android.annotation.SuppressLint;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.LinearSmoothScroller;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -139,6 +139,17 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
         recycle.setLayoutManager(manager2);
         changyongLayout.setOnClickListener(this);
         editSelect.setOnClickListener(this);
+
+//        zhuClassifyRecycle.addOnScrollListener(new RecyclerView.OnScrollListener() {
+//            @Override
+//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//                if (mShouldScroll && RecyclerView.SCROLL_STATE_IDLE == newState) {
+//                    mShouldScroll = false;
+//                    smoothMoveToPosition(zhuClassifyRecycle, mToPosition);
+//                }
+//            }
+//        });
     }
 
 
@@ -198,18 +209,74 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
         adapter.setOnItemClickListener(R.id.flow_text, (view, position) -> {
             adapter.setSelectPosition(position);
             flowSelectPosition = position;
+            if(isVisible(position)){
+                scrollToMiddleW(view,position);
+            }
+//            setmToPosition(flowSelectPosition);
             mPresenter.getChildClassify(list.get(position).getId());
         });
         adapter.setSelectPosition(flowSelectPosition);
         zhuClassifyRecycle.setAdapter(adapter);
-        zhuClassifyRecycle.post(() -> {
-//            zhuClassifyRecycle.smoothScrollToPosition(flowSelectPosition);
-            LinearSmoothScroller s1 = new TopSmoothScroller(getActivity());
-            s1.setTargetPosition(flowSelectPosition);
-            manager.startSmoothScroll(s1);
-        });
+        zhuClassifyRecycle.scrollToPosition(flowSelectPosition);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                scrollToMiddleW(manager.findViewByPosition(flowSelectPosition),flowSelectPosition);
+            }
+        },300);
+//        zhuClassifyRecycle.post(() -> {
+//            zhuClassifyRecycle.scrollToPosition(flowSelectPosition);
+//            LinearLayoutManager mLayoutManager = (LinearLayoutManager) zhuClassifyRecycle.getLayoutManager();
+//            mLayoutManager.scrollToPositionWithOffset(flowSelectPosition, 0);
+//             if(isVisible(flowSelectPosition)){
+
+//             }
+            //     LinearSmoothScroller s1 = new TopSmoothScroller(getActivity());
+            //     s1.setTargetPosition(flowSelectPosition);
+            //     manager.startSmoothScroll(s1);
+//            smoothMoveToPosition(zhuClassifyRecycle,flowSelectPosition);
+//        });
 //        zhuClassifyRecycle.smoothScrollToPosition(flowSelectPosition);
     }
+
+
+    private boolean isVisible(int position) {//所点击的 Item是不是在屏幕位置中可见
+
+        final int firstPosition = manager.findFirstVisibleItemPosition();//第一个可见的Item 位置值
+
+        final int lastPosition = manager.findLastVisibleItemPosition();//最后一个可见的Item 位置值
+
+        return position <= lastPosition && position >= firstPosition;
+
+    }
+
+
+
+    private void scrollToMiddleW(View view,int position) {
+
+        int vWidth = view.getWidth();
+
+        Rect rect = new Rect();
+
+        zhuClassifyRecycle.getGlobalVisibleRect(rect);
+
+        int reWidth = rect.right - rect.left - vWidth; //除掉点击View的宽度，剩下整个屏幕的宽度
+
+        final int firstPosition = manager.findFirstVisibleItemPosition();
+
+        int left = zhuClassifyRecycle.getChildAt(position - firstPosition).getLeft();//从左边到点击的Item的位置距离
+
+        int half = reWidth / 2;//半个屏幕的宽度
+
+        int moveDis = left - half;//向中间移动的距离
+
+        zhuClassifyRecycle.smoothScrollBy( moveDis,0);
+
+    }
+
+
+
+
 
     @Override
     public void getChildClassify(List<ClassifyBO> list) {
