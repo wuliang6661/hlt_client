@@ -59,9 +59,6 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
 
-        <activity
-            android:name=".ui.opsgood.OpsGoodActivity"
-            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.ordercommit.OrderCommitActivity"
@@ -74,11 +71,6 @@
         <activity
             android:name=".ui.register.PersonXieyIAct"
             android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".ui.select.SelectActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustNothing" />
 
 
         <activity

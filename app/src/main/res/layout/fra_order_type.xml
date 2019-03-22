@@ -9,7 +9,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="65dp"
         android:layout_marginTop="1dp"
         android:background="@color/white"
         android:gravity="center_vertical"
@@ -25,28 +25,24 @@
 
         <TextView
             android:id="@+id/order_type_zhengdan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
             android:layout_marginLeft="10dp"
+            android:layout_weight="1"
             android:background="@drawable/order_shaixuan"
-            android:paddingLeft="21dp"
-            android:paddingTop="5dp"
-            android:paddingRight="21dp"
-            android:paddingBottom="5dp"
+            android:gravity="center"
             android:text="全部"
             android:textColor="@color/white"
             android:textSize="13sp" />
 
         <TextView
             android:id="@+id/order_type_wancheng"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
             android:layout_marginLeft="10dp"
+            android:layout_weight="1"
             android:background="@drawable/order_shaixuan"
-            android:paddingLeft="21dp"
-            android:paddingTop="5dp"
-            android:paddingRight="21dp"
-            android:paddingBottom="5dp"
+            android:gravity="center"
             android:text="全部"
             android:textColor="@color/white"
             android:textSize="13sp" />
@@ -54,14 +50,13 @@
 
         <TextView
             android:id="@+id/order_type_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
             android:background="@drawable/order_shaixuan"
-            android:paddingLeft="21dp"
-            android:paddingTop="5dp"
-            android:paddingRight="21dp"
-            android:paddingBottom="5dp"
+            android:gravity="center"
             android:text="按日显示"
             android:textColor="@color/white"
             android:textSize="13sp" />
@@ -141,14 +136,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/all_price_layout"
-            android:layout_marginTop="1dp" />
+            android:layout_marginTop="6dp" />
 
         <ExpandableListView
             android:id="@+id/expand_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_above="@+id/all_price_layout"
-            android:layout_marginTop="1dp"
+            android:layout_marginTop="6dp"
             android:groupIndicator="@null"
             android:visibility="gone" />
 

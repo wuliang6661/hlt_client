@@ -209,8 +209,8 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
         adapter.setOnItemClickListener(R.id.flow_text, (view, position) -> {
             adapter.setSelectPosition(position);
             flowSelectPosition = position;
-            if(isVisible(position)){
-                scrollToMiddleW(view,position);
+            if (isVisible(position)) {
+                scrollToMiddleW(view, position);
             }
 //            setmToPosition(flowSelectPosition);
             mPresenter.getChildClassify(list.get(position).getId());
@@ -221,9 +221,9 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                scrollToMiddleW(manager.findViewByPosition(flowSelectPosition),flowSelectPosition);
+                scrollToMiddleW(manager.findViewByPosition(flowSelectPosition), flowSelectPosition);
             }
-        },300);
+        }, 300);
 //        zhuClassifyRecycle.post(() -> {
 //            zhuClassifyRecycle.scrollToPosition(flowSelectPosition);
 //            LinearLayoutManager mLayoutManager = (LinearLayoutManager) zhuClassifyRecycle.getLayoutManager();
@@ -231,9 +231,9 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
 //             if(isVisible(flowSelectPosition)){
 
 //             }
-            //     LinearSmoothScroller s1 = new TopSmoothScroller(getActivity());
-            //     s1.setTargetPosition(flowSelectPosition);
-            //     manager.startSmoothScroll(s1);
+        //     LinearSmoothScroller s1 = new TopSmoothScroller(getActivity());
+        //     s1.setTargetPosition(flowSelectPosition);
+        //     manager.startSmoothScroll(s1);
 //            smoothMoveToPosition(zhuClassifyRecycle,flowSelectPosition);
 //        });
 //        zhuClassifyRecycle.smoothScrollToPosition(flowSelectPosition);
@@ -251,8 +251,7 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
     }
 
 
-
-    private void scrollToMiddleW(View view,int position) {
+    private void scrollToMiddleW(View view, int position) {
 
         int vWidth = view.getWidth();
 
@@ -270,13 +269,13 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
 
         int moveDis = left - half;//向中间移动的距离
 
-        zhuClassifyRecycle.smoothScrollBy( moveDis,0);
+        zhuClassifyRecycle.smoothScrollBy(moveDis, 0);
 
     }
 
 
-
-
+    private int childCount = 0;
+    private int middlechild = 0;
 
     @Override
     public void getChildClassify(List<ClassifyBO> list) {
@@ -287,9 +286,30 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
         adapter.setOnItemClickListener(R.id.flow_child_text, (view, position) -> {
             adapter.setSelectPosition(position);
             mPresenter.getXianshiList(classifyBOS.get(flowSelectPosition).getId(), list.get(position).getId());
+
+            //得到布局
+            RecyclerView.LayoutManager manager = congRecycle.getLayoutManager();
+            //竖排类型,所以强转LinearLayoutManager,如果是ListView就不需要强转
+            LinearLayoutManager layoutManager = (LinearLayoutManager) manager;
+
+            //得到屏幕可见的item的总数
+            childCount = layoutManager.getChildCount();
+            if (childCount != list.size()) {
+                //可见item的总数除以2  就可以拿到中间位置
+                middlechild = childCount / 2;
+            }
+
+            //判断你点的是中间位置的上面还是中间的下面位置
+            //RecyclerView必须加 && position != 2,listview不需要
+            if (position <= (layoutManager.findFirstVisibleItemPosition() + middlechild) && position != 2) {
+                congRecycle.smoothScrollToPosition(position + 1 - middlechild);
+            } else {
+                congRecycle.smoothScrollToPosition(position - 1 + middlechild);
+            }
         });
         congRecycle.setAdapter(adapter);
     }
+
 
     @Override
     public void getXianshiList(XianShiBO shopBOS) {

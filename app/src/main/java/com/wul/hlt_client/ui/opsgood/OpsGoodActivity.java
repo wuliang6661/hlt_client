@@ -3,8 +3,13 @@ package com.wul.hlt_client.ui.opsgood;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,8 +17,9 @@ import com.wul.hlt_client.R;
 import com.wul.hlt_client.base.MyApplication;
 import com.wul.hlt_client.entity.CityGongGao;
 import com.wul.hlt_client.entity.ShopBO;
+import com.wul.hlt_client.entity.event.FinishEvent;
 import com.wul.hlt_client.entity.event.ShopCarRefresh;
-import com.wul.hlt_client.mvp.MVPBaseActivity;
+import com.wul.hlt_client.mvp.MVPBaseFragment;
 import com.wul.hlt_client.ui.ShopAdapter;
 import com.wul.hlt_client.ui.ordercommit.OrderCommitActivity;
 
@@ -24,6 +30,8 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 
 /**
@@ -31,7 +39,7 @@ import butterknife.BindView;
  * 常用清单列表
  */
 
-public class OpsGoodActivity extends MVPBaseActivity<OpsGoodContract.View, OpsGoodPresenter>
+public class OpsGoodActivity extends MVPBaseFragment<OpsGoodContract.View, OpsGoodPresenter>
         implements OpsGoodContract.View {
 
     @BindView(R.id.back)
@@ -50,28 +58,40 @@ public class OpsGoodActivity extends MVPBaseActivity<OpsGoodContract.View, OpsGo
     TextView shopCarButton;
 
     private ShopAdapter adapter;
+    Unbinder unbinder;
 
+
+    @Nullable
     @Override
-    protected int getLayout() {
-        return R.layout.act_ops_good;
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.act_ops_good, null);
+        unbinder = ButterKnife.bind(this, view);
+        return view;
     }
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        goBack();
-        setTitleText("常用清单");
-        EventBus.getDefault().register(this);
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        LinearLayoutManager manager = new LinearLayoutManager(this);
+        EventBus.getDefault().register(this);
+        titleText.setText("常用清单");
+        back.setVisibility(View.GONE);
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recycle.setLayoutManager(manager);
 
         mPresenter.getChangyongList();
         mPresenter.getCityGongGao();
-        shopCarButton.setOnClickListener(view -> mPresenter.testSkipe());
+        shopCarButton.setOnClickListener(v -> mPresenter.testSkipe());
         initShopCar();
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     /**
@@ -101,6 +121,10 @@ public class OpsGoodActivity extends MVPBaseActivity<OpsGoodContract.View, OpsGo
         initShopCar();
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(FinishEvent event) {
+        pop();
+    }
 
     @Override
     public void onRequestError(String msg) {
@@ -113,14 +137,14 @@ public class OpsGoodActivity extends MVPBaseActivity<OpsGoodContract.View, OpsGo
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
     }
 
     @Override
     public void getOpsShop(List<ShopBO> list) {
-        adapter = new ShopAdapter(this, list, MyApplication.shopCarBO);
+        adapter = new ShopAdapter(getActivity(), list, MyApplication.shopCarBO);
         recycle.setAdapter(adapter);
     }
 

@@ -9,6 +9,7 @@
         android:id="@+id/shop_car_layout"
         android:layout_width="match_parent"
         android:layout_height="56dp"
+        android:visibility="gone"
         android:layout_alignParentBottom="true">
 
 
@@ -60,10 +61,6 @@
         android:layout_above="@+id/shop_car_layout"
         android:orientation="vertical">
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="24dp"
-            android:background="@color/green_color" />
 
         <include layout="@layout/title_bar1" />
 

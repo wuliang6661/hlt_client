@@ -38,7 +38,7 @@ public class DowmTimer extends TimerTask {
             message.obj = getTime(startTime - date);
             message.what = 0x11;
             handler.sendMessage(message);
-            if (getTime(startTime - date).equals("00:00:00")) {
+            if (getTime(startTime - date).equals("")) {
                 LogUtils.e("开始一次");
                 if (mediaPlayer != null) {
                     mediaPlayer.release();
@@ -53,7 +53,7 @@ public class DowmTimer extends TimerTask {
             message.obj = getTime(endTime - date);
             message.what = 0x22;
             handler.sendMessage(message);
-            if (getTime(endTime - date).equals("00:00:00")) {
+            if (getTime(endTime - date).equals("")) {
                 LogUtils.e("结束一次");
                 if (mediaPlayer != null) {
                     mediaPlayer.release();
@@ -77,11 +77,16 @@ public class DowmTimer extends TimerTask {
         long hour = (allScond - (day * 24 * 3600)) / 3600;   //剩余小时
         long minute = (allScond - (day * 24 * 3600) - (hour * 3600)) / 60;
         long scond = allScond - (day * 24 * 3600) - (hour * 3600) - (minute * 60);
+        String timeStr;
         if (day <= 0) {
-            return format(hour) + ":" + format(minute) + ":" + format(scond);
+            timeStr = format(hour) + ":" + format(minute) + ":" + format(scond);
         } else {
-            return format(day) + "天 " + format(hour) + ":" + format(minute) + ":" + format(scond);
+            timeStr = format(day) + "天 " + format(hour) + ":" + format(minute) + ":" + format(scond);
         }
+        if ("00:00:00".equals(timeStr)) {
+            return "";
+        }
+        return timeStr;
     }
 
     private String format(long time) {
