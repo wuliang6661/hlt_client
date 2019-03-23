@@ -157,7 +157,7 @@
                     android:id="@+id/down_time_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="距离开始还有："
+                    android:text="暂无促销活动"
                     android:textColor="#666666"
                     android:textSize="13sp" />
 
@@ -167,7 +167,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="00:00:00"
+                    android:text=""
                     android:textColor="#F5142F"
                     android:textSize="13sp" />
 

@@ -297,6 +297,18 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
             xianshiRecycle.setVisibility(View.VISIBLE);
             none1.setVisibility(View.GONE);
         }
+        if (list.getStartTime() == 0) {
+            if (timer != null) {
+                timer.cancel();
+                handler.removeCallbacksAndMessages(null);
+            }
+            downTimeText.setVisibility(View.GONE);
+            downTime.setText("");
+            downTime.setVisibility(View.GONE);
+        } else {
+            downTimeText.setVisibility(View.VISIBLE);
+            downTime.setVisibility(View.VISIBLE);
+        }
         LGRecycleViewAdapter<ShopBO> adapter = new LGRecycleViewAdapter<ShopBO>(list.getList()) {
             @Override
             public int getLayoutId(int viewType) {

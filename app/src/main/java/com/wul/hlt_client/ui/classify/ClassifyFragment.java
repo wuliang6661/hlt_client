@@ -1,6 +1,7 @@
 package com.wul.hlt_client.ui.classify;
 
 
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -10,9 +11,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -27,6 +31,7 @@ import com.wul.hlt_client.entity.event.SwitchFlow;
 import com.wul.hlt_client.mvp.MVPBaseFragment;
 import com.wul.hlt_client.ui.DowmTimer;
 import com.wul.hlt_client.ui.ShopAdapter;
+import com.wul.hlt_client.ui.main.MainActivity;
 import com.wul.hlt_client.ui.opsgood.OpsGoodActivity;
 import com.wul.hlt_client.ui.select.SelectActivity;
 
@@ -40,6 +45,8 @@ import java.util.Timer;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+
+import static com.gyf.barlibrary.ImmersionBar.getStatusBarHeight;
 
 /**
  * MVPPlugin
@@ -78,6 +85,7 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
     Timer timer;
 
     LinearLayoutManager manager;
+    LinearLayoutManager manager1;
 
     public static ClassifyFragment getInstanse(int flowSelectPosition) {
         Bundle bundle = new Bundle();
@@ -131,7 +139,7 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
         manager = new LinearLayoutManager(getActivity());
         manager.setOrientation(LinearLayoutManager.HORIZONTAL);
         zhuClassifyRecycle.setLayoutManager(manager);
-        LinearLayoutManager manager1 = new LinearLayoutManager(getActivity());
+        manager1 = new LinearLayoutManager(getActivity());
         manager1.setOrientation(LinearLayoutManager.VERTICAL);
         congRecycle.setLayoutManager(manager1);
         LinearLayoutManager manager2 = new LinearLayoutManager(getActivity());
@@ -140,16 +148,6 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
         changyongLayout.setOnClickListener(this);
         editSelect.setOnClickListener(this);
 
-//        zhuClassifyRecycle.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//                super.onScrollStateChanged(recyclerView, newState);
-//                if (mShouldScroll && RecyclerView.SCROLL_STATE_IDLE == newState) {
-//                    mShouldScroll = false;
-//                    smoothMoveToPosition(zhuClassifyRecycle, mToPosition);
-//                }
-//            }
-//        });
     }
 
 
@@ -157,7 +155,7 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.changyong_layout:
-                gotoActivity(OpsGoodActivity.class, false);
+                start(new OpsGoodActivity());
                 break;
             case R.id.edit_select:
                 start(new SelectActivity());
@@ -212,7 +210,6 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
             if (isVisible(position)) {
                 scrollToMiddleW(view, position);
             }
-//            setmToPosition(flowSelectPosition);
             mPresenter.getChildClassify(list.get(position).getId());
         });
         adapter.setSelectPosition(flowSelectPosition);
@@ -224,53 +221,26 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
                 scrollToMiddleW(manager.findViewByPosition(flowSelectPosition), flowSelectPosition);
             }
         }, 300);
-//        zhuClassifyRecycle.post(() -> {
-//            zhuClassifyRecycle.scrollToPosition(flowSelectPosition);
-//            LinearLayoutManager mLayoutManager = (LinearLayoutManager) zhuClassifyRecycle.getLayoutManager();
-//            mLayoutManager.scrollToPositionWithOffset(flowSelectPosition, 0);
-//             if(isVisible(flowSelectPosition)){
-
-//             }
-        //     LinearSmoothScroller s1 = new TopSmoothScroller(getActivity());
-        //     s1.setTargetPosition(flowSelectPosition);
-        //     manager.startSmoothScroll(s1);
-//            smoothMoveToPosition(zhuClassifyRecycle,flowSelectPosition);
-//        });
-//        zhuClassifyRecycle.smoothScrollToPosition(flowSelectPosition);
     }
 
 
     private boolean isVisible(int position) {//所点击的 Item是不是在屏幕位置中可见
-
         final int firstPosition = manager.findFirstVisibleItemPosition();//第一个可见的Item 位置值
-
         final int lastPosition = manager.findLastVisibleItemPosition();//最后一个可见的Item 位置值
-
         return position <= lastPosition && position >= firstPosition;
-
     }
 
 
     private void scrollToMiddleW(View view, int position) {
-
         int vWidth = view.getWidth();
-
         Rect rect = new Rect();
-
         zhuClassifyRecycle.getGlobalVisibleRect(rect);
-
         int reWidth = rect.right - rect.left - vWidth; //除掉点击View的宽度，剩下整个屏幕的宽度
-
         final int firstPosition = manager.findFirstVisibleItemPosition();
-
         int left = zhuClassifyRecycle.getChildAt(position - firstPosition).getLeft();//从左边到点击的Item的位置距离
-
         int half = reWidth / 2;//半个屏幕的宽度
-
         int moveDis = left - half;//向中间移动的距离
-
         zhuClassifyRecycle.smoothScrollBy(moveDis, 0);
-
     }
 
 
@@ -287,27 +257,85 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
             adapter.setSelectPosition(position);
             mPresenter.getXianshiList(classifyBOS.get(flowSelectPosition).getId(), list.get(position).getId());
 
-            //得到布局
-            RecyclerView.LayoutManager manager = congRecycle.getLayoutManager();
-            //竖排类型,所以强转LinearLayoutManager,如果是ListView就不需要强转
-            LinearLayoutManager layoutManager = (LinearLayoutManager) manager;
+//            if(isvisible(position)){
+//                scrollToMiddleH(view,position);
+//            }
 
-            //得到屏幕可见的item的总数
-            childCount = layoutManager.getChildCount();
-            if (childCount != list.size()) {
-                //可见item的总数除以2  就可以拿到中间位置
-                middlechild = childCount / 2;
-            }
+//            //得到布局
+//            RecyclerView.LayoutManager manager = congRecycle.getLayoutManager();
+//            //竖排类型,所以强转LinearLayoutManager,如果是ListView就不需要强转
+//            LinearLayoutManager layoutManager = (LinearLayoutManager) manager;
+//
+//            //得到屏幕可见的item的总数
+//            childCount = layoutManager.getChildCount();
+//            if (childCount != list.size()) {
+//                //可见item的总数除以2  就可以拿到中间位置
+//                middlechild = childCount / 2;
+//            }
+//
+//            //判断你点的是中间位置的上面还是中间的下面位置
+//            //RecyclerView必须加 && position != 2,listview不需要
+//            if (position <= (layoutManager.findFirstVisibleItemPosition() + middlechild) && position != 2) {
+//                Log.e("wuliang", (position + 1 - middlechild) + "");
+////                if (position + 1 - middlechild >= 0) {
+//                    congRecycle.smoothScrollToPosition(Math.abs(position + 1 - middlechild));
+////                }else{
+////                    congRecycle.smoothScrollToPosition(position - 1 + middlechild);
+////                }
+//            } else {
+//                congRecycle.smoothScrollToPosition(position - 1 + middlechild);
+//            }
+            DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+            int heightPixels = displayMetrics.heightPixels;
+            int widthPixels = displayMetrics.widthPixels;
+            int[] outLocation = new int[2];
+            view.getLocationOnScreen(outLocation);
+            int itemLayoutHeight = outLocation[1] - getStatusBarHeight(getActivity());
+            int centreHeight = (int) ((heightPixels / 2) - ((widthPixels * 0.5) / 2));
 
-            //判断你点的是中间位置的上面还是中间的下面位置
-            //RecyclerView必须加 && position != 2,listview不需要
-            if (position <= (layoutManager.findFirstVisibleItemPosition() + middlechild) && position != 2) {
-                congRecycle.smoothScrollToPosition(position + 1 - middlechild);
-            } else {
-                congRecycle.smoothScrollToPosition(position - 1 + middlechild);
+            RecyclerView.LayoutManager layoutManager = congRecycle.getLayoutManager();
+            if (layoutManager != null && layoutManager instanceof LinearLayoutManager) {
+                final LinearLayoutManager mLayoutManager = (LinearLayoutManager) layoutManager;
+                if (centreHeight != itemLayoutHeight) {
+                    ValueAnimator valueAnimator = ValueAnimator.ofInt(itemLayoutHeight, centreHeight);
+                    valueAnimator.setDuration(100);
+                    valueAnimator.setInterpolator(new LinearInterpolator());
+                    valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+                        @Override
+                        public void onAnimationUpdate(ValueAnimator animation) {
+                            int animatedValue = (int) animation.getAnimatedValue();
+                            ((LinearLayoutManager) mLayoutManager).scrollToPositionWithOffset(position, animatedValue);
+
+                        }
+                    });
+                    valueAnimator.start();
+                }
             }
         });
         congRecycle.setAdapter(adapter);
+    }
+
+
+    private boolean isvisible(int position) {//所点击的 Item是不是在屏幕位置中可见
+
+        final int firstPosition = manager1.findFirstVisibleItemPosition();//第一个可见的Item 位置值
+
+        final int lastPosition = manager1.findLastVisibleItemPosition();//最后一个可见的Item 位置值
+
+        return position <= lastPosition && position >= firstPosition;
+
+    }
+
+
+    private void scrollToMiddleH(View view, int position) {
+        int vHeight = view.getHeight();
+        Rect rect = new Rect();
+        congRecycle.getGlobalVisibleRect(rect);
+        int reHeight = rect.top - rect.bottom - vHeight;
+        final int firstPosition = manager1.findFirstVisibleItemPosition();
+        int top = congRecycle.getChildAt(position - firstPosition).getTop();
+        int half = reHeight / 2;
+        congRecycle.smoothScrollBy(0, top - half);
     }
 
 
@@ -334,12 +362,12 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
             switch (msg.what) {
                 case 0x11:
                     if (downTimeText != null) {
-                        downTimeText.setText("距离开始时间还有：");
+                        downTimeText.setText("距离秒杀活动开始还有：");
                     }
                     break;
                 case 0x22:
                     if (downTimeText != null) {
-                        downTimeText.setText("距离结束时间还有：");
+                        downTimeText.setText("距离秒杀活动结束还有：");
                     }
                     break;
                 case 0x33:

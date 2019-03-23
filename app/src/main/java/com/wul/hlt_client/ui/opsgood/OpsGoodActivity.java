@@ -76,7 +76,6 @@ public class OpsGoodActivity extends MVPBaseFragment<OpsGoodContract.View, OpsGo
 
         EventBus.getDefault().register(this);
         titleText.setText("常用清单");
-        back.setVisibility(View.GONE);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         recycle.setLayoutManager(manager);
@@ -84,6 +83,7 @@ public class OpsGoodActivity extends MVPBaseFragment<OpsGoodContract.View, OpsGo
         mPresenter.getChangyongList();
         mPresenter.getCityGongGao();
         shopCarButton.setOnClickListener(v -> mPresenter.testSkipe());
+        back.setOnClickListener(v -> pop());
         initShopCar();
     }
 
