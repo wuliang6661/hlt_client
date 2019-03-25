@@ -164,19 +164,15 @@ public class SalesGoodFragment extends MVPBaseFragment<SalesGoodContract.View, S
 
     @Override
     public void getXianshiList(XianShiBO shopBOS) {
+        if (timer != null) {
+            timer.cancel();
+            handler.removeCallbacksAndMessages(null);
+        }
         if (shopBOS.getStartTime() == 0) {
-            if (timer != null) {
-                timer.cancel();
-                handler.removeCallbacksAndMessages(null);
-            }
             downTimeText.setText("暂无促销活动");
             timeLayout.setVisibility(View.GONE);
             viewLine.setVisibility(View.VISIBLE);
         } else {
-            if (timer != null) {
-                timer.cancel();
-                handler.removeCallbacksAndMessages(null);
-            }
             timeLayout.setVisibility(View.VISIBLE);
             viewLine.setVisibility(View.GONE);
             timer = new Timer();

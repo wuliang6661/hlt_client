@@ -12,7 +12,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +30,6 @@ import com.wul.hlt_client.entity.event.SwitchFlow;
 import com.wul.hlt_client.mvp.MVPBaseFragment;
 import com.wul.hlt_client.ui.DowmTimer;
 import com.wul.hlt_client.ui.ShopAdapter;
-import com.wul.hlt_client.ui.main.MainActivity;
 import com.wul.hlt_client.ui.opsgood.OpsGoodActivity;
 import com.wul.hlt_client.ui.select.SelectActivity;
 
@@ -244,9 +242,6 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
     }
 
 
-    private int childCount = 0;
-    private int middlechild = 0;
-
     @Override
     public void getChildClassify(List<ClassifyBO> list) {
         if (list != null && list.size() > 0) {
@@ -257,34 +252,6 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
             adapter.setSelectPosition(position);
             mPresenter.getXianshiList(classifyBOS.get(flowSelectPosition).getId(), list.get(position).getId());
 
-//            if(isvisible(position)){
-//                scrollToMiddleH(view,position);
-//            }
-
-//            //得到布局
-//            RecyclerView.LayoutManager manager = congRecycle.getLayoutManager();
-//            //竖排类型,所以强转LinearLayoutManager,如果是ListView就不需要强转
-//            LinearLayoutManager layoutManager = (LinearLayoutManager) manager;
-//
-//            //得到屏幕可见的item的总数
-//            childCount = layoutManager.getChildCount();
-//            if (childCount != list.size()) {
-//                //可见item的总数除以2  就可以拿到中间位置
-//                middlechild = childCount / 2;
-//            }
-//
-//            //判断你点的是中间位置的上面还是中间的下面位置
-//            //RecyclerView必须加 && position != 2,listview不需要
-//            if (position <= (layoutManager.findFirstVisibleItemPosition() + middlechild) && position != 2) {
-//                Log.e("wuliang", (position + 1 - middlechild) + "");
-////                if (position + 1 - middlechild >= 0) {
-//                    congRecycle.smoothScrollToPosition(Math.abs(position + 1 - middlechild));
-////                }else{
-////                    congRecycle.smoothScrollToPosition(position - 1 + middlechild);
-////                }
-//            } else {
-//                congRecycle.smoothScrollToPosition(position - 1 + middlechild);
-//            }
             DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
             int heightPixels = displayMetrics.heightPixels;
             int widthPixels = displayMetrics.widthPixels;
@@ -341,15 +308,19 @@ public class ClassifyFragment extends MVPBaseFragment<ClassifyContract.View, Cla
 
     @Override
     public void getXianshiList(XianShiBO shopBOS) {
+        if (timer != null) {
+            timer.cancel();
+            handler.removeCallbacksAndMessages(null);
+        }
         if (shopBOS.getStartTime() == 0 || shopBOS.getEndTime() == 0) {
             timeLayout.setVisibility(View.GONE);
         } else {
             timeLayout.setVisibility(View.VISIBLE);
+            timer = new Timer();
+            timer.schedule(new DowmTimer(getActivity(), shopBOS.getStartTime(), shopBOS.getEndTime(), handler), 0, 1000);
         }
         ShopAdapter adapter = new ShopAdapter(getActivity(), shopBOS.getList(), MyApplication.shopCarBO);
         recycle.setAdapter(adapter);
-        timer = new Timer();
-        timer.schedule(new DowmTimer(getActivity(), shopBOS.getStartTime(), shopBOS.getEndTime(), handler), 0, 1000);
     }
 
     @SuppressLint("HandlerLeak")

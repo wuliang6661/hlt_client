@@ -150,14 +150,15 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="10dp"
-                android:paddingRight="10dp">
+                android:paddingRight="10dp"
+                android:visibility="gone">
 
 
                 <TextView
                     android:id="@+id/down_time_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="暂无促销活动"
+                    android:text=""
                     android:textColor="#666666"
                     android:textSize="13sp" />
 

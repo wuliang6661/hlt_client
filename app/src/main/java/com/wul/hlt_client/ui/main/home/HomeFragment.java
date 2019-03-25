@@ -288,26 +288,27 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     @Override
     public void getXianshiList(XianShiBO list) {
         swipe.setRefreshing(false);
+        if (timer != null) {
+            timer.cancel();
+            handler.removeCallbacksAndMessages(null);
+        }
         if (list.getList() == null || list.getList().size() == 0) {
             xianshiRecycle.setVisibility(View.GONE);
             none1.setVisibility(View.VISIBLE);
-            downTimeText.setText("");
             return;
         } else {
             xianshiRecycle.setVisibility(View.VISIBLE);
             none1.setVisibility(View.GONE);
         }
         if (list.getStartTime() == 0) {
-            if (timer != null) {
-                timer.cancel();
-                handler.removeCallbacksAndMessages(null);
-            }
             downTimeText.setVisibility(View.GONE);
             downTime.setText("");
             downTime.setVisibility(View.GONE);
         } else {
             downTimeText.setVisibility(View.VISIBLE);
             downTime.setVisibility(View.VISIBLE);
+            timer = new Timer();
+            timer.schedule(new DowmTimer(getActivity(), list.getStartTime(), list.getEndTime(), handler), 0, 1000);
         }
         LGRecycleViewAdapter<ShopBO> adapter = new LGRecycleViewAdapter<ShopBO>(list.getList()) {
             @Override
@@ -327,10 +328,6 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         };
         adapter.setOnItemClickListener(R.id.item_layout, (view, position) -> EventBus.getDefault().post(new SwithFragment(1)));
         xianshiRecycle.setAdapter(adapter);
-        if (list.getStartTime() != 0) {
-            timer = new Timer();
-            timer.schedule(new DowmTimer(getActivity(), list.getStartTime(), list.getEndTime(), handler), 0, 1000);
-        }
     }
 
     @SuppressLint("HandlerLeak")
@@ -366,6 +363,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         super.onDestroy();
         if (timer != null) {
             timer.cancel();
+            handler.removeCallbacksAndMessages(null);
         }
         ImmersionBar.with(this).destroy();
     }
@@ -390,6 +388,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         mPresenter.getXianshiList();
         if (timer != null) {
             timer.cancel();
+            handler.removeCallbacksAndMessages(null);
             timer = null;
         }
     }
