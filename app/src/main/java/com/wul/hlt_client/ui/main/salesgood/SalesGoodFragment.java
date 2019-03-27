@@ -74,6 +74,10 @@ public class SalesGoodFragment extends MVPBaseFragment<SalesGoodContract.View, S
     Unbinder unbinder;
     @BindView(R.id.none_layout)
     LinearLayout noneLayout;
+    @BindView(R.id.time_layout)
+    LinearLayout timeLayout;
+    @BindView(R.id.view_line)
+    View viewLine;
 
 
     @Nullable
@@ -160,13 +164,17 @@ public class SalesGoodFragment extends MVPBaseFragment<SalesGoodContract.View, S
 
     @Override
     public void getXianshiList(XianShiBO shopBOS) {
+        if (timer != null) {
+            timer.cancel();
+            handler.removeCallbacksAndMessages(null);
+        }
         if (shopBOS.getStartTime() == 0) {
-            downTimeText.setText("暂无促销活动：");
+            downTimeText.setText("暂无促销活动");
+            timeLayout.setVisibility(View.GONE);
+            viewLine.setVisibility(View.VISIBLE);
         } else {
-            if (timer != null) {
-                timer.cancel();
-                handler.removeCallbacksAndMessages(null);
-            }
+            timeLayout.setVisibility(View.VISIBLE);
+            viewLine.setVisibility(View.GONE);
             timer = new Timer();
             timer.schedule(new DowmTimer(getActivity(), shopBOS.getStartTime(), shopBOS.getEndTime(), handler), 0, 1000);
         }
@@ -188,10 +196,10 @@ public class SalesGoodFragment extends MVPBaseFragment<SalesGoodContract.View, S
             String time = (String) msg.obj;
             switch (msg.what) {
                 case 0x11:
-                    downTimeText.setText("距离开始时间还有：");
+                    downTimeText.setText("距离秒杀活动开始还有：");
                     break;
                 case 0x22:
-                    downTimeText.setText("距离结束时间还有：");
+                    downTimeText.setText("距离秒杀活动结束还有：");
                     break;
                 case 0x33:
                     mPresenter.getXianshiList();

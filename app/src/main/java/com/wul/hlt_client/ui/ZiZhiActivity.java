@@ -19,6 +19,8 @@ public class ZiZhiActivity extends BaseActivity {
     @BindView(R.id.view_pager)
     ViewPager viewPager;
 
+    int[] res = new int[]{R.drawable.zizhi1, R.drawable.zizhi2, R.drawable.zizhi3, R.drawable.zizhi4, R.drawable.zizhi5};
+
     @Override
     protected int getLayout() {
         return R.layout.act_zizhi;
@@ -40,7 +42,7 @@ public class ZiZhiActivity extends BaseActivity {
 
         @Override
         public int getCount() {
-            return 2;
+            return res.length;
         }
 
         @Override
@@ -51,11 +53,7 @@ public class ZiZhiActivity extends BaseActivity {
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             ImageView imageView = new ImageView(ZiZhiActivity.this);
-            if (position == 0) {
-                imageView.setImageResource(R.drawable.zizhi1);
-            } else {
-                imageView.setImageResource(R.drawable.zizhi2);
-            }
+            imageView.setImageResource(res[position]);
             container.addView(imageView);
             //最后要返回的是控件本身
             return imageView;

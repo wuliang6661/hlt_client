@@ -59,7 +59,7 @@ public class MyOrderActivity extends MVPBaseActivity<MyOrderContract.View, MyOrd
         OrderTypeFragment fragment = new OrderTypeFragment();
         PayTypeFragment fragment1 = new PayTypeFragment();
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(fragment);
+//        fragments.add(fragment);
         fragments.add(fragment1);
         viewPager.setAdapter(new FragmentPaerAdapter(getSupportFragmentManager(), fragments));
         setListener();

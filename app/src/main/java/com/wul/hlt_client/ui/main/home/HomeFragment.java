@@ -107,10 +107,13 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         initView();
         invitionSwipeRefresh(swipe);
         swipe.setOnRefreshListener(this);
-        mPresenter.getClassifyList();
-        mPresenter.getBanner();
-        mPresenter.getComomPaseList();
-        mPresenter.getXianshiList();
+
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
 
     }
 
@@ -261,21 +264,21 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
                 holder.setText(R.id.item_text, classifyBO.getProductName());
                 holder.getView(R.id.shop_price).setVisibility(View.GONE);
                 TextView textView = (TextView) holder.getView(R.id.shop_old_price);
+                textView.setTextColor(Color.parseColor("#FF722B"));
+//                TextPaint paint = textView.getPaint();
+//                paint.setFakeBoldText(true);
                 if (classifyBO.getIsPromotion() == 1 && classifyBO.getProductType() == 0) {  //促销商品
-                    textView.setTextColor(Color.parseColor("#FF722B"));
                     holder.setText(R.id.shop_old_price, "¥ " + classifyBO.getPromotionPrice1() + "元/" + classifyBO.getMeasureUnitName1());
                 } else if (classifyBO.getProductType() == 1) {    //秒杀商品
-                    textView.setTextColor(Color.parseColor("#FF722B"));
                     holder.setText(R.id.shop_old_price, "¥ " + classifyBO.getPromotionPrice1() + "元/" + classifyBO.getMeasureUnitName1());
                 } else {  //正常商品
-                    textView.setTextColor(Color.parseColor("#666666"));
                     holder.setText(R.id.shop_old_price, "¥ " + classifyBO.getPrice1() + "元/" + classifyBO.getMeasureUnitName1());
                 }
                 TextPaint tp = textView.getPaint();
                 tp.setFakeBoldText(true);
             }
         };
-        adapter.setOnItemClickListener(R.id.item_layout, (view, position) -> gotoActivity(OpsGoodActivity.class, false));
+        adapter.setOnItemClickListener(R.id.item_layout, (view, position) -> start(new OpsGoodActivity()));
         changyongRecycle.setAdapter(adapter);
     }
 
@@ -285,14 +288,27 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
     @Override
     public void getXianshiList(XianShiBO list) {
         swipe.setRefreshing(false);
+        if (timer != null) {
+            timer.cancel();
+            handler.removeCallbacksAndMessages(null);
+        }
         if (list.getList() == null || list.getList().size() == 0) {
             xianshiRecycle.setVisibility(View.GONE);
             none1.setVisibility(View.VISIBLE);
-            downTimeText.setText("");
             return;
         } else {
             xianshiRecycle.setVisibility(View.VISIBLE);
             none1.setVisibility(View.GONE);
+        }
+        if (list.getStartTime() == 0) {
+            downTimeText.setVisibility(View.GONE);
+            downTime.setText("");
+            downTime.setVisibility(View.GONE);
+        } else {
+            downTimeText.setVisibility(View.VISIBLE);
+            downTime.setVisibility(View.VISIBLE);
+            timer = new Timer();
+            timer.schedule(new DowmTimer(getActivity(), list.getStartTime(), list.getEndTime(), handler), 0, 1000);
         }
         LGRecycleViewAdapter<ShopBO> adapter = new LGRecycleViewAdapter<ShopBO>(list.getList()) {
             @Override
@@ -312,10 +328,6 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         };
         adapter.setOnItemClickListener(R.id.item_layout, (view, position) -> EventBus.getDefault().post(new SwithFragment(1)));
         xianshiRecycle.setAdapter(adapter);
-        if (list.getStartTime() != 0) {
-            timer = new Timer();
-            timer.schedule(new DowmTimer(getActivity(), list.getStartTime(), list.getEndTime(), handler), 0, 1000);
-        }
     }
 
     @SuppressLint("HandlerLeak")
@@ -327,10 +339,10 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
             String time = (String) msg.obj;
             switch (msg.what) {
                 case 0x11:
-                    downTimeText.setText("距离开始时间还有：");
+                    downTimeText.setText("距离秒杀活动开始还有：");
                     break;
                 case 0x22:
-                    downTimeText.setText("距离结束时间还有：");
+                    downTimeText.setText("距离秒杀活动结束还有：");
                     break;
                 case 0x33:
                     if (timer != null) {
@@ -351,6 +363,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         super.onDestroy();
         if (timer != null) {
             timer.cancel();
+            handler.removeCallbacksAndMessages(null);
         }
         ImmersionBar.with(this).destroy();
     }
@@ -375,6 +388,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         mPresenter.getXianshiList();
         if (timer != null) {
             timer.cancel();
+            handler.removeCallbacksAndMessages(null);
             timer = null;
         }
     }
@@ -384,7 +398,7 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         switch (view.getId()) {
             case R.id.changyong:   //常用列表
             case R.id.changyong_recycle:
-                gotoActivity(OpsGoodActivity.class, false);
+                start(new OpsGoodActivity());
                 break;
             case R.id.xianshi:    //进入限时抢购
                 EventBus.getDefault().post(new SwithFragment(1));
@@ -404,6 +418,10 @@ public class HomeFragment extends MVPBaseFragment<HomeContract.View, HomePresent
         if (isImmersionBarEnabled()) {
             initImmersionBar();
         }
+        mPresenter.getClassifyList();
+        mPresenter.getBanner();
+        mPresenter.getComomPaseList();
+        mPresenter.getXianshiList();
     }
 
     public void initImmersionBar() {

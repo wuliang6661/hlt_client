@@ -30,7 +30,7 @@
             app:xyzSelectIcon="@drawable/main1_xz"
             app:xyzSelectState="true"
             app:xyzTitle="首页"
-            app:xyzTitleColor="#666666"
+            app:xyzTitleColor="#333333"
             app:xyzTitleSelectColor="#6db83d"
             app:xyzTitleSize="13sp"
             app:xyzTitleTop="5dp" />
@@ -46,7 +46,7 @@
             app:xyzSelectIcon="@drawable/main2_xz"
             app:xyzSelectState="false"
             app:xyzTitle="促销"
-            app:xyzTitleColor="#666666"
+            app:xyzTitleColor="#333333"
             app:xyzTitleSelectColor="#6db83d"
             app:xyzTitleSize="13sp"
             app:xyzTitleTop="5dp" />
@@ -67,7 +67,7 @@
                 app:xyzSelectIcon="@drawable/main3_xz"
                 app:xyzSelectState="false"
                 app:xyzTitle="购物车"
-                app:xyzTitleColor="#666666"
+                app:xyzTitleColor="#333333"
                 app:xyzTitleSelectColor="#6db83d"
                 app:xyzTitleSize="13sp"
                 app:xyzTitleTop="5dp" />
@@ -101,7 +101,7 @@
             app:xyzSelectIcon="@drawable/main4_xz"
             app:xyzSelectState="false"
             app:xyzTitle="我的"
-            app:xyzTitleColor="#666666"
+            app:xyzTitleColor="#333333"
             app:xyzTitleSelectColor="#6db83d"
             app:xyzTitleSize="13sp"
             app:xyzTitleTop="5dp" />
@@ -121,5 +121,6 @@
         android:layout_height="2dp"
         android:layout_above="@+id/buttom_tab"
         android:background="#f2f2f2" />
+
 
 </RelativeLayout>

@@ -283,6 +283,9 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
             } else {
                 showToast("orderInfo为空！");
             }
+        } else if ("0".equals(orderInfo)) {    //实付款为0
+            showToast("下单成功！");
+            gotoActivity(MyOrderActivity.class, true);
         } else {
             aliPay(orderInfo);
         }
@@ -290,6 +293,7 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
 
     @Override
     public void testTimeSourss(String message) {
+        stopProgress();
         dispatchingTime.setText(selectTime);
         if (isZhengDan()) {
             if (orderType == 1) {
@@ -397,12 +401,18 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
         builder = new TimePickerBuilder(this, (date, v) -> {
             switch (selectView) {
                 case 1:
+                    if (isNow(date)) {
+                        hourTime.setText("11:00-15:00点");
+                    } else {
+                        hourTime.setText("06:00-11:00点");
+                    }
                     SimpleDateFormat sf = new SimpleDateFormat("yyyy年MM月dd日");
                     selectTime = sf.format(date) + " " + hourTime.getText().toString();
                     selectDate = date;
                     dispatchingTime.setText("");
                     TestTimeRequest request = new TestTimeRequest();
                     request.requireDeliverOn = selectTime.replaceAll(":00", "").replace(" ", "");
+                    showProgress();
                     mPresenter.testSkipeTime(request);
                     pvView.dismiss();
                     break;
