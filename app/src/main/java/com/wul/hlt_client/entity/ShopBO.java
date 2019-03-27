@@ -49,7 +49,7 @@ public class ShopBO {
      * promotionPrice2 : 4.2
      */
 
-    private int quantity;
+    private String quantity;
     private int productId;
     private String money;
     private String httpUrl;
@@ -191,11 +191,11 @@ public class ShopBO {
         this.maxBuyNum = maxBuyNum;
     }
 
-    public int getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(String quantity) {
         this.quantity = quantity;
     }
 

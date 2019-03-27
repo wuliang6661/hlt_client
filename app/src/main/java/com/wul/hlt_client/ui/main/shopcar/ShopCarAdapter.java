@@ -71,7 +71,7 @@ public class ShopCarAdapter extends LGRecycleViewAdapter<ShopBO> {
         TextView shopNum = (TextView) holder.getView(R.id.shop_num);
         TextView shopPrice = (TextView) holder.getView(R.id.shop_price);
         LinearLayout shopCarPriceLayout = (LinearLayout) holder.getView(R.id.shop_car_item_price);
-        if (shopBO.getQuantity() > 0) {
+        if (Double.parseDouble(shopBO.getQuantity()) > 0) {
             remove.setVisibility(View.VISIBLE);
             shopNum.setVisibility(View.VISIBLE);
             shopNum.setText(shopBO.getQuantity() + "");

@@ -50,7 +50,7 @@ public class ShoppingCarBO {
 
         private String image;
         private String measureUnitName2;
-        private int quantity;
+        private String quantity;
         private int isPromotion;
         private int productId;
         private String money;
@@ -76,11 +76,11 @@ public class ShoppingCarBO {
             this.measureUnitName2 = measureUnitName2;
         }
 
-        public int getQuantity() {
+        public String getQuantity() {
             return quantity;
         }
 
-        public void setQuantity(int quantity) {
+        public void setQuantity(String quantity) {
             this.quantity = quantity;
         }
 

@@ -113,7 +113,7 @@ public class HistoryOrderBo {
             private String price0MeasureUnit;
             private String img;
             private String measureUnit1And2Relation;
-            private int quantity;
+            private String quantity;
             private String cost;
             private int productId;
             private String productDetail;
@@ -153,11 +153,11 @@ public class HistoryOrderBo {
                 this.measureUnit1And2Relation = measureUnit1And2Relation;
             }
 
-            public int getQuantity() {
+            public String getQuantity() {
                 return quantity;
             }
 
-            public void setQuantity(int quantity) {
+            public void setQuantity(String quantity) {
                 this.quantity = quantity;
             }
 
