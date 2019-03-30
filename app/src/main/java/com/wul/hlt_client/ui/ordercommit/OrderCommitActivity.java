@@ -211,6 +211,7 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
 
     @Override
     public void onRequestError(String msg) {
+        stopProgress();
         showToast(msg);
     }
 
