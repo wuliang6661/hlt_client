@@ -81,10 +81,10 @@
             <ImageView
                 android:layout_width="16dp"
                 android:layout_height="16dp"
-                android:layout_marginBottom="8dp"
                 android:layout_marginLeft="12dp"
-                android:layout_marginRight="15dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginBottom="8dp"
                 android:src="@drawable/gonggao_red" />
 
 
@@ -104,7 +104,7 @@
                     android:marqueeRepeatLimit="marquee_forever"
                     android:singleLine="true"
                     android:textColor="#666666"
-                    android:textSize="10sp" />
+                    android:textSize="13sp" />
             </LinearLayout>
 
         </LinearLayout>

@@ -11,4 +11,5 @@ public class CommitOrderBO extends BaseRequest {
     public int orderType;
     public int payChannel;
     public String requireDeliverOn;
+    public int isFreeSign;
 }

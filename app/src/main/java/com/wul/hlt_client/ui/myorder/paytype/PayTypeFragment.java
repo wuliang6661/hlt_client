@@ -26,13 +26,17 @@ import com.wul.hlt_client.R;
 import com.wul.hlt_client.entity.OrderDayBo;
 import com.wul.hlt_client.entity.OrderMonthBO;
 import com.wul.hlt_client.entity.PayResult;
+import com.wul.hlt_client.entity.event.PaySuress;
 import com.wul.hlt_client.entity.request.ScreenBO;
 import com.wul.hlt_client.mvp.MVPBaseFragment;
 import com.wul.hlt_client.ui.myorder.ExpandListAdapter;
 import com.wul.hlt_client.ui.myorder.RecycleAdapter;
 import com.wul.hlt_client.ui.myorder.ScreenPopWindow;
 import com.wul.hlt_client.ui.orderdetails.OrderDetailsActivity;
-import com.wul.hlt_client.util.AppManager;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -102,6 +106,7 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        EventBus.getDefault().register(this);
         orderTypeWancheng.setText("全部");
 
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
@@ -118,6 +123,7 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        EventBus.getDefault().unregister(this);
     }
 
 
@@ -127,6 +133,13 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
         orderTypeTime.setOnClickListener(this);
         shopCarButton.setOnClickListener(this);
         checkbox.setOnCheckedChangeListener(listener);
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(PaySuress suress) {
+        orderIds.clear();
+        syncHttp();
     }
 
 
@@ -377,6 +390,7 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
             expandList.expandGroup(i);
         }
         adapter2.setIds(orderIds);
+        syncSelectPrice();
     }
 
     @Override
@@ -428,6 +442,8 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
                     if (TextUtils.equals(resultStatus, "9000")) {    //支付成功
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                         showToast("支付成功！");
+                        orderIds.clear();
+                        syncHttp();
                     } else {              //支付失败
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                         showToast("支付失败！");

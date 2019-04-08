@@ -107,6 +107,12 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
     TextView goodPrice;
     @BindView(R.id.mian_view)
     RelativeLayout mianView;
+    @BindView(R.id.mian_line)
+    View mianLine;
+    @BindView(R.id.mian_qianshou_checkbox)
+    CheckBox mianQianshouCheckbox;
+    @BindView(R.id.mian_qianshou_layout)
+    LinearLayout mianQianshouLayout;
 
     private int strPayType = 2;   //默认支付宝   1是货到付款
 
@@ -309,7 +315,11 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
                             checkbox.setChecked(false);
                             payLayout.setEnabled(false);
                         }).show();
+                mianLine.setVisibility(View.GONE);
+                mianQianshouLayout.setVisibility(View.GONE);
             } else {
+                mianLine.setVisibility(View.VISIBLE);
+                mianQianshouLayout.setVisibility(View.VISIBLE);
                 mPresenter.getShoppingList(orderType);
                 payType.setText("支付宝");
                 strPayType = 2;
@@ -322,6 +332,8 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
             new AlertDialog(this).builder().setGone().setMsg("当前时间不能临时补单\n请重新选择配送时间")
                     .setNegativeButton("确定", null).show();
             dispatchingTime.setText("");
+            mianLine.setVisibility(View.GONE);
+            mianQianshouLayout.setVisibility(View.GONE);
         }
     }
 
@@ -372,6 +384,9 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
                                         orderBO.balancePayStatus = checkbox.isChecked() ? 0 : 1;
                                         orderBO.orderType = orderType;
                                         orderBO.payChannel = strPayType;
+                                        if (orderType == 0) {  //正单
+                                            orderBO.isFreeSign = mianQianshouCheckbox.isChecked() ? 1 : 0;
+                                        }
                                         orderBO.requireDeliverOn = selectTime.replaceAll(":00", "").replace(" ", "");
                                         mPresenter.commitOrder(orderBO);
                                     }
