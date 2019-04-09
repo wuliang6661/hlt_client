@@ -10,10 +10,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.blankj.utilcode.util.LogUtils;
+import com.bumptech.glide.Glide;
 import com.wul.hlt_client.R;
 import com.wul.hlt_client.base.BaseActivity;
 
@@ -50,7 +53,7 @@ public class ZiZhiActivity extends BaseActivity {
         viewList.add(new ImageView(this));
         viewList.add(new ImageView(this));
 
-        viewPager.setOffscreenPageLimit(5);
+//        viewPager.setOffscreenPageLimit(5);
         viewPager.setAdapter(new MyAdapter());
     }
 
@@ -100,6 +103,15 @@ public class ZiZhiActivity extends BaseActivity {
 //            container.removeView((View) object);
             //回收图片
             ImageView imageView = viewList.get(position);
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) imageView.getDrawable();
+            if (bitmapDrawable != null) {
+                Bitmap bm = bitmapDrawable.getBitmap();
+                if (bm != null && !bm.isRecycled()) {
+                    Log.d("...desimg..", "被回收了" + bm.getByteCount());
+                    imageView.setImageResource(0);
+                    bm.recycle();
+                }
+            }
             imageView.setImageBitmap(null);
             releaseImageViewResouce(imageView);
             //移除页面
@@ -121,6 +133,7 @@ public class ZiZhiActivity extends BaseActivity {
                 if (bitmap != null && !bitmap.isRecycled()) {
                     bitmap.recycle();
                     bitmap = null;
+                    LogUtils.e("图片回收啦");
                 }
             }
             System.gc();
