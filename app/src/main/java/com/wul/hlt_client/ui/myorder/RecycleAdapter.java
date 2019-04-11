@@ -38,6 +38,12 @@ public class RecycleAdapter extends LGRecycleViewAdapter<OrderDayBo.AddressMyOrd
 
 
     public List<Integer> getIds() {
+        ids = new ArrayList<>();
+        for (OrderDayBo.AddressMyOrderListBean bean : dataList) {
+            if (bean.getPayStatus() == 0 && bean.getStatusId() != 3 && "0".equals(bean.getOrderType())) {
+                ids.add(bean.getId());
+            }
+        }
         return ids;
     }
 

@@ -43,6 +43,13 @@ public class ExpandListAdapter extends BaseExpandableListAdapter {
 
 
     public List<Integer> getIds() {
+        for (OrderMonthBO.AddressMyOrderListBean bean : lists) {
+            for (OrderMonthBO.AddressMyOrderListBean.OrderListBean data : bean.getOrderList()) {
+                if (data.getPayStatus() == 0 && data.getStatusId() != 3 && "0".equals(data.getOrderType())) {
+                    ids.add((int) data.getId());
+                }
+            }
+        }
         return ids;
     }
 

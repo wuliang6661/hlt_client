@@ -93,7 +93,7 @@ public class LoginActivity extends MVPBaseActivity<LoginContract.View, LoginPres
      */
     private boolean isLogin() {
         if (StringUtils.isEmpty(strShop)) {
-            showToast("请输入商户编号！");
+            showToast("请输入门店编号！");
             return false;
         }
         if (StringUtils.isEmpty(strPwd)) {

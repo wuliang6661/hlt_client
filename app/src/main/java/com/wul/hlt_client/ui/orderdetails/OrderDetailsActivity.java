@@ -28,10 +28,13 @@ import com.blankj.utilcode.util.TimeUtils;
 import com.wul.hlt_client.R;
 import com.wul.hlt_client.entity.OrderDetailsBO;
 import com.wul.hlt_client.entity.PayResult;
+import com.wul.hlt_client.entity.event.PaySuress;
 import com.wul.hlt_client.mvp.MVPBaseActivity;
 import com.wul.hlt_client.util.PhoneUtils;
 import com.wul.hlt_client.widget.lgrecycleadapter.LGRecycleViewAdapter;
 import com.wul.hlt_client.widget.lgrecycleadapter.LGViewHolder;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.Map;
 
@@ -134,9 +137,9 @@ public class OrderDetailsActivity extends MVPBaseActivity<OrderDetailsContract.V
         takeAddress.setText("收货地址：" + orderDetailsBO.getDeliverAddress());
         takeTime.setText(orderDetailsBO.getRequireDeliverOn());
         orderTime.setText(TimeUtils.millis2String(orderDetailsBO.getCreateDate()));
-        if(orderDetailsBO.getIsCancel() == 1){
+        if (orderDetailsBO.getIsCancel() == 1) {
             cancleButton.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             cancleButton.setVisibility(View.GONE);
         }
         if (orderDetailsBO.getOrderType() == 0 && orderDetailsBO.getPayStatus() == 0) {
@@ -341,6 +344,7 @@ public class OrderDetailsActivity extends MVPBaseActivity<OrderDetailsContract.V
                     if (TextUtils.equals(resultStatus, "9000")) {    //支付成功
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                         showToast("支付成功！");
+                        EventBus.getDefault().post(new PaySuress());
                         finish();
                     } else {              //支付失败
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
