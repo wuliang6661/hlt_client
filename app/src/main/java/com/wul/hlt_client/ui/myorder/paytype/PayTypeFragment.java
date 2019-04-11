@@ -32,7 +32,6 @@ import com.wul.hlt_client.ui.myorder.ExpandListAdapter;
 import com.wul.hlt_client.ui.myorder.RecycleAdapter;
 import com.wul.hlt_client.ui.myorder.ScreenPopWindow;
 import com.wul.hlt_client.ui.orderdetails.OrderDetailsActivity;
-import com.wul.hlt_client.util.AppManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;

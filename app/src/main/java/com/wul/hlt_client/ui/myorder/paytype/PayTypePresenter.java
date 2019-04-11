@@ -1,7 +1,5 @@
 package com.wul.hlt_client.ui.myorder.paytype;
 
-import android.content.Context;
-
 import com.wul.hlt_client.api.HttpResultSubscriber;
 import com.wul.hlt_client.api.HttpServiceIml;
 import com.wul.hlt_client.entity.OrderDayBo;
