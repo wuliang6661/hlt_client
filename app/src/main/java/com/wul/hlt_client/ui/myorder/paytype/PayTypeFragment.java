@@ -443,7 +443,12 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
                         // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
                         showToast("支付成功！");
                         orderIds.clear();
-                        syncHttp();
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                syncSelectPrice();
+                            }
+                        });
                     } else {              //支付失败
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                         showToast("支付失败！");

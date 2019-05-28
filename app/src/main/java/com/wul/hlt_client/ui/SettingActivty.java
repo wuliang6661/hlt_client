@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.blankj.utilcode.util.AppUtils;
 import com.wul.hlt_client.R;
 import com.wul.hlt_client.base.BaseActivity;
+import com.wul.hlt_client.base.MyApplication;
 import com.wul.hlt_client.ui.login.LoginActivity;
 import com.wul.hlt_client.util.AppManager;
 import com.wul.hlt_client.util.DataCleanManager;
@@ -61,6 +62,8 @@ public class SettingActivty extends BaseActivity implements View.OnClickListener
                         .setCancelable(false)
                         .setNegativeButton("取消", null)
                         .setPositiveButton("确定", v1 -> {
+                            MyApplication.spUtils.remove("pwd");
+                            MyApplication.spUtils.remove("phone");
                             gotoActivity(LoginActivity.class, true);
                             AppManager.getAppManager().finishAllActivity();
                         }).show();
