@@ -38,30 +38,30 @@ public class DowmTimer extends TimerTask {
             message.obj = getTime(startTime - date);
             message.what = 0x11;
             handler.sendMessage(message);
-            if (getTime(startTime - date).equals("")) {
-                LogUtils.e("开始一次");
-                if (mediaPlayer != null) {
-                    mediaPlayer.release();
-                }
-                mediaPlayer = MediaPlayer.create(context, R.raw.miaosha_start);
-                mediaPlayer.setOnCompletionListener(new MediaListener());
-                mediaPlayer.start();
-            }
+//            if (getTime(startTime - date).equals("")) {
+//                LogUtils.e("开始一次");
+//                if (mediaPlayer != null) {
+//                    mediaPlayer.release();
+//                }
+//                mediaPlayer = MediaPlayer.create(context, R.raw.miaosha_start);
+//                mediaPlayer.setOnCompletionListener(new MediaListener());
+//                mediaPlayer.start();
+//            }
         }
         if (date >= startTime && date <= endTime) {    //活动还没结束
             Message message = new Message();
             message.obj = getTime(endTime - date);
             message.what = 0x22;
             handler.sendMessage(message);
-            if (getTime(endTime - date).equals("")) {
-                LogUtils.e("结束一次");
-                if (mediaPlayer != null) {
-                    mediaPlayer.release();
-                }
-                mediaPlayer = MediaPlayer.create(context, R.raw.miaosha_end);
-                mediaPlayer.setOnCompletionListener(new MediaListener());
-                mediaPlayer.start();
-            }
+//            if (getTime(endTime - date).equals("")) {
+//                LogUtils.e("结束一次");
+//                if (mediaPlayer != null) {
+//                    mediaPlayer.release();
+//                }
+//                mediaPlayer = MediaPlayer.create(context, R.raw.miaosha_end);
+//                mediaPlayer.setOnCompletionListener(new MediaListener());
+//                mediaPlayer.start();
+//            }
         }
         if (date > endTime) {
             Message message = new Message();

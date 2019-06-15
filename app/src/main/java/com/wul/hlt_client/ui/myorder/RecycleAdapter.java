@@ -1,6 +1,5 @@
 package com.wul.hlt_client.ui.myorder;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
@@ -37,6 +36,17 @@ public class RecycleAdapter extends LGRecycleViewAdapter<OrderDayBo.AddressMyOrd
     }
 
 
+    public List<Integer> getIds(List<OrderDayBo.AddressMyOrderListBean> dataList) {
+        this.dataList = dataList;
+        ids = new ArrayList<>();
+        for (OrderDayBo.AddressMyOrderListBean bean : dataList) {
+            if (bean.getPayStatus() == 0 && bean.getStatusId() != 3 && "0".equals(bean.getOrderType())) {
+                ids.add(bean.getId());
+            }
+        }
+        return ids;
+    }
+
     public List<Integer> getIds() {
         ids = new ArrayList<>();
         for (OrderDayBo.AddressMyOrderListBean bean : dataList) {
@@ -46,6 +56,7 @@ public class RecycleAdapter extends LGRecycleViewAdapter<OrderDayBo.AddressMyOrd
         }
         return ids;
     }
+
 
 
     public void setIds(List<Integer> ids) {

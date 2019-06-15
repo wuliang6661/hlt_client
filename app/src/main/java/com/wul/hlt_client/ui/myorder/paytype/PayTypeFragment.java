@@ -332,6 +332,7 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
             recycle.setAdapter(adapter);
         } else {
             adapter.setData(orderDayBo.getAddressMyOrderList());
+            orderIds = adapter.getIds(orderDayBo.getAddressMyOrderList());
         }
         syncSelectPrice();
     }
@@ -355,6 +356,7 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
         expandList.setVisibility(View.VISIBLE);
         if (adapter2 == null) {
             adapter2 = new ExpandListAdapter(getActivity(), orderMonthBO.getAddressMyOrderList());
+            adapter2.setIds(orderIds);
             adapter2.setOnSelector(new ExpandListAdapter.onSelector() {
                 @Override
                 public void select(int id) {
@@ -385,6 +387,7 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
             });
         } else {
             adapter2.setDatas(orderMonthBO.getAddressMyOrderList());
+            orderIds = adapter2.getIds();
         }
         for (int i = 0; i < orderMonthBO.getAddressMyOrderList().size(); i++) {
             expandList.expandGroup(i);

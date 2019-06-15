@@ -94,7 +94,7 @@ public class SalesGoodFragment extends MVPBaseFragment<SalesGoodContract.View, S
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        titleText.setText("限时促销专场");
+        titleText.setText("促销秒杀专场");
         back.setVisibility(View.GONE);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
