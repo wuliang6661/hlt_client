@@ -338,6 +338,11 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
     }
 
     @Override
+    public void cancleSuress(String text) {
+
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.good_layout:   //进入商品清单

@@ -143,4 +143,26 @@ public class OrderCommitPresenter extends BasePresenterImpl<OrderCommitContract.
             }
         });
     }
+
+
+    /**
+     * 取消订单
+     */
+    public void cancleOrder(int id) {
+        HttpServiceIml.cancleOrder(id).subscribe(new HttpResultSubscriber<String>() {
+            @Override
+            public void onSuccess(String s) {
+                if (mView != null) {
+                    mView.cancleSuress(s);
+                }
+            }
+
+            @Override
+            public void onFiled(String message) {
+                if (mView != null) {
+                    mView.onRequestError(message);
+                }
+            }
+        });
+    }
 }

@@ -26,6 +26,8 @@ public class OrderCommitContract {
 
         void testTimeSourss(String message);
 
+        void cancleSuress(String text);
+
     }
 
     interface Presenter extends BasePresenter<View> {
