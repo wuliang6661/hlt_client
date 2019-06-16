@@ -11,6 +11,7 @@ import com.wul.hlt_client.entity.MoneyBO;
 import com.wul.hlt_client.entity.OrderDayBo;
 import com.wul.hlt_client.entity.OrderDetailsBO;
 import com.wul.hlt_client.entity.OrderMonthBO;
+import com.wul.hlt_client.entity.PayBo;
 import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.entity.ShopCarBO;
 import com.wul.hlt_client.entity.ShopInfoBO;
@@ -164,7 +165,7 @@ public interface HttpService {
      * 确认订单
      */
     @POST("/hct_webservice/app/address/settlement/confirmOrder")
-    Observable<BaseResult<String>> commitOrder(@Body CommitOrderBO commitOrderBO);
+    Observable<BaseResult<PayBo>> commitOrder(@Body CommitOrderBO commitOrderBO);
 
 
     /**
