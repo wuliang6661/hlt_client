@@ -31,6 +31,7 @@ import com.wul.hlt_client.R;
 import com.wul.hlt_client.base.GlideApp;
 import com.wul.hlt_client.entity.AddressBO;
 import com.wul.hlt_client.entity.MoneyBO;
+import com.wul.hlt_client.entity.PayBo;
 import com.wul.hlt_client.entity.PayResult;
 import com.wul.hlt_client.entity.ShoppingCarBO;
 import com.wul.hlt_client.entity.request.CommitOrderBO;
@@ -281,20 +282,24 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
         orderPrice.setText("¥ " + moneyBO.getPayableAmount());
     }
 
+
+    private int orderId;
+
     @Override
-    public void paySourss(String orderInfo) {
-        if (StringUtils.isEmpty(orderInfo)) {
+    public void paySourss(PayBo orderInfo) {
+        orderId = orderInfo.getOrderId();
+        if (orderInfo.getIsAliPay() != 1) {    //非支付宝支付
             if (strPayType == 1) {
                 showToast("下单成功！");
                 gotoActivity(MyOrderActivity.class, true);
             } else {
                 showToast("orderInfo为空！");
             }
-        } else if ("0".equals(orderInfo)) {    //实付款为0
+        } else if ("0".equals(orderInfo.getAliPayUrl())) {    //实付款为0
             showToast("下单成功！");
             gotoActivity(MyOrderActivity.class, true);
         } else {
-            aliPay(orderInfo);
+            aliPay(orderInfo.getAliPayUrl());
         }
     }
 
@@ -335,6 +340,11 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
             mianLine.setVisibility(View.GONE);
             mianQianshouLayout.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    public void cancleSuress(String text) {
+        gotoActivity(MyOrderActivity.class, true);
     }
 
     @Override
@@ -607,7 +617,8 @@ public class OrderCommitActivity extends MVPBaseActivity<OrderCommitContract.Vie
                     } else {              //支付失败
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                         showToast("支付失败！");
-                        gotoActivity(MyOrderActivity.class, true);
+//                        gotoActivity(MyOrderActivity.class, true);
+                        mPresenter.cancleOrder(orderId);
                     }
                     break;
                 }

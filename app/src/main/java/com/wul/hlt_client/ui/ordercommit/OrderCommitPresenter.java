@@ -4,6 +4,7 @@ import com.wul.hlt_client.api.HttpResultSubscriber;
 import com.wul.hlt_client.api.HttpServiceIml;
 import com.wul.hlt_client.entity.AddressBO;
 import com.wul.hlt_client.entity.MoneyBO;
+import com.wul.hlt_client.entity.PayBo;
 import com.wul.hlt_client.entity.ShoppingCarBO;
 import com.wul.hlt_client.entity.request.CommitOrderBO;
 import com.wul.hlt_client.entity.request.TestTimeRequest;
@@ -64,9 +65,9 @@ public class OrderCommitPresenter extends BasePresenterImpl<OrderCommitContract.
      * 确认订单
      */
     public void commitOrder(CommitOrderBO orderBO) {
-        HttpServiceIml.commitOrder(orderBO).subscribe(new HttpResultSubscriber<String>() {
+        HttpServiceIml.commitOrder(orderBO).subscribe(new HttpResultSubscriber<PayBo>() {
             @Override
-            public void onSuccess(String s) {
+            public void onSuccess(PayBo s) {
                 if (mView != null) {
                     mView.paySourss(s);
                 }
@@ -132,6 +133,28 @@ public class OrderCommitPresenter extends BasePresenterImpl<OrderCommitContract.
             public void onSuccess(String s) {
                 if (mView != null) {
                     mView.testTimeSourss(s);
+                }
+            }
+
+            @Override
+            public void onFiled(String message) {
+                if (mView != null) {
+                    mView.onRequestError(message);
+                }
+            }
+        });
+    }
+
+
+    /**
+     * 取消订单
+     */
+    public void cancleOrder(int id) {
+        HttpServiceIml.cancleOrder(id).subscribe(new HttpResultSubscriber<String>() {
+            @Override
+            public void onSuccess(String s) {
+                if (mView != null) {
+                    mView.cancleSuress(s);
                 }
             }
 

@@ -12,6 +12,7 @@ import com.wul.hlt_client.entity.MoneyBO;
 import com.wul.hlt_client.entity.OrderDayBo;
 import com.wul.hlt_client.entity.OrderDetailsBO;
 import com.wul.hlt_client.entity.OrderMonthBO;
+import com.wul.hlt_client.entity.PayBo;
 import com.wul.hlt_client.entity.ShopBO;
 import com.wul.hlt_client.entity.ShopCarBO;
 import com.wul.hlt_client.entity.ShopInfoBO;
@@ -225,7 +226,7 @@ public class HttpServiceIml {
     /**
      * 确认订单
      */
-    public static Observable<String> commitOrder(CommitOrderBO commitOrderBO) {
+    public static Observable<PayBo> commitOrder(CommitOrderBO commitOrderBO) {
         commitOrderBO.token = MyApplication.token;
         return getService().commitOrder(commitOrderBO).compose(RxResultHelper.httpRusult());
     }
