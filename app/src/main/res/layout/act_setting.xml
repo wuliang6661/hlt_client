@@ -94,6 +94,7 @@
         android:background="#f2f2f2" />
 
     <LinearLayout
+        android:id="@+id/version_layout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginLeft="10dp"

@@ -33,6 +33,7 @@ import com.wul.hlt_client.ui.NoneFragment3;
 import com.wul.hlt_client.ui.NoneFragment4;
 import com.wul.hlt_client.ui.main.shopcar.ShopCarAdapter;
 import com.wul.hlt_client.util.AppManager;
+import com.wul.hlt_client.util.UpdateUtils;
 import com.xyz.tabitem.BottmTabItem;
 
 import org.greenrobot.eventbus.EventBus;
@@ -87,6 +88,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         getShopCarList();
         requestPermission();
         registerService();
+        UpdateUtils.checkUpdate();
 //        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.miaosha_start);
 //        mediaPlayer.setOnCompletionListener(new MediaListener(mediaPlayer));
 //        mediaPlayer.start();
