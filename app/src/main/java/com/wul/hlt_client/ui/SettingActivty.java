@@ -13,11 +13,13 @@ import com.wul.hlt_client.base.MyApplication;
 import com.wul.hlt_client.ui.login.LoginActivity;
 import com.wul.hlt_client.util.AppManager;
 import com.wul.hlt_client.util.DataCleanManager;
+import com.wul.hlt_client.util.UpdateUtils;
 import com.wul.hlt_client.widget.AlertDialog;
 
 import java.io.File;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class SettingActivty extends BaseActivity implements View.OnClickListener {
 
@@ -82,5 +84,11 @@ public class SettingActivty extends BaseActivity implements View.OnClickListener
                         }).show();
                 break;
         }
+    }
+
+
+    @OnClick(R.id.version_layout)
+    public void update() {
+        UpdateUtils.checkUpdate();
     }
 }

@@ -19,12 +19,14 @@ import com.wul.hlt_client.entity.ShopInfoBO;
 import com.wul.hlt_client.entity.ShoppingCarBO;
 import com.wul.hlt_client.entity.TousuBO;
 import com.wul.hlt_client.entity.UserBo;
+import com.wul.hlt_client.entity.VersionBo;
 import com.wul.hlt_client.entity.XianShiBO;
 import com.wul.hlt_client.entity.request.BaseRequest;
 import com.wul.hlt_client.entity.request.ChildFlowBO;
 import com.wul.hlt_client.entity.request.CommitOrderBO;
 import com.wul.hlt_client.entity.request.GetOrderBO;
 import com.wul.hlt_client.entity.request.GetShopRequest;
+import com.wul.hlt_client.entity.request.GetVersionRequest;
 import com.wul.hlt_client.entity.request.LoginBo;
 import com.wul.hlt_client.entity.request.PageBO;
 import com.wul.hlt_client.entity.request.RegionBO;
@@ -38,8 +40,10 @@ import com.wul.hlt_client.entity.request.TuiKuanBO;
 import com.wul.hlt_client.entity.request.XianshiBO;
 import com.wul.hlt_client.util.rx.RxResultHelper;
 
+import java.io.File;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import rx.Observable;
 
 /**
@@ -52,6 +56,8 @@ public class HttpServiceIml {
 
     private static HttpService service;
 
+    private static HttpService downLoadService;
+
     /**
      * 获取代理对象
      *
@@ -61,6 +67,17 @@ public class HttpServiceIml {
         if (service == null)
             service = ApiManager.getInstance().configRetrofit(HttpService.class, HttpService.URL);
         return service;
+    }
+
+    /**
+     * 获取代理对象
+     *
+     * @return
+     */
+    public static HttpService getDownLoadService(DownloadResponseBody.DownloadListener listener) {
+        downLoadService = ApiManager.getInstance().downloadConfigRetrofit(HttpService.class, HttpService.URL, listener);
+        return downLoadService;
+
     }
 
 
@@ -369,6 +386,26 @@ public class HttpServiceIml {
     public static Observable<String> testSkipe(TestTimeRequest request) {
         request.token = MyApplication.token;
         return getService().testSpike(request).compose(RxResultHelper.httpRusult());
+    }
+
+    /**
+     * 获取版本信息
+     */
+    public static Observable<VersionBo> getVersionInfo() {
+        GetVersionRequest request = new GetVersionRequest();
+        request.type = 0;
+        request.token = MyApplication.token;
+        return getService().getVersionName(request).compose(RxResultHelper.httpRusult());
+    }
+
+
+    /**
+     * 下载
+     */
+    public static Observable<ResponseBody> downLoad(String url, DownloadResponseBody.DownloadListener
+            downloadListener, File file) {
+        //url = "http://172.18.100.26:8080/manager/images/kkk.7z";
+        return getDownLoadService(downloadListener).download(url).compose(RxResultHelper.downRequest(file));
     }
 
 }

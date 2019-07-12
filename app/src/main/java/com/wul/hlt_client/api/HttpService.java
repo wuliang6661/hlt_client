@@ -18,11 +18,13 @@ import com.wul.hlt_client.entity.ShopInfoBO;
 import com.wul.hlt_client.entity.ShoppingCarBO;
 import com.wul.hlt_client.entity.TousuBO;
 import com.wul.hlt_client.entity.UserBo;
+import com.wul.hlt_client.entity.VersionBo;
 import com.wul.hlt_client.entity.XianShiBO;
 import com.wul.hlt_client.entity.request.BaseRequest;
 import com.wul.hlt_client.entity.request.ChildFlowBO;
 import com.wul.hlt_client.entity.request.CommitOrderBO;
 import com.wul.hlt_client.entity.request.GetOrderBO;
+import com.wul.hlt_client.entity.request.GetVersionRequest;
 import com.wul.hlt_client.entity.request.LoginBo;
 import com.wul.hlt_client.entity.request.PageBO;
 import com.wul.hlt_client.entity.request.RegionBO;
@@ -38,8 +40,12 @@ import com.wul.hlt_client.entity.request.GetShopRequest;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Streaming;
+import retrofit2.http.Url;
 import rx.Observable;
 
 /**
@@ -254,4 +260,19 @@ public interface HttpService {
      */
     @POST("/hct_webservice/app/address/settlement/testSpikeDeliverDate")
     Observable<BaseResult<String>> testSpike(@Body TestTimeRequest request);
+
+    /**
+     * 获取版本对比
+     */
+    @POST("/hct_webservice/app/address/getVersion")
+    Observable<BaseResult<VersionBo>> getVersionName(@Body GetVersionRequest request);
+
+
+    /**
+     * 下载
+     */
+    @Streaming
+    @GET
+    Observable<ResponseBody> download(@Url String url);
+
 }
