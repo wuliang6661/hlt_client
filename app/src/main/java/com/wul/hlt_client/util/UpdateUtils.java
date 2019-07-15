@@ -1,7 +1,6 @@
 package com.wul.hlt_client.util;
 
 import android.os.Environment;
-import android.view.View;
 
 import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.FileUtils;
@@ -35,12 +34,7 @@ public class UpdateUtils {
                 if (s.getVersionCode() > AppUtils.getAppVersionCode()) {
                     new AlertDialog(AppManager.getAppManager().curremtActivity()).builder().setGone().
                             setMsg("发现新版本")
-                            .setPositiveButton("立即更新", new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    updateAPK(s);
-                                }
-                            })
+                            .setPositiveButton("立即更新", v -> updateAPK(s))
                             .setCancelable(false).show();
                 }
             }

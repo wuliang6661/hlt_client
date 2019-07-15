@@ -104,18 +104,11 @@ public class ShopAdapter extends LGRecycleViewAdapter<ShopBO> {
      * 促销商品处理
      */
     private void setCuxiao(LGViewHolder holder, ShopBO shopBO) {
-        TextView yuanText = (TextView) holder.getView(R.id.good_unit2);
-        yuanText.getPaint().setFlags(0);
-        if (shopBO.getIsPromotion() == 1 && shopBO.getProductType() == 0) {   //促销商品
-            holder.getView(R.id.good_type_cu).setVisibility(View.VISIBLE);
-            holder.getView(R.id.good_price).setVisibility(View.VISIBLE);
-            holder.getView(R.id.good_price2).setVisibility(View.VISIBLE);
-            holder.setText(R.id.good_price, "¥" + shopBO.getPromotionPrice2() + "元/" + shopBO.getMeasureUnitName2());
-            holder.setText(R.id.good_price2, "¥" + shopBO.getPromotionPrice1() + "元/" + shopBO.getMeasureUnitName1());
-            yuanText.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
-        } else {
-            holder.getView(R.id.good_type_cu).setVisibility(View.GONE);
-        }
+//        TextView yuanText = (TextView) holder.getView(R.id.good_unit2);
+//        yuanText.getPaint().setFlags(0);
+//         else {
+//
+//        }
     }
 
 
@@ -125,8 +118,19 @@ public class ShopAdapter extends LGRecycleViewAdapter<ShopBO> {
     private void setMiaosha(LGViewHolder holder, ShopBO shopBO) {
         ImageView shopAdd = (ImageView) holder.getView(R.id.shop_add);
         TextView yuanText = (TextView) holder.getView(R.id.good_unit2);
+        holder.getView(R.id.good_type_miao).setVisibility(View.GONE);
+        holder.getView(R.id.good_type_cu).setVisibility(View.GONE);
+        holder.getView(R.id.good_unit2).setVisibility(View.VISIBLE);
         shopAdd.setEnabled(true);
-        if (shopBO.getProductType() == 1) {    //秒杀商品
+        if (shopBO.getIsPromotion() == 1 && shopBO.getProductType() == 0) {   //促销商品
+            holder.getView(R.id.good_type_cu).setVisibility(View.VISIBLE);
+            holder.getView(R.id.good_price).setVisibility(View.VISIBLE);
+            holder.getView(R.id.good_price2).setVisibility(View.VISIBLE);
+            holder.setText(R.id.good_price, "¥" + shopBO.getPromotionPrice2() + "元/" + shopBO.getMeasureUnitName2());
+            holder.setText(R.id.good_price2, "¥" + shopBO.getPromotionPrice1() + "元/" + shopBO.getMeasureUnitName1());
+            yuanText.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
+            yuanText.setText("¥" + shopBO.getPrice1() + "元/" + shopBO.getMeasureUnitName1());
+        } else if (shopBO.getProductType() == 1) {    //秒杀商品
             holder.getView(R.id.kucun).setVisibility(View.VISIBLE);
             holder.getView(R.id.good_price).setVisibility(View.VISIBLE);
             holder.getView(R.id.good_price2).setVisibility(View.VISIBLE);
@@ -134,6 +138,7 @@ public class ShopAdapter extends LGRecycleViewAdapter<ShopBO> {
             holder.setText(R.id.good_price, "¥" + shopBO.getPromotionPrice2() + "元/" + shopBO.getMeasureUnitName2());
             holder.setText(R.id.good_price2, "¥" + shopBO.getPromotionPrice1() + "元/" + shopBO.getMeasureUnitName1());
             yuanText.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG); //中划线
+            yuanText.setText("¥" + shopBO.getPrice1() + "元/" + shopBO.getMeasureUnitName1());
             if (shopBO.getSurplusStock() > 0) {  //库存大于0
                 holder.setText(R.id.kucun, "仅剩" + shopBO.getSurplusStock() + shopBO.getMeasureUnitName2());
             } else {
@@ -143,7 +148,6 @@ public class ShopAdapter extends LGRecycleViewAdapter<ShopBO> {
         } else if (shopBO.getProductType() == 0 && shopBO.getIsPromotion() == 0) {        //正常商品
             holder.getView(R.id.good_price).setVisibility(View.VISIBLE);
             holder.getView(R.id.good_unit2).setVisibility(View.GONE);
-            holder.getView(R.id.good_type_miao).setVisibility(View.GONE);
             holder.setText(R.id.good_price, "¥" + shopBO.getPrice2() + "元/" + shopBO.getMeasureUnitName2());
             holder.setText(R.id.good_price2, "¥" + shopBO.getPrice1() + "元/" + shopBO.getMeasureUnitName1());
 //            yuanText.setTextColor(Color.parseColor("#FF722B"));
