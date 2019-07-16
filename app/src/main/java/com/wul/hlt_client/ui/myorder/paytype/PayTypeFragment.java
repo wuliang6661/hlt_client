@@ -261,6 +261,7 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
         screenBO.setDisplayType(displayType);
         screenBO.setOrderTypes(orderTypes);
         screenBO.setPayStatus(payStatus);
+        showProgress();
         if (displayType == 1) {
             mPresenter.getMyOrderList(screenBO);
         } else {
@@ -286,6 +287,7 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
 
     @Override
     public void getOrderListDay(OrderDayBo orderDayBo) {
+        stopProgress();
         if (orderDayBo.getAddressMyOrderList() == null) {
             orderDayBo.setAddressMyOrderList(new ArrayList<>());
             recycle.setVisibility(View.GONE);
@@ -339,6 +341,7 @@ public class PayTypeFragment extends MVPBaseFragment<PayTypeContract.View, PayTy
 
     @Override
     public void getOrderListMonth(OrderMonthBO orderMonthBO) {
+        stopProgress();
         if (orderMonthBO.getAddressMyOrderList() == null) {
             orderMonthBO.setAddressMyOrderList(new ArrayList<>());
             recycle.setVisibility(View.GONE);

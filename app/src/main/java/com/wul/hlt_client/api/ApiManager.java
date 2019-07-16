@@ -36,7 +36,7 @@ public class ApiManager {
 
     private static final String TAG = "ApiManager";
     private Retrofit mRetrofit;
-    private static final int DEFAULT_TIMEOUT = 30;
+    private static final int DEFAULT_TIMEOUT = 100;
     OkHttpClient.Builder builder;
 
     OtherHttpService service;
